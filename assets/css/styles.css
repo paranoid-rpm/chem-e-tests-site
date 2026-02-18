@@ -140,7 +140,7 @@ textarea{min-height:120px;resize:vertical}
 .answer input{width:auto;margin-right:8px}
 
 .small{font-size:13px;color:var(--muted)}
-.hidden{display:none}
+.hidden{display:none !important}
 
 .callout{margin-top:12px;padding:12px;border-radius: 14px;border:1px solid var(--border);background: var(--card)}
 
