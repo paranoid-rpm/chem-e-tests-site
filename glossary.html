@@ -6,7 +6,16 @@
   <title>Справочник • ChemTests</title>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
-  <meta name="description" content="Справочник по химии: определения и подсказки."/>
+  <meta name="description" content="Большой справочник по химии: определения, правила и мини‑шпаргалки."/>
+
+  <style>
+    details.dict{ border:1px solid var(--border); border-radius:16px; background:transparent; overflow:hidden; margin-top:12px; }
+    details.dict summary{ cursor:pointer; user-select:none; display:flex; justify-content:space-between; gap:12px; align-items:center; padding:12px 14px; }
+    details.dict summary::-webkit-details-marker{ display:none; }
+    .dict-body{ border-top:1px solid var(--border); padding:12px 14px; }
+    .dict-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
+    @media (max-width: 960px){ .dict-grid{ grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body data-ink="c">
   <header class="nav">
@@ -30,14 +39,102 @@
     <section class="card" style="margin-top:18px">
       <div class="card-pad">
         <h1 style="margin:0 0 10px">Справочник</h1>
-        <p class="lead">Короткие определения (и можно дополнять по мере обучения).</p>
-        <div class="grid" style="margin-top:12px">
-          <div class="tile"><h3>Атом</h3><p>Наименьшая частица элемента, сохраняющая его свойства.</p></div>
-          <div class="tile"><h3>Молекула</h3><p>Частица вещества из связанных атомов.</p></div>
-          <div class="tile"><h3>Реакция</h3><p>Превращение веществ с разрывом и образованием связей.</p></div>
+        <p class="lead">Определения + мини‑шпаргалки. Разделы можно сворачивать.</p>
+
+        <div class="tile" style="margin-top:12px">
+          <b>Совет</b>
+          <div class="small" style="margin-top:8px">Если в тестах встретилось незнакомое слово — открой раздел «Справочник» и добавь его в свой список повторения.</div>
         </div>
       </div>
     </section>
+
+    <details class="dict" open>
+      <summary>
+        <div class="group-title"><b>База</b><span class="tag">термины</span></div>
+        <span class="tag">развернуть</span>
+      </summary>
+      <div class="dict-body">
+        <div class="dict-grid">
+          <div class="tile"><h3>Атом</h3><p>Наименьшая частица элемента, сохраняющая его свойства.</p></div>
+          <div class="tile"><h3>Молекула</h3><p>Частица вещества из связанных атомов.</p></div>
+          <div class="tile"><h3>Элемент</h3><p>Вид атомов с одинаковым зарядом ядра (одинаковый Z).</p></div>
+          <div class="tile"><h3>Простое вещество</h3><p>Состоит из атомов одного элемента (O2, Fe, S).</p></div>
+          <div class="tile"><h3>Сложное вещество</h3><p>Состоит из атомов разных элементов (H2O, NaCl).</p></div>
+          <div class="tile"><h3>Ион</h3><p>Заряженная частица, образуется при потере/присоединении электронов.</p></div>
+          <div class="tile"><h3>Изотоп</h3><p>Атомы одного элемента с разным числом нейтронов.</p></div>
+          <div class="tile"><h3>Химическая реакция</h3><p>Превращение веществ с разрывом и образованием связей.</p></div>
+          <div class="tile"><h3>Катализатор</h3><p>Ускоряет реакцию, но не расходуется и не смещает равновесие.</p></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="dict">
+      <summary>
+        <div class="group-title"><b>Связь и строение</b><span class="tag">свойства</span></div>
+        <span class="tag">развернуть</span>
+      </summary>
+      <div class="dict-body">
+        <div class="dict-grid">
+          <div class="tile"><h3>Ионная связь</h3><p>Притяжение катионов и анионов (обычно металл + неметалл).</p></div>
+          <div class="tile"><h3>Ковалентная связь</h3><p>Связь через общие электронные пары между атомами неметаллов.</p></div>
+          <div class="tile"><h3>Полярность связи</h3><p>Смещение электронной плотности к более электроотрицательному атому.</p></div>
+          <div class="tile"><h3>Металлическая связь</h3><p>Связь катионов металла «электронным газом» в решётке.</p></div>
+          <div class="tile"><h3>Кристаллическая решётка</h3><p>Регулярное расположение частиц (ионов/атомов/молекул) в твёрдом.</p></div>
+          <div class="tile"><h3>Водородная связь</h3><p>Дополнительное притяжение при H–F/O/N, влияет на свойства воды и спиртов.</p></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="dict">
+      <summary>
+        <div class="group-title"><b>Растворы</b><span class="tag">концентрации</span></div>
+        <span class="tag">развернуть</span>
+      </summary>
+      <div class="dict-body">
+        <div class="dict-grid">
+          <div class="tile"><h3>Раствор</h3><p>Однородная смесь растворителя и растворённого вещества.</p></div>
+          <div class="tile"><h3>Растворимость</h3><p>Максимальное количество вещества, которое может раствориться при данных условиях.</p></div>
+          <div class="tile"><h3>Массовая доля</h3><p>Доля массы вещества в массе раствора (часто в процентах).</p></div>
+          <div class="tile"><h3>Молярная концентрация</h3><p>Количество вещества на единицу объёма раствора.</p></div>
+          <div class="tile"><h3>Разбавление</h3><p>При добавлении растворителя количество растворённого вещества сохраняется.</p></div>
+          <div class="tile"><h3>Осадок</h3><p>Нерастворимое/малорастворимое вещество, выпадает из раствора.</p></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="dict">
+      <summary>
+        <div class="group-title"><b>Кислоты, основания, соли</b><span class="tag">неорганика</span></div>
+        <span class="tag">развернуть</span>
+      </summary>
+      <div class="dict-body">
+        <div class="dict-grid">
+          <div class="tile"><h3>Кислота</h3><p>В школьной модели: электролит, дающий в растворе H+.</p></div>
+          <div class="tile"><h3>Основание</h3><p>Соединение металла с OH−; растворимые основания — щёлочи.</p></div>
+          <div class="tile"><h3>Соль</h3><p>Ионное соединение из катиона и аниона кислотного остатка.</p></div>
+          <div class="tile"><h3>Оксид</h3><p>Соединение элемента с кислородом (O обычно −2).</p></div>
+          <div class="tile"><h3>Нейтрализация</h3><p>Кислота + щёлочь → соль + вода.</p></div>
+          <div class="tile"><h3>Амфотерность</h3><p>Способность проявлять и кислотные, и основные свойства.</p></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="dict">
+      <summary>
+        <div class="group-title"><b>ОВР</b><span class="tag">электроны</span></div>
+        <span class="tag">развернуть</span>
+      </summary>
+      <div class="dict-body">
+        <div class="dict-grid">
+          <div class="tile"><h3>Степень окисления</h3><p>Условный заряд атома в соединении при полном смещении электронов.</p></div>
+          <div class="tile"><h3>Окисление</h3><p>Рост степени окисления (отдача электронов).</p></div>
+          <div class="tile"><h3>Восстановление</h3><p>Падение степени окисления (присоединение электронов).</p></div>
+          <div class="tile"><h3>Окислитель</h3><p>Принимает электроны и сам восстанавливается.</p></div>
+          <div class="tile"><h3>Восстановитель</h3><p>Отдаёт электроны и сам окисляется.</p></div>
+          <div class="tile"><h3>Электронный баланс</h3><p>Метод уравнивания ОВР через равенство отданных и принятых электронов.</p></div>
+        </div>
+      </div>
+    </details>
 
     <section class="gallery is-single" style="margin-top:14px" aria-label="Иллюстрация">
       <figure class="imgcard">
