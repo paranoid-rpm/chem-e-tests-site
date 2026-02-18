@@ -10,7 +10,9 @@
 <body>
   <header class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
+      <a class="brand" href="./index.html" aria-label="На главную">
+        <span class="pill">ChemTests</span>
+      </a>
 
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
@@ -20,21 +22,6 @@
         <a href="./glossary.html">Справочник</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
-
-        <span class="nav-sep" aria-hidden="true"></span>
-
-        <label class="small" for="styleSelect" style="margin-right:6px">Стиль</label>
-        <select id="styleSelect" data-action="style-select" class="select" aria-label="Выбор стиля">
-          <option value="minimal">Минимализм</option>
-          <option value="aurora">Аура</option>
-          <option value="mono">Моно</option>
-        </select>
-
-        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
-        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
-        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
-        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
-        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
       </nav>
     </div>
   </header>
@@ -43,7 +30,7 @@
     <div class="card">
       <div class="card-pad">
         <h2>Тесты</h2>
-        <p>Выбери тест слева. Поиск и фильтр помогают быстро найти нужную тему.</p>
+        <p>Выбери вариант слева или найди нужную тему через поиск и фильтр.</p>
 
         <div class="grid" style="grid-template-columns: 1.2fr .8fr 1fr; margin-top:12px">
           <div class="tile">
@@ -58,7 +45,7 @@
             <div class="small">Режим</div>
             <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:8px">
               <input id="trainerMode" type="checkbox" style="width:auto"/>
-              Режим тренировки (пояснения)
+              Тренировка (с пояснениями)
             </label>
           </div>
         </div>
@@ -79,21 +66,16 @@
 
     <div class="footer">
       <hr class="sep"/>
-      <div class="small">Если тесты не загружаются, запусти сайт через локальный сервер (README).</div>
+      <div class="small">Тема выбирается автоматически по настройке системы.</div>
     </div>
   </main>
 
   <script type="module">
-    import { initTheme, wireThemeToggle } from "./assets/js/app.js";
-    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
+    import "./assets/js/prefs.js";
+    import { wirePWA } from "./assets/js/app.js";
     import { initQuiz } from "./assets/js/quiz.js";
 
-    initTheme();
-    wireThemeToggle();
-
-    initPrefs();
-    wirePrefs();
-
+    wirePWA();
     initQuiz();
   </script>
 </body>
