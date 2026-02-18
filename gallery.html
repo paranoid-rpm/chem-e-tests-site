@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Фото — ChemTests</title>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
+      <nav class="navlinks" aria-label="Навигация">
+        <a href="./tests.html">Тесты</a>
+        <a href="./theory-tests.html">Теория тестов</a>
+        <a href="./history-tests.html">История</a>
+        <a href="./chemistry.html">Химия</a>
+        <a href="./gallery.html">Фото</a>
+        <a href="./contact.html">Контакты</a>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
+        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
+        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
+        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
+        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <div class="card-pad">
+        <h2>Галерея</h2>
+        <p>Сюда можно добавить фотографии кабинета, лабораторных работ, моделей молекул и т.п.</p>
+        <p class="small">Сейчас стоят декоративные «плейсхолдеры». Если хочешь реальные фото — создай папку <code>assets/img/</code> и подставь ссылки в CSS.</p>
+      </div>
+    </div>
+
+    <section class="gallery" style="margin-top:14px" aria-label="Изображения">
+      <div class="gimg g1" role="img" aria-label="Химическая лаборатория"></div>
+      <div class="gimg g2" role="img" aria-label="Колбы и реагенты"></div>
+      <div class="gimg g3" role="img" aria-label="Модель молекулы"></div>
+      <div class="gimg g4" role="img" aria-label="Класс на уроке"></div>
+      <div class="gimg g5" role="img" aria-label="Периодическая таблица"></div>
+      <div class="gimg g6" role="img" aria-label="Доска и формулы"></div>
+    </section>
+
+    <div class="footer">
+      <hr class="sep"/>
+      <div class="small">Хочешь — сделаю галерею с модальным просмотром (на клике открывается большое фото).</div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initTheme, wireThemeToggle } from "./assets/js/app.js";
+    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
+    initTheme(); wireThemeToggle();
+    initPrefs(); wirePrefs();
+  </script>
+</body>
+</html>

@@ -1,4 +1,5 @@
-const CACHE = "chem-e-tests-v1";
+const CACHE = "chem-e-tests-v2";
+
 const ASSETS = [
   "./",
   "./index.html",
@@ -11,15 +12,10 @@ const ASSETS = [
   "./manifest.webmanifest",
   "./assets/css/styles.css",
   "./assets/js/app.js",
+  "./assets/js/prefs.js",
   "./assets/js/quiz.js",
   "./assets/js/email.js",
   "./assets/data/tests.json",
-  "./assets/img/hero.jpg",
-  "./assets/img/lab-1.jpg",
-  "./assets/img/lab-2.jpg",
-  "./assets/img/class.jpg",
-  "./assets/icons/icon-192.png",
-  "./assets/icons/icon-512.png",
   "./assets/icons/favicon.svg"
 ];
 

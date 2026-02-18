@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Химия — ChemTests</title>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
+      <nav class="navlinks" aria-label="Навигация">
+        <a href="./tests.html">Тесты</a>
+        <a href="./theory-tests.html">Теория тестов</a>
+        <a href="./history-tests.html">История</a>
+        <a href="./chemistry.html">Химия</a>
+        <a href="./gallery.html">Фото</a>
+        <a href="./contact.html">Контакты</a>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
+        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
+        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
+        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
+        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <div class="card-pad">
+        <h2>Химия: мини‑конспект</h2>
+        <p>Этот раздел специально написан простым языком. Он подходит и школьнику, и взрослому, который хочет «вспомнить базу».</p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="tile">
+        <h3>Строение атома</h3>
+        <p>Протоны/нейтроны в ядре, электроны вокруг. Порядковый номер = число протонов.</p>
+      </div>
+      <div class="tile">
+        <h3>Химическая связь</h3>
+        <p>Ионная, ковалентная, металлическая — зависит от того, как «делятся» электронами.</p>
+      </div>
+      <div class="tile">
+        <h3>Реакции</h3>
+        <p>Соединение, разложение, замещение, обмен. Уравнивание — чтобы атомов слева и справа было поровну.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-pad">
+        <h2>Быстрый план повторения</h2>
+        <ul>
+          <li>Таблица Менделеева: периоды/группы, заряд ядра, валентность (в базе).</li>
+          <li>Формулы: относительная молекулярная масса, количество вещества (моль), молярная масса.</li>
+          <li>Растворы: массовая доля, концентрации (на нужном уровне).</li>
+        </ul>
+        <div class="form-actions" style="margin-top:14px">
+          <a class="btn" href="./tests.html">Открыть тесты по химии</a>
+          <a class="btn btn-ghost" href="./theory-tests.html">Как делать тесты</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <hr class="sep"/>
+      <div class="small">Хочешь раздел «ЕГЭ‑формат» или «8–9 класс» — скажи, подстрою.</div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initTheme, wireThemeToggle } from "./assets/js/app.js";
+    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
+    initTheme(); wireThemeToggle();
+    initPrefs(); wirePrefs();
+  </script>
+</body>
+</html>

@@ -11,14 +11,19 @@
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
-      <nav class="navlinks">
+      <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
         <a href="./history-tests.html">История</a>
         <a href="./chemistry.html">Химия</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
-        <button class="btn btn-ghost" data-action="toggle-theme">Тема</button>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
+        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
+        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
+        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
+        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
       </nav>
     </div>
   </header>
@@ -27,30 +32,36 @@
     <div class="card">
       <div class="card-pad">
         <h2>Тесты</h2>
-        <p>Слева выбираешь тест, справа проходишь. Вопросы берутся из <code>assets/data/tests.json</code>.</p>
+        <p>Слева выбираешь тест, справа проходишь. Прогресс сохраняется в этом браузере.</p>
+        <p class="small">Если тесты не загружаются, запускай сайт через локальный сервер (см. README).</p>
       </div>
     </div>
 
     <section class="quiz" style="margin-top:14px">
       <div class="card quiz-list">
         <div class="card-pad">
-          <div id="quizList"></div>
+          <div id="quizList" aria-label="Список тестов"></div>
         </div>
       </div>
 
-      <div class="card" id="quizBox"></div>
+      <div class="card" id="quizBox" aria-label="Окно теста"></div>
     </section>
 
     <div class="footer">
       <hr class="sep"/>
-      <div class="small">Хочешь больше тестов — просто добавляй новые блоки в tests.json.</div>
+      <div class="small">Тесты берутся из файла <code>assets/data/tests.json</code>.</div>
     </div>
   </main>
 
   <script type="module">
     import { initTheme, wireThemeToggle } from "./assets/js/app.js";
+    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
     import { initQuiz } from "./assets/js/quiz.js";
-    initTheme(); wireThemeToggle(); initQuiz();
+    initTheme();
+    wireThemeToggle();
+    initPrefs();
+    wirePrefs();
+    initQuiz();
   </script>
 </body>
 </html>

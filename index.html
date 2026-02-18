@@ -15,14 +15,19 @@
         <span class="pill">ChemTests</span>
         <span class="small">теория • практика • тесты</span>
       </a>
-      <nav class="navlinks">
+      <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
         <a href="./history-tests.html">История</a>
         <a href="./chemistry.html">Химия</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
-        <button class="btn btn-ghost" data-action="toggle-theme">Тема</button>
+        <span class="nav-sep" aria-hidden="true"></span>
+        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
+        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
+        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
+        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
+        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
       </nav>
     </div>
   </header>
@@ -32,46 +37,57 @@
       <div class="card">
         <div class="card-pad">
           <h1 class="h1">Современный сайт про e‑тесты на уроках химии</h1>
-          <p class="lead">Тренажеры, контрольные, теория тестов и химии — в одном месте.</p>
+          <p class="lead">Тренажеры, контрольные, теория тестов и химии — в одном месте. Удобно детям, студентам и взрослым: есть масштаб текста, высокий контраст и режим «меньше анимаций».</p>
+
           <div class="form-actions">
             <a class="btn" href="./tests.html">Начать тестирование</a>
             <a class="btn btn-ghost" href="./theory-tests.html">Прочитать теорию</a>
           </div>
-          <div class="kpis">
-            <div class="kpi"><b>8 тестов</b><span class="small">банк вопросов в JSON</span></div>
-            <div class="kpi"><b>PWA</b><span class="small">можно офлайн</span></div>
-            <div class="kpi"><b>Сохранение</b><span class="small">прогресс в браузере</span></div>
+
+          <div class="kpis" aria-label="Ключевые возможности">
+            <div class="kpi"><b>Банк тестов</b><span class="small">в JSON, легко дополнять</span></div>
+            <div class="kpi"><b>Доступность</b><span class="small">шрифт/контраст/движение</span></div>
+            <div class="kpi"><b>PWA</b><span class="small">можно установить</span></div>
+          </div>
+
+          <hr class="sep"/>
+
+          <div class="grid" style="margin-top:0">
+            <div class="tile">
+              <h3>Мне 5 минут</h3>
+              <p>Короткие мини‑тесты на урок или самопроверку.</p>
+            </div>
+            <div class="tile">
+              <h3>Хочу глубже</h3>
+              <p>Теория тестирования + история + химия с примерами.</p>
+            </div>
+            <div class="tile">
+              <h3>Для учителя</h3>
+              <p>Готовая структура: добавляй свои вопросы и темы.</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="card hero-img"></div>
-    </section>
-
-    <section class="grid">
-      <div class="tile">
-        <h3>Для ученика</h3>
-        <p>Проходи тренажеры, смотри результаты, повторяй темы.</p>
-      </div>
-      <div class="tile">
-        <h3>Для учителя</h3>
-        <p>Бери готовые вопросы и быстро расширяй банк под свою программу.</p>
-      </div>
-      <div class="tile">
-        <h3>Для проекта</h3>
-        <p>Добавь свои картинки, логотип, новые тесты и форму обратной связи.</p>
+      <div class="card hero-visual" aria-hidden="true">
+        <div class="hero-visual-inner"></div>
       </div>
     </section>
 
     <div class="footer">
       <hr class="sep"/>
-      <div>Сделано на HTML/CSS/JS. Без серверной части.</div>
+      <div>Сайт сделан на HTML/CSS/JS (без сервера). Открывай раздел «Тесты», чтобы начать.</div>
     </div>
   </main>
 
   <script type="module">
     import { initTheme, wireThemeToggle, wirePWA } from "./assets/js/app.js";
-    initTheme(); wireThemeToggle(); wirePWA();
+    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
+    initTheme();
+    wireThemeToggle();
+    wirePWA();
+    initPrefs();
+    wirePrefs();
   </script>
 </body>
 </html>
