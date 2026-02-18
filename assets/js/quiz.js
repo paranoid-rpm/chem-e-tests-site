@@ -1,3 +1,5 @@
+import { buildQuestions } from "./questionBank.js";
+
 const STORE_KEY = "chem_quiz_progress_v1";
 const SETTINGS_KEY = "chem_quiz_settings_v1";
 
@@ -93,13 +95,14 @@ export async function initQuiz(){
     const tests = data.tests.filter(matches);
 
     if(!tests.length){
-      listNode.appendChild(el("div", {class:"small"}, "Ничего не найдено. Попробуй другой запрос."));
+      listNode.appendChild(el("div", {class:"small"}, "Ничего не найдено. Измени запрос или фильтр."));
       return;
     }
 
     tests.forEach(t => {
       const done = progress[t.id]?.done;
       const pct = progress[t.id]?.pct;
+      const qCount = t.questions?.length || t.questionIds?.length || t.questionCount || 10;
       const item = el("div", {class:"item", "data-id": t.id},
         `<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
            <div>
@@ -107,7 +110,7 @@ export async function initQuiz(){
              <div class="small">${t.description}</div>
              <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
                <span class="tag">${t.category}</span>
-               <span class="tag">${t.questions.length} вопросов</span>
+               <span class="tag">${qCount} вопросов</span>
                ${t.timerSec ? `<span class="tag">таймер</span>` : ``}
                ${done && typeof pct === "number" ? `<span class="tag">${pct}%</span>` : ``}
              </div>
@@ -126,8 +129,8 @@ export async function initQuiz(){
   boxNode.innerHTML = `
     <div class="card-pad">
       <h2>Выбери тест</h2>
-      <p>Включи «Режим тренировки», если нужны пояснения и подсказки.</p>
-      <p class="small">Результаты сохраняются только на этом устройстве (в браузере).</p>
+      <p>Режим тренировки показывает подсказки и пояснения (если они есть в вопросах).</p>
+      <p class="small">Результаты сохраняются на этом устройстве (в браузере).</p>
     </div>
   `;
 
@@ -138,7 +141,19 @@ async function runTest(data, testId, settings){
   const test = data.tests.find(t => t.id === testId);
   const boxNode  = document.querySelector("#quizBox");
 
-  let questions = test.randomize ? shuffle(test.questions) : [...test.questions];
+  let questions = [];
+
+  if(Array.isArray(test.questions) && test.questions.length){
+    questions = [...test.questions];
+  } else if(Array.isArray(test.questionIds) && test.questionIds.length && data.questionBank){
+    questions = test.questionIds
+      .map((qid, idx) => ({...data.questionBank[qid], id: `q${idx+1}`}))
+      .filter(Boolean);
+  } else if(test.template){
+    questions = buildQuestions(test);
+  }
+
+  if(test.randomize) questions = shuffle(questions);
   questions = questions.map(q => ({
     ...q,
     answers: test.randomize ? shuffle(q.answers) : q.answers
@@ -274,7 +289,7 @@ async function runTest(data, testId, settings){
     const mistakesHtml = mistakes.length
       ? `<hr class="sep"/>
          <h3 style="margin:0 0 10px">Ошибки (${mistakes.length})</h3>
-         <div class="small">Ниже — вопросы, где ответ был неверным или не выбран.</div>
+         <div class="small">Вопросы, где ответ был неверным или не выбран.</div>
          <div style="margin-top:10px;display:grid;gap:10px">
            ${mistakes.slice(0,8).map(m => `<div class="tile"><b>${m.prompt}</b>${m.explain ? `<div class="small" style="margin-top:6px">${m.explain}</div>` : ``}</div>`).join("")}
          </div>

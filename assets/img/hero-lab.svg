@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420">
+  <defs>
+    <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <rect width="720" height="420" fill="none"/>
+  <g opacity="0.9" stroke="#111" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M210 70h130"/>
+    <path d="M260 70v70l-60 110a80 80 0 0 0 70 120h50a80 80 0 0 0 70-120l-60-110V70"/>
+    <path d="M236 150h48"/>
+    <path d="M220 196h80"/>
+    <path d="M204 240h112"/>
+  </g>
+  <g opacity="0.55" filter="url(#blur)">
+    <circle cx="520" cy="110" r="70" fill="#111" opacity="0.08"/>
+    <circle cx="560" cy="180" r="90" fill="#111" opacity="0.06"/>
+    <circle cx="510" cy="230" r="60" fill="#111" opacity="0.06"/>
+  </g>
+  <g opacity="0.85" stroke="#111" stroke-width="2" fill="none">
+    <circle cx="520" cy="110" r="18"/>
+    <circle cx="560" cy="180" r="14"/>
+    <circle cx="510" cy="230" r="10"/>
+    <path d="M536 123l14 43"/>
+    <path d="M548 190l-28 32"/>
+  </g>
+</svg>

@@ -1,364 +1,69 @@
 {
   "tests": [
-    {
-      "id": "e-tests-basics",
-      "title": "Электронные тесты: основы",
-      "description": "Цели, форматы, где применять на уроке химии.",
-      "category": "Методика",
-      "randomize": true,
-      "timerSec": 420,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Главная сильная сторона электронного теста на уроке (если он хорошо сделан):",
-          "note": "Подумай про обратную связь и скорость проверки.",
-          "answers": [
-            { "id": "a", "text": "Мгновенная проверка и быстрая обратная связь" },
-            { "id": "b", "text": "Заменяет лабораторные работы полностью" },
-            { "id": "c", "text": "Всегда оценивает глубину понимания лучше устного опроса" },
-            { "id": "d", "text": "Не требует подготовки банка заданий" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "single",
-          "prompt": "На каком этапе урока чаще всего уместен короткий электронный мини-тест (3–5 вопросов)?",
-          "answers": [
-            { "id": "a", "text": "Оперативный контроль/актуализация (в начале/в середине темы)" },
-            { "id": "b", "text": "Только в конце четверти" },
-            { "id": "c", "text": "Только как домашнее задание" },
-            { "id": "d", "text": "Только вместо объяснения теории" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q3",
-          "type": "multi",
-          "prompt": "Что помогает снизить списывание в электронном тесте?",
-          "answers": [
-            { "id": "a", "text": "Рандомизация вопросов и вариантов" },
-            { "id": "b", "text": "Одинаковый порядок для всех" },
-            { "id": "c", "text": "Банк эквивалентных заданий" },
-            { "id": "d", "text": "Отключение проверки ответов навсегда" }
-          ],
-          "correct": ["a", "c"]
-        },
-        {
-          "id": "q4",
-          "type": "single",
-          "prompt": "Лучший формат вопроса для проверки понимания причинно-следственной связи (в базовом тесте):",
-          "answers": [
-            { "id": "a", "text": "Выбор одного ответа + короткое объяснение (если платформа позволяет)" },
-            { "id": "b", "text": "Только 'да/нет' без контекста" },
-            { "id": "c", "text": "Только запоминание определения" },
-            { "id": "d", "text": "Вопрос без критериев" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q5",
-          "type": "single",
-          "prompt": "Какой подход к оцениванию лучше для тренажера (обучающий тест)?",
-          "answers": [
-            { "id": "a", "text": "Можно несколько попыток + подсказки/разбор ошибок" },
-            { "id": "b", "text": "Одна попытка и никаких объяснений" },
-            { "id": "c", "text": "Только штрафы за ошибки" },
-            { "id": "d", "text": "Скрывать тему вопроса" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q6",
-          "type": "single",
-          "prompt": "Что важно проверить перед массовым запуском теста на класс?",
-          "answers": [
-            { "id": "a", "text": "Работает ли на телефонах, есть ли Wi‑Fi/офлайн-план, понятны ли формулировки" },
-            { "id": "b", "text": "Только цвет кнопок" },
-            { "id": "c", "text": "Только скорость печати учителя" },
-            { "id": "d", "text": "Ничего, можно сразу" }
-          ],
-          "correct": "a"
-        }
-      ]
-    },
-    {
-      "id": "item-writing",
-      "title": "Составление заданий (качество вопросов)",
-      "description": "Как писать вопросы без ловушек и двусмысленностей.",
-      "category": "Методика",
-      "randomize": true,
-      "timerSec": 480,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Плохой признак формулировки вопроса:",
-          "answers": [
-            { "id": "a", "text": "Двусмысленность или 'угадай, что имел в виду автор'" },
-            { "id": "b", "text": "Один смысл и один правильный ответ" },
-            { "id": "c", "text": "Короткая и ясная формулировка" },
-            { "id": "d", "text": "Единый уровень языка" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "multi",
-          "prompt": "Какие дистракторы (неверные варианты) считаются нормальными?",
-          "answers": [
-            { "id": "a", "text": "Правдоподобные ошибки, которые реально делают ученики" },
-            { "id": "b", "text": "Смешные/явно абсурдные ответы" },
-            { "id": "c", "text": "Варианты одинакового стиля и длины (примерно)" },
-            { "id": "d", "text": "Подсказка в грамматике (только один вариант совпадает по роду/числу)" }
-          ],
-          "correct": ["a", "c"]
-        },
-        {
-          "id": "q3",
-          "type": "single",
-          "prompt": "Если цель — проверить вычислительный навык (моль, масса, n, M), то лучше:",
-          "answers": [
-            { "id": "a", "text": "Дать задачу и попросить конечный ответ (и/или шаги, если платформа умеет)" },
-            { "id": "b", "text": "Спросить определение 'моль' 5 раз" },
-            { "id": "c", "text": "Дать вопрос без единиц измерения" },
-            { "id": "d", "text": "Сделать все варианты ответов одинаковыми" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q4",
-          "type": "single",
-          "prompt": "Правило хорошего теста по теме:",
-          "answers": [
-            { "id": "a", "text": "Покрывает разные уровни сложности и разные поднавыки" },
-            { "id": "b", "text": "Только самые легкие вопросы" },
-            { "id": "c", "text": "Только самые сложные вопросы" },
-            { "id": "d", "text": "Один вопрос на всю тему" }
-          ],
-          "correct": "a"
-        }
-      ]
-    },
-    {
-      "id": "assessment-ethics",
-      "title": "Этика и честность в e‑тестах",
-      "description": "Списывание, приватность, прозрачность критериев.",
-      "category": "Методика",
-      "randomize": true,
-      "timerSec": 360,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Самый прозрачный подход к оцениванию для учеников:",
-          "answers": [
-            { "id": "a", "text": "Заранее объяснить формат, критерии и что считается ошибкой" },
-            { "id": "b", "text": "Не говорить ничего до конца четверти" },
-            { "id": "c", "text": "Менять правила после теста" },
-            { "id": "d", "text": "Оценивать по настроению" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "multi",
-          "prompt": "Что относится к мерам академической честности (без перегиба)?",
-          "answers": [
-            { "id": "a", "text": "Разные варианты теста (рандомизация/банк)" },
-            { "id": "b", "text": "Слишком короткое время на чтение вопроса" },
-            { "id": "c", "text": "Проверка понимания, а не только фактов" },
-            { "id": "d", "text": "Невозможность пересдать тренажер" }
-          ],
-          "correct": ["a", "c"]
-        },
-        {
-          "id": "q3",
-          "type": "single",
-          "prompt": "Что лучше сделать, если у части класса нестабильный интернет?",
-          "answers": [
-            { "id": "a", "text": "Иметь офлайн-план: бумажный вариант/вторая попытка/перенос" },
-            { "id": "b", "text": "Поставить всем ноль" },
-            { "id": "c", "text": "Сказать 'ваши проблемы'" },
-            { "id": "d", "text": "Отменить учебу" }
-          ],
-          "correct": "a"
-        }
-      ]
-    },
-    {
-      "id": "ctt-irt-mini",
-      "title": "Теория тестов: КТТ и IRT (мини)",
-      "description": "Базовые понятия: надежность, валидность, сложность, дискриминативность.",
-      "category": "Теория тестов",
-      "randomize": true,
-      "timerSec": 540,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Надежность теста — это в первую очередь про:",
-          "answers": [
-            { "id": "a", "text": "Стабильность результатов и устойчивость измерения" },
-            { "id": "b", "text": "Красивый дизайн интерфейса" },
-            { "id": "c", "text": "Количество картинок" },
-            { "id": "d", "text": "Скорость интернета" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "single",
-          "prompt": "Валидность теста — это про:",
-          "answers": [
-            { "id": "a", "text": "Насколько тест измеряет именно то, что задумано" },
-            { "id": "b", "text": "Насколько тест сложный" },
-            { "id": "c", "text": "Насколько тест длинный" },
-            { "id": "d", "text": "Наличие таймера" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q3",
-          "type": "single",
-          "prompt": "Если вопрос слишком легкий для всех, то он обычно:",
-          "answers": [
-            { "id": "a", "text": "Плохо различает сильных и слабых (низкая дискриминативность)" },
-            { "id": "b", "text": "Всегда повышает валидность" },
-            { "id": "c", "text": "Делает тест научнее" },
-            { "id": "d", "text": "Гарантирует честность" }
-          ],
-          "correct": "a"
-        }
-      ]
-    },
-    {
-      "id": "chem-atomic",
-      "title": "Химия: строение атома и периодический закон",
-      "description": "Мини-тест по базовым понятиям (8–9 класс).",
-      "category": "Химия",
-      "randomize": true,
-      "timerSec": 480,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Порядковый номер элемента в таблице Менделеева равен:",
-          "answers": [
-            { "id": "a", "text": "Числу протонов в ядре" },
-          
-            { "id": "b", "text": "Числу нейтронов" },
-            { "id": "c", "text": "Числу молекул" },
-            { "id": "d", "text": "Числу изотопов" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "single",
-          "prompt": "Ион — это:",
-          "answers": [
-            { "id": "a", "text": "Заряженная частица, образованная потерей/присоединением электронов" },
-            { "id": "b", "text": "Любой атом" },
-            { "id": "c", "text": "Смесь веществ" },
-            { "id": "d", "text": "Только молекула" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q3",
-          "type": "single",
-          "prompt": "В периоде слева направо обычно:",
-          "answers": [
-            { "id": "a", "text": "Растет заряд ядра и уменьшается радиус атома" },
-            { "id": "b", "text": "Уменьшается заряд ядра" },
-            { "id": "c", "text": "Растет радиус атома" },
-            { "id": "d", "text": "Ничего не меняется" }
-          ],
-          "correct": "a"
-        }
-      ]
-    },
-    {
-      "id": "chem-reactions",
-      "title": "Химия: реакции и уравнивание",
-      "description": "Типы реакций, коэффициенты, признаки реакций.",
-      "category": "Химия",
-      "randomize": true,
-      "timerSec": 540,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Уравнивание реакции нужно для:",
-          "answers": [
-            { "id": "a", "text": "Соблюдения закона сохранения атомов (массы) в уравнении" },
-            { "id": "b", "text": "Красоты записи" },
-            { "id": "c", "text": "Сокращения формул" },
-            { "id": "d", "text": "Увеличения температуры" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "single",
-          "prompt": "Реакция соединения — это когда:",
-          "answers": [
-            { "id": "a", "text": "Из нескольких веществ образуется одно" },
-            { "id": "b", "text": "Одно вещество распадается на несколько" },
-            { "id": "c", "text": "Обмен ионами в растворе" },
-            { "id": "d", "text": "Ничего не происходит" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q3",
-          "type": "multi",
-          "prompt": "Признаки химической реакции (выбери верные):",
-          "answers": [
-            { "id": "a", "text": "Выделение газа" },
-            { "id": "b", "text": "Образование осадка" },
-            { "id": "c", "text": "Изменение цвета/температуры" },
-            { "id": "d", "text": "Всегда появляется свет" }
-          ],
-          "correct": ["a", "b", "c"]
-        }
-      ]
-    },
-    {
-      "id": "platform-setup",
-      "title": "Платформы и настройки (Google Forms/Moodle/тренажер)",
-      "description": "Практика: попытки, обратная связь, анализ результатов.",
-      "category": "Практика",
-      "randomize": true,
-      "timerSec": 420,
-      "questions": [
-        {
-          "id": "q1",
-          "type": "single",
-          "prompt": "Для обучающего теста (тренажера) чаще полезно:",
-          "answers": [
-            { "id": "a", "text": "Показывать объяснение после ответа" },
-            { "id": "b", "text": "Запрещать повторные попытки" },
-            { "id": "c", "text": "Скрыть тему и цель теста" },
-            { "id": "d", "text": "Не сохранять результаты" }
-          ],
-          "correct": "a"
-        },
-        {
-          "id": "q2",
-          "type": "single",
-          "prompt": "Если цель — контрольная работа, то корректнее:",
-          "answers": [
-            { "id": "a", "text": "Ограничить попытки, включить перемешивание, четко задать время" },
-            { "id": "b", "text": "Разрешить бесконечные попытки с подсказками" },
-            { "id": "c", "text": "Не фиксировать время" },
-            { "id": "d", "text": "Дать ответы заранее" }
-          ],
-          "correct": "a"
-        }
-      ]
-    }
+    { "id": "method-01", "title": "Электронные тесты (вариант 1)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 1, "questionCount": 10 },
+    { "id": "method-02", "title": "Электронные тесты (вариант 2)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 2, "questionCount": 10 },
+    { "id": "method-03", "title": "Электронные тесты (вариант 3)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 3, "questionCount": 10 },
+    { "id": "method-04", "title": "Электронные тесты (вариант 4)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 4, "questionCount": 10 },
+    { "id": "method-05", "title": "Электронные тесты (вариант 5)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 5, "questionCount": 10 },
+    { "id": "method-06", "title": "Электронные тесты (вариант 6)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 6, "questionCount": 10 },
+    { "id": "method-07", "title": "Электронные тесты (вариант 7)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 7, "questionCount": 10 },
+    { "id": "method-08", "title": "Электронные тесты (вариант 8)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 8, "questionCount": 10 },
+    { "id": "method-09", "title": "Электронные тесты (вариант 9)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 9, "questionCount": 10 },
+    { "id": "method-10", "title": "Электронные тесты (вариант 10)", "description": "10 вопросов. 1 правильный ответ.", "category": "Методика", "randomize": true, "timerSec": 600, "template": "method", "seed": 10, "questionCount": 10 },
+
+    { "id": "testtheory-01", "title": "Теория тестирования (вариант 1)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 1, "questionCount": 10 },
+    { "id": "testtheory-02", "title": "Теория тестирования (вариант 2)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 2, "questionCount": 10 },
+    { "id": "testtheory-03", "title": "Теория тестирования (вариант 3)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 3, "questionCount": 10 },
+    { "id": "testtheory-04", "title": "Теория тестирования (вариант 4)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 4, "questionCount": 10 },
+    { "id": "testtheory-05", "title": "Теория тестирования (вариант 5)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 5, "questionCount": 10 },
+    { "id": "testtheory-06", "title": "Теория тестирования (вариант 6)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 6, "questionCount": 10 },
+    { "id": "testtheory-07", "title": "Теория тестирования (вариант 7)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 7, "questionCount": 10 },
+    { "id": "testtheory-08", "title": "Теория тестирования (вариант 8)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 8, "questionCount": 10 },
+    { "id": "testtheory-09", "title": "Теория тестирования (вариант 9)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 9, "questionCount": 10 },
+    { "id": "testtheory-10", "title": "Теория тестирования (вариант 10)", "description": "10 вопросов. 1 правильный ответ.", "category": "Теория тестов", "randomize": true, "timerSec": 600, "template": "testTheory", "seed": 10, "questionCount": 10 },
+
+    { "id": "chem-atom-01", "title": "Атом и таблица (вариант 1)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 1, "questionCount": 10 },
+    { "id": "chem-atom-02", "title": "Атом и таблица (вариант 2)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 2, "questionCount": 10 },
+    { "id": "chem-atom-03", "title": "Атом и таблица (вариант 3)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 3, "questionCount": 10 },
+    { "id": "chem-atom-04", "title": "Атом и таблица (вариант 4)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 4, "questionCount": 10 },
+    { "id": "chem-atom-05", "title": "Атом и таблица (вариант 5)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 5, "questionCount": 10 },
+    { "id": "chem-atom-06", "title": "Атом и таблица (вариант 6)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 6, "questionCount": 10 },
+    { "id": "chem-atom-07", "title": "Атом и таблица (вариант 7)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 7, "questionCount": 10 },
+    { "id": "chem-atom-08", "title": "Атом и таблица (вариант 8)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 8, "questionCount": 10 },
+    { "id": "chem-atom-09", "title": "Атом и таблица (вариант 9)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 9, "questionCount": 10 },
+    { "id": "chem-atom-10", "title": "Атом и таблица (вариант 10)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAtom", "seed": 10, "questionCount": 10 },
+
+    { "id": "chem-react-01", "title": "Реакции и уравнивание (вариант 1)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 1, "questionCount": 10 },
+    { "id": "chem-react-02", "title": "Реакции и уравнивание (вариант 2)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 2, "questionCount": 10 },
+    { "id": "chem-react-03", "title": "Реакции и уравнивание (вариант 3)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 3, "questionCount": 10 },
+    { "id": "chem-react-04", "title": "Реакции и уравнивание (вариант 4)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 4, "questionCount": 10 },
+    { "id": "chem-react-05", "title": "Реакции и уравнивание (вариант 5)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 5, "questionCount": 10 },
+    { "id": "chem-react-06", "title": "Реакции и уравнивание (вариант 6)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 6, "questionCount": 10 },
+    { "id": "chem-react-07", "title": "Реакции и уравнивание (вариант 7)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 7, "questionCount": 10 },
+    { "id": "chem-react-08", "title": "Реакции и уравнивание (вариант 8)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 8, "questionCount": 10 },
+    { "id": "chem-react-09", "title": "Реакции и уравнивание (вариант 9)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 9, "questionCount": 10 },
+    { "id": "chem-react-10", "title": "Реакции и уравнивание (вариант 10)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemReactions", "seed": 10, "questionCount": 10 },
+
+    { "id": "chem-sol-01", "title": "Растворы и смеси (вариант 1)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 1, "questionCount": 10 },
+    { "id": "chem-sol-02", "title": "Растворы и смеси (вариант 2)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 2, "questionCount": 10 },
+    { "id": "chem-sol-03", "title": "Растворы и смеси (вариант 3)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 3, "questionCount": 10 },
+    { "id": "chem-sol-04", "title": "Растворы и смеси (вариант 4)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 4, "questionCount": 10 },
+    { "id": "chem-sol-05", "title": "Растворы и смеси (вариант 5)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 5, "questionCount": 10 },
+    { "id": "chem-sol-06", "title": "Растворы и смеси (вариант 6)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 6, "questionCount": 10 },
+    { "id": "chem-sol-07", "title": "Растворы и смеси (вариант 7)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 7, "questionCount": 10 },
+    { "id": "chem-sol-08", "title": "Растворы и смеси (вариант 8)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 8, "questionCount": 10 },
+    { "id": "chem-sol-09", "title": "Растворы и смеси (вариант 9)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 9, "questionCount": 10 },
+    { "id": "chem-sol-10", "title": "Растворы и смеси (вариант 10)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemSolutions", "seed": 10, "questionCount": 10 },
+
+    { "id": "chem-acidbase-01", "title": "Кислоты, основания, соли (вариант 1)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 1, "questionCount": 10 },
+    { "id": "chem-acidbase-02", "title": "Кислоты, основания, соли (вариант 2)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 2, "questionCount": 10 },
+    { "id": "chem-acidbase-03", "title": "Кислоты, основания, соли (вариант 3)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 3, "questionCount": 10 },
+    { "id": "chem-acidbase-04", "title": "Кислоты, основания, соли (вариант 4)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 4, "questionCount": 10 },
+    { "id": "chem-acidbase-05", "title": "Кислоты, основания, соли (вариант 5)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 5, "questionCount": 10 },
+    { "id": "chem-acidbase-06", "title": "Кислоты, основания, соли (вариант 6)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 6, "questionCount": 10 },
+    { "id": "chem-acidbase-07", "title": "Кислоты, основания, соли (вариант 7)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 7, "questionCount": 10 },
+    { "id": "chem-acidbase-08", "title": "Кислоты, основания, соли (вариант 8)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 8, "questionCount": 10 },
+    { "id": "chem-acidbase-09", "title": "Кислоты, основания, соли (вариант 9)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 9, "questionCount": 10 },
+    { "id": "chem-acidbase-10", "title": "Кислоты, основания, соли (вариант 10)", "description": "10 вопросов. 1 правильный ответ.", "category": "Химия", "randomize": true, "timerSec": 600, "template": "chemAcidBase", "seed": 10, "questionCount": 10 }
   ]
 }

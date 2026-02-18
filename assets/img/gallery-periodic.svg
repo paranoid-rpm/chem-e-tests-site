@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420">
+  <rect width="640" height="420" fill="none"/>
+  <g stroke="#111" stroke-width="3" fill="none" opacity="0.9">
+    <rect x="130" y="110" width="380" height="220" rx="18"/>
+    <path d="M130 160h380"/>
+    <path d="M190 110v220"/>
+    <path d="M250 160v170"/>
+    <path d="M310 160v170"/>
+    <path d="M370 160v170"/>
+    <path d="M430 160v170"/>
+  </g>
+  <g opacity="0.9" fill="#111">
+    <circle cx="220" cy="210" r="4"/>
+    <circle cx="280" cy="250" r="4"/>
+    <circle cx="400" cy="230" r="4"/>
+    <circle cx="460" cy="280" r="4"/>
+  </g>
+  <g opacity="0.08" fill="#111">
+    <circle cx="520" cy="140" r="80"/>
+  </g>
+</svg>
