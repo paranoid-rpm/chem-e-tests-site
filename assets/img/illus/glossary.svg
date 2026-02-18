@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <path d="M0,120 C140,160 220,80 360,120 C520,170 640,70 800,120 C950,170 1030,90 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,132 C140,172 220,92 360,132 C520,182 640,82 800,132 C950,182 1030,102 1200,132" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <path d="M960 610c55-45 140-10 140 55 0 65-85 105-145 70-60-35-50-90 5-125z" fill="#000" opacity="0.05"/>
+
+  <!-- таблица -->
+  <g fill="none" stroke="#000" stroke-width="6" opacity="0.85">
+    <rect x="220" y="220" width="760" height="420" rx="26"/>
+  </g>
+
+  <g fill="#000" opacity="0.08">
+    <rect x="260" y="260" width="120" height="100" rx="18"/>
+    <rect x="400" y="260" width="120" height="100" rx="18"/>
+    <rect x="540" y="260" width="120" height="100" rx="18"/>
+    <rect x="680" y="260" width="120" height="100" rx="18"/>
+    <rect x="820" y="260" width="120" height="100" rx="18"/>
+
+    <rect x="260" y="380" width="120" height="100" rx="18"/>
+    <rect x="400" y="380" width="120" height="100" rx="18"/>
+    <rect x="540" y="380" width="120" height="100" rx="18"/>
+    <rect x="680" y="380" width="120" height="100" rx="18"/>
+    <rect x="820" y="380" width="120" height="100" rx="18"/>
+
+    <rect x="260" y="500" width="120" height="100" rx="18"/>
+    <rect x="400" y="500" width="120" height="100" rx="18"/>
+    <rect x="540" y="500" width="120" height="100" rx="18"/>
+    <rect x="680" y="500" width="120" height="100" rx="18"/>
+    <rect x="820" y="500" width="120" height="100" rx="18"/>
+  </g>
+
+  <g stroke="#000" stroke-width="4" opacity="0.15">
+    <path d="M290 320h60"/>
+    <path d="M430 320h60"/>
+    <path d="M570 320h60"/>
+    <path d="M710 320h60"/>
+    <path d="M850 320h60"/>
+  </g>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <path d="M0,120 C150,160 230,80 380,120 C540,165 660,70 820,120 C980,170 1050,95 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,132 C150,172 230,92 380,132 C540,177 660,82 820,132 C980,182 1050,107 1200,132" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <path d="M160 600c40-55 125-38 150 22 25 60-55 112-118 98-63-14-76-70-32-120z" fill="#000" opacity="0.05"/>
+  <path d="M950 560c55-45 140-10 140 55 0 65-85 105-145 70-60-35-50-90 5-125z" fill="#000" opacity="0.05"/>
+
+  <!-- лист -->
+  <rect x="250" y="200" width="700" height="460" rx="26" fill="none" stroke="#000" stroke-width="6" opacity="0.85"/>
+  <path d="M320 300 h560" stroke="#000" stroke-width="4" opacity="0.18"/>
+  <path d="M320 360 h520" stroke="#000" stroke-width="4" opacity="0.18"/>
+  <path d="M320 420 h540" stroke="#000" stroke-width="4" opacity="0.18"/>
+
+  <!-- чекбоксы -->
+  <g fill="none" stroke="#000" stroke-width="6" opacity="0.85">
+    <rect x="320" y="470" width="44" height="44" rx="10"/>
+    <rect x="320" y="540" width="44" height="44" rx="10"/>
+  </g>
+  <path d="M332 492 l14 14 26-30" fill="none" stroke="#000" stroke-width="6" opacity="0.85" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M390 492 h420" stroke="#000" stroke-width="4" opacity="0.18"/>
+  <path d="M390 562 h380" stroke="#000" stroke-width="4" opacity="0.18"/>
+
+  <!-- кнопка -->
+  <rect x="740" y="580" width="170" height="56" rx="28" fill="#000" opacity="0.08"/>
+  <rect x="730" y="570" width="190" height="66" rx="33" fill="none" stroke="#000" stroke-width="4" opacity="0.35"/>
+</svg>

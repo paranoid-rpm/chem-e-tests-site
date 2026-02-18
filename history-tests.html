@@ -3,49 +3,54 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>История — ChemTests</title>
+  <title>История тестов • ChemTests</title>
+  <link rel="manifest" href="./manifest.webmanifest"/>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
+  <meta name="description" content="Заметки об истории тестов и проверок."/>
 </head>
-<body data-ink="c">
+<body data-ink="a">
   <header class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./index.html" aria-label="На главную"><span class="pill">ChemTests</span></a>
+      <a class="brand" href="./index.html" aria-label="На главную">
+        <span class="pill">ChemTests</span>
+        <span class="small">химия • тесты • теория</span>
+      </a>
+
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
-        <a href="./history-tests.html">История</a>
         <a href="./chemistry.html">Химия</a>
         <a href="./glossary.html">Справочник</a>
-        <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="card"><div class="card-pad">
-      <h2>История тестирования</h2>
-      <p>Короткая справка о том, как развивались тесты и оценивание в образовании.</p>
-    </div></div>
+    <section class="card" style="margin-top:18px">
+      <div class="card-pad">
+        <h1 style="margin:0 0 10px">История тестов</h1>
+        <p class="lead">Короткая заметка: тестирование — это не только оценка, но и способ тренировать память и внимание.</p>
+        <ul>
+          <li>Короткие сессии лучше длинных — мозгу проще удерживать концентрацию.</li>
+          <li>Ошибки полезны, если есть пояснение: «почему так», а не только «что правильно».</li>
+          <li>Повторение через время работает лучше, чем повторение сразу.</li>
+        </ul>
+      </div>
+    </section>
 
-    <section class="gallery is-single" style="margin-top:14px" aria-label="Фото на странице">
+    <section class="gallery is-single" style="margin-top:14px" aria-label="Иллюстрация">
       <figure class="imgcard">
-        <img class="photo" src="./assets/img/pages/history-01.jpg" alt="Фото: история лаборатории" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-06.svg';"/>
-        <figcaption class="small">История — 01</figcaption>
+        <img class="illus" src="./assets/img/illus/history.svg" alt="Иллюстрация: история"/>
+        <figcaption class="small">История</figcaption>
       </figure>
     </section>
 
-    <div class="card" style="margin-top:14px"><div class="card-pad">
-      <h2>Зачем это знать</h2>
-      <ul>
-        <li>Чтобы отличать проверку знаний от формального «набора баллов».</li>
-        <li>Чтобы делать тесты понятными и честными.</li>
-        <li>Чтобы анализировать ошибки и улучшать задания.</li>
-      </ul>
-    </div></div>
-
-    <div class="footer"><hr class="sep"/><div class="small">Тема выбирается автоматически по настройке системы.</div></div>
+    <div class="footer">
+      <hr class="sep"/>
+      <div class="small">Тема выбирается автоматически по настройке системы.</div>
+    </div>
   </main>
 
   <script type="module">

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <path d="M0,120 C160,160 240,80 400,120 C560,165 700,70 860,120 C1010,170 1080,95 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,132 C160,172 240,92 400,132 C560,177 700,82 860,132 C1010,182 1080,107 1200,132" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <path d="M980 620c55-45 140-10 140 55 0 65-85 105-145 70-60-35-50-90 5-125z" fill="#000" opacity="0.05"/>
+
+  <!-- линия времени -->
+  <path d="M160 520 h880" stroke="#000" stroke-width="6" opacity="0.55"/>
+  <g fill="#000" opacity="0.18">
+    <circle cx="240" cy="520" r="10"/>
+    <circle cx="420" cy="520" r="10"/>
+    <circle cx="600" cy="520" r="10"/>
+    <circle cx="780" cy="520" r="10"/>
+    <circle cx="960" cy="520" r="10"/>
+  </g>
+
+  <!-- карточки -->
+  <g fill="none" stroke="#000" stroke-width="6" opacity="0.85">
+    <rect x="200" y="260" width="200" height="180" rx="20"/>
+    <rect x="440" y="220" width="260" height="220" rx="20"/>
+    <rect x="740" y="250" width="240" height="190" rx="20"/>
+  </g>
+  <g stroke="#000" stroke-width="4" opacity="0.18">
+    <path d="M230 320h140"/>
+    <path d="M230 360h120"/>
+    <path d="M470 300h200"/>
+    <path d="M470 340h180"/>
+    <path d="M770 320h180"/>
+    <path d="M770 360h160"/>
+  </g>
+
+  <!-- стрелка -->
+  <path d="M1040 520 l-40 -30 v20 h-120 v20 h120 v20z" fill="#000" opacity="0.12"/>
+</svg>

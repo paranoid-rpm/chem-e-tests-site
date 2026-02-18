@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <!-- волна -->
+  <path d="M0,120 C140,160 220,80 360,120 C520,170 640,70 800,120 C950,170 1030,90 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,130 C140,170 220,90 360,130 C520,180 640,80 800,130 C950,180 1030,100 1200,130" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <!-- пятна -->
+  <path d="M170 610c40-60 130-40 150 25 20 65-60 115-120 100-60-15-70-75-30-125z" fill="#000" opacity="0.05"/>
+  <path d="M930 560c55-45 140-10 140 55 0 65-85 105-145 70-60-35-50-90 5-125z" fill="#000" opacity="0.05"/>
+
+  <!-- стол -->
+  <rect x="140" y="560" width="920" height="18" rx="9" fill="#000" opacity="0.15"/>
+
+  <!-- колба -->
+  <path d="M520 220 v170 l-120 190 h280 l-120-190 v-170" fill="none" stroke="#000" stroke-width="6" opacity="0.85"/>
+  <path d="M450 510 h300" stroke="#000" stroke-width="4" opacity="0.25"/>
+  <path d="M480 460 c80 40 160 10 240-10" stroke="#000" stroke-width="4" opacity="0.22" fill="none"/>
+
+  <!-- пробирки -->
+  <g opacity="0.85" fill="none" stroke="#000" stroke-width="6">
+    <path d="M320 260 v250 c0 45 80 45 80 0V260"/>
+    <path d="M800 260 v250 c0 45 80 45 80 0V260"/>
+  </g>
+  <path d="M320 360 c50 25 80 20 80 0" stroke="#000" stroke-width="4" opacity="0.22" fill="none"/>
+  <path d="M800 395 c50 25 80 20 80 0" stroke="#000" stroke-width="4" opacity="0.22" fill="none"/>
+
+  <!-- подписи линиями -->
+  <path d="M160 240 h180" stroke="#000" stroke-width="3" opacity="0.18"/>
+  <path d="M860 240 h180" stroke="#000" stroke-width="3" opacity="0.18"/>
+</svg>

@@ -1,4 +1,4 @@
-const CACHE = "chem-e-tests-v10";
+const CACHE = "chem-e-tests-v11";
 
 const ASSETS = [
   "./",
@@ -8,7 +8,6 @@ const ASSETS = [
   "./history-tests.html",
   "./chemistry.html",
   "./glossary.html",
-  "./gallery.html",
   "./contact.html",
   "./manifest.webmanifest",
   "./assets/css/styles.css",
@@ -27,26 +26,13 @@ const ASSETS = [
   "./assets/img/ink-bg-b-dark.svg",
   "./assets/img/ink-bg-c-light.svg",
   "./assets/img/ink-bg-c-dark.svg",
-  "./assets/img/photo-placeholder-01.svg",
-  "./assets/img/photo-placeholder-02.svg",
-  "./assets/img/photo-placeholder-03.svg",
-  "./assets/img/photo-placeholder-04.svg",
-  "./assets/img/photo-placeholder-05.svg",
-  "./assets/img/photo-placeholder-06.svg",
-  "./assets/img/photo-placeholder-07.svg",
-  "./assets/img/photo-placeholder-08.svg",
-  "./assets/img/photo-placeholder-09.svg",
-  "./assets/img/photo-placeholder-10.svg",
-  "./assets/img/photo-placeholder-11.svg",
-  "./assets/img/photo-placeholder-12.svg",
-  "./assets/img/photo-placeholder-13.svg",
-  "./assets/img/photo-placeholder-14.svg",
-  "./assets/img/photo-placeholder-15.svg",
-  "./assets/img/photo-placeholder-16.svg",
-  "./assets/img/photo-placeholder-17.svg",
-  "./assets/img/photo-placeholder-18.svg",
-  "./assets/img/photos/README.md",
-  "./assets/img/pages/README.md"
+  "./assets/img/illus/index.svg",
+  "./assets/img/illus/tests.svg",
+  "./assets/img/illus/theory.svg",
+  "./assets/img/illus/history.svg",
+  "./assets/img/illus/chemistry.svg",
+  "./assets/img/illus/glossary.svg",
+  "./assets/img/illus/contact.svg"
 ];
 
 self.addEventListener("install", (e) => {
@@ -72,7 +58,6 @@ async function networkFirst(request){
   } catch {
     const cached = await cache.match(request);
     if (cached) return cached;
-    // Если конкретной страницы нет в кэше — только тогда отдаём главную.
     if (request.mode === "navigate") return cache.match("./index.html");
     throw new Error("offline");
   }

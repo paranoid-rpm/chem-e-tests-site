@@ -151,6 +151,9 @@ textarea{min-height:120px;resize:vertical}
 .imgcard img.photo{object-fit:cover}
 .imgcard.is-fav::after{content:"★";position:absolute;top:10px;right:10px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;background: var(--bg);color: var(--text);}
 
+.imgcard img.illus{object-fit:contain;}
+[data-theme="dark"] .imgcard img.illus{filter: invert(1) hue-rotate(180deg);}
+
 .modal-open{overflow:hidden}
 .lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:18px;}
 .lightbox-backdrop{position:absolute;inset:0;background: rgba(0,0,0,.65);}
@@ -167,6 +170,28 @@ textarea{min-height:120px;resize:vertical}
 .lightbox-img{width:100%;max-height: 70vh;object-fit: contain;display:block;border-radius: 14px;border:1px solid var(--border);background: transparent}
 .navbtn{border:1px solid var(--border);background: transparent;color:var(--text);padding:10px 0;border-radius:16px;cursor:pointer;height:52px;}
 .lightbox-hint{padding:0 12px 12px}
+
+/* Settings modal */
+.settings{position:fixed;inset:0;z-index:210;display:grid;place-items:center;padding:18px;}
+.settings-backdrop{position:absolute;inset:0;background: rgba(0,0,0,.55);}
+.settings-card{position:relative;width:min(720px, 100%);border-radius: 18px;border:1px solid var(--border);background: var(--card);box-shadow: var(--shadow);overflow:hidden;}
+.settings-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:12px;border-bottom:1px solid var(--border);}
+.settings-body{padding:12px;display:grid;gap:12px;}
+.settings-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
+.settings-inline{display:flex;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--border);border-radius:999px;}
+.settings-inline input{width:auto}
+.settings-foot{padding:12px;border-top:1px solid var(--border);display:flex;justify-content:flex-end}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%, 14px);opacity:0;pointer-events:none;z-index:220;border:1px solid var(--border);background: var(--card);color: var(--text);padding:10px 14px;border-radius:999px;box-shadow: var(--shadow);transition: opacity .18s ease, transform .18s ease;}
+.toast.show{opacity:1;transform:translate(-50%, 0);}
+
+/* Compact */
+html[data-compact="1"] .container{padding:12px}
+html[data-compact="1"] .card-pad{padding:14px}
+html[data-compact="1"] .grid{gap:10px}
+html[data-compact="1"] .quiz{gap:10px}
+html[data-compact="1"] .gallery{gap:10px}
 
 @media (max-width: 960px){
   .hero{grid-template-columns: 1fr}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <path d="M0,120 C140,160 220,80 360,120 C520,170 640,70 800,120 C950,170 1030,90 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,132 C140,172 220,92 360,132 C520,182 640,82 800,132 C950,182 1030,102 1200,132" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <path d="M190 640c45-65 140-35 155 35 15 70-70 118-132 95-62-23-66-83-23-130z" fill="#000" opacity="0.05"/>
+
+  <!-- книга -->
+  <path d="M300 240c140-60 260-60 400 0v420c-140-60-260-60-400 0z" fill="none" stroke="#000" stroke-width="6" opacity="0.85"/>
+  <path d="M700 240c140-60 260-60 400 0v420c-140-60-260-60-400 0z" fill="none" stroke="#000" stroke-width="6" opacity="0.85"/>
+  <path d="M700 240v420" stroke="#000" stroke-width="4" opacity="0.25"/>
+
+  <!-- строки -->
+  <g stroke="#000" stroke-width="4" opacity="0.18">
+    <path d="M340 330h300"/>
+    <path d="M340 390h280"/>
+    <path d="M340 450h295"/>
+    <path d="M760 330h300"/>
+    <path d="M760 390h280"/>
+    <path d="M760 450h295"/>
+  </g>
+
+  <!-- маркер -->
+  <path d="M940 560l90 90" stroke="#000" stroke-width="10" opacity="0.35" stroke-linecap="round"/>
+  <path d="M900 600l40 40" stroke="#000" stroke-width="10" opacity="0.35" stroke-linecap="round"/>
+</svg>

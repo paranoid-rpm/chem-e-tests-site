@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <path d="M0,120 C150,160 230,80 380,120 C540,165 660,70 820,120 C980,170 1050,95 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,132 C150,172 230,92 380,132 C540,177 660,82 820,132 C980,182 1050,107 1200,132" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <path d="M180 610c40-60 130-40 150 25 20 65-60 115-120 100-60-15-70-75-30-125z" fill="#000" opacity="0.05"/>
+
+  <!-- конверт -->
+  <g fill="none" stroke="#000" stroke-width="6" opacity="0.85">
+    <rect x="260" y="280" width="680" height="360" rx="26"/>
+    <path d="M280 320 L600 520 L920 320"/>
+    <path d="M280 600 L520 430"/>
+    <path d="M920 600 L680 430"/>
+  </g>
+
+  <!-- значок -->
+  <circle cx="900" cy="250" r="56" fill="#000" opacity="0.06"/>
+  <path d="M872 250 h56" stroke="#000" stroke-width="6" opacity="0.35" stroke-linecap="round"/>
+  <path d="M900 222 v56" stroke="#000" stroke-width="6" opacity="0.35" stroke-linecap="round"/>
+
+  <!-- нижняя волна -->
+  <path d="M0,760 C160,720 260,800 420,760 C580,720 720,820 880,760 C1030,705 1100,780 1200,760" fill="none" stroke="#000" stroke-width="3" opacity="0.18"/>
+</svg>

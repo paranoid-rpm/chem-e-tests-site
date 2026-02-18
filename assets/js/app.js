@@ -1,5 +1,5 @@
 // app.js
-// Минималистичная логика сайта: PWA + улучшения галереи.
+// Минималистичная логика сайта: PWA + UI‑фичи + лёгкий лайтбокс для иллюстраций.
 
 export function initTheme(){
   // Тема управляется через assets/js/prefs.js по настройке системы.
@@ -39,11 +39,6 @@ function clamp(x, a, b){
   return Math.max(a, Math.min(b, x));
 }
 
-function isGalleryPage(){
-  const p = (location.pathname || "").toLowerCase();
-  return p.endsWith("/gallery.html") || p.endsWith("gallery.html");
-}
-
 function parsePhotoHash(){
   const m = (window.location.hash || "").match(/photo=(\d+)/);
   if (!m) return null;
@@ -52,32 +47,176 @@ function parsePhotoHash(){
   return n - 1;
 }
 
+function clearHash(){
+  const u = new URL(window.location.href);
+  u.hash = "";
+  history.replaceState(null, "", u);
+}
+
+function applyUIPrefs(){
+  const KEY = "chem_ui_prefs_v1";
+  let p = { fontScale: 1, compact: false, motion: "auto" };
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) p = { ...p, ...JSON.parse(raw) };
+  } catch {}
+
+  const scale = Number(p.fontScale);
+  if (Number.isFinite(scale)){
+    document.documentElement.style.setProperty("--font-scale", String(clamp(scale, 0.9, 1.25)));
+  }
+
+  document.documentElement.dataset.compact = p.compact ? "1" : "0";
+
+  if (p.motion === "reduce") document.documentElement.dataset.motion = "reduce";
+  else delete document.documentElement.dataset.motion;
+
+  return { KEY, p };
+}
+
+function toast(msg){
+  let t = qs(".toast");
+  if (!t){
+    t = document.createElement("div");
+    t.className = "toast";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._tm);
+  t._tm = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+function wireConnectivity(){
+  window.addEventListener("offline", () => toast("Офлайн: результаты сохранятся на устройстве"));
+  window.addEventListener("online",  () => toast("Онлайн"));
+}
+
+function wireSettings(){
+  const { KEY, p } = applyUIPrefs();
+
+  const nav = qs(".navlinks");
+  if (!nav) return;
+
+  // Кнопка настроек (не ломаем верстку: это обычная btn)
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn btn-ghost";
+  btn.textContent = "Настройки";
+  btn.setAttribute("aria-label", "Открыть настройки");
+
+  const modal = document.createElement("div");
+  modal.className = "settings hidden";
+  modal.innerHTML = `
+    <div class="settings-backdrop" data-action="close" aria-hidden="true"></div>
+    <div class="settings-card" role="dialog" aria-modal="true" aria-label="Настройки">
+      <div class="settings-head">
+        <div>
+          <b>Настройки</b>
+          <div class="small">Читабельность и поведение интерфейса.</div>
+        </div>
+        <button class="iconbtn" data-action="close" type="button" aria-label="Закрыть">✕</button>
+      </div>
+
+      <div class="settings-body">
+        <div class="settings-row">
+          <label>
+            <span class="small">Масштаб шрифта</span>
+            <select class="select" id="uiFont">
+              <option value="0.95">Меньше</option>
+              <option value="1" selected>Обычно</option>
+              <option value="1.1">Больше</option>
+              <option value="1.2">Очень крупно</option>
+            </select>
+          </label>
+
+          <label class="settings-inline">
+            <input type="checkbox" id="uiCompact"/>
+            <span>Компактный режим</span>
+          </label>
+
+          <label class="settings-inline">
+            <input type="checkbox" id="uiReduce"/>
+            <span>Меньше анимаций</span>
+          </label>
+        </div>
+
+        <div class="small">Совет: в тестах работают клавиши 1–4 для ответа и Enter для «Дальше».</div>
+      </div>
+
+      <div class="settings-foot">
+        <button class="btn" data-action="close" type="button">Готово</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  nav.appendChild(btn);
+
+  const uiFont = qs("#uiFont", modal);
+  const uiCompact = qs("#uiCompact", modal);
+  const uiReduce = qs("#uiReduce", modal);
+
+  if (uiFont) uiFont.value = String(p.fontScale ?? 1);
+  if (uiCompact) uiCompact.checked = !!p.compact;
+  if (uiReduce) uiReduce.checked = (p.motion === "reduce");
+
+  function save(){
+    const next = {
+      fontScale: Number(uiFont?.value || 1),
+      compact: !!uiCompact?.checked,
+      motion: uiReduce?.checked ? "reduce" : "auto"
+    };
+    try { localStorage.setItem(KEY, JSON.stringify(next)); } catch {}
+    applyUIPrefs();
+  }
+
+  uiFont?.addEventListener("change", save);
+  uiCompact?.addEventListener("change", save);
+  uiReduce?.addEventListener("change", save);
+
+  function open(){
+    modal.classList.remove("hidden");
+    document.body.classList.add("modal-open");
+    const closeBtn = qs("[data-action='close']", modal);
+    closeBtn?.focus();
+  }
+
+  function close(){
+    modal.classList.add("hidden");
+    document.body.classList.remove("modal-open");
+  }
+
+  btn.addEventListener("click", open);
+
+  modal.addEventListener("click", (e) => {
+    const el = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
+    const act = el && el.getAttribute && el.getAttribute("data-action");
+    if (act === "close") close();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (modal.classList.contains("hidden")) return;
+    if (e.key === "Escape") close();
+  });
+}
+
 function enhanceGallery(){
   const grid = qs(".gallery");
   if (!grid) return;
 
+  // Если вдруг кто-то пришёл по старой ссылке — убираем hash и не автозапускаем просмотр.
+  if (parsePhotoHash() != null) clearHash();
+
   const imgs = qsa("img", grid).filter(img => img.getAttribute("src"));
   if (!imgs.length) return;
 
-  // Всегда убираем #photo=... из URL, чтобы лайтбокс не «залипал» при обновлении.
-  // Если это gallery.html — мы можем открыть нужный элемент, но хэш всё равно не оставляем.
-  const hashIndex = parsePhotoHash();
-  if (hashIndex != null) {
-    const u = new URL(window.location.href);
-    u.hash = "";
-    history.replaceState(null, "", u);
-  }
-
-  const allowAutoOpen = isGalleryPage();
-
-  // Ленивая загрузка по возможности
   imgs.forEach(img => {
     if (!img.hasAttribute("loading")) img.setAttribute("loading", "lazy");
     if (!img.hasAttribute("decoding")) img.setAttribute("decoding", "async");
     img.setAttribute("data-gallery", "1");
   });
 
-  // Собираем список
   const items = imgs.map((img, i) => ({
     i,
     src: img.getAttribute("src"),
@@ -85,7 +224,7 @@ function enhanceGallery(){
     el: img
   }));
 
-  // Favorites
+  // Favorites (для картинок)
   const FAV_KEY = "chem_gallery_favs";
   const readFavs = () => {
     try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); }
@@ -98,7 +237,6 @@ function enhanceGallery(){
 
   const favs = readFavs();
 
-  // UI: лёгкий бейдж на карточке
   items.forEach(({src, el}) => {
     const card = el.closest(".imgcard");
     if (!card) return;
@@ -108,7 +246,6 @@ function enhanceGallery(){
     card.setAttribute("aria-label", "Открыть изображение");
   });
 
-  // Lightbox
   const lb = document.createElement("div");
   lb.className = "lightbox hidden";
   lb.innerHTML = `
@@ -210,7 +347,6 @@ function enhanceGallery(){
   }
 
   async function copyLink(){
-    // Теперь URL без #photo=..., копируем прямую ссылку на файл.
     try {
       await navigator.clipboard.writeText(items[idx].src);
       const btn = qs("[data-action='copy']", lb);
@@ -244,7 +380,6 @@ function enhanceGallery(){
     if (e.key === " ") { e.preventDefault(); togglePlay(); }
   });
 
-  // Swipe (минимально)
   let x0 = null;
   lb.addEventListener("pointerdown", (e) => { x0 = e.clientX; });
   lb.addEventListener("pointerup", (e) => {
@@ -255,7 +390,6 @@ function enhanceGallery(){
     dx < 0 ? next() : prev();
   });
 
-  // Open from cards
   items.forEach(({i, el}) => {
     const card = el.closest(".imgcard");
     if (!card) return;
@@ -264,14 +398,11 @@ function enhanceGallery(){
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(i); }
     });
   });
-
-  // Авто‑открытие только в gallery.html, при этом хэш уже удалён выше.
-  if (allowAutoOpen && hashIndex != null){
-    const i = clamp(hashIndex, 0, items.length-1);
-    setTimeout(() => open(i), 0);
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  applyUIPrefs();
+  wireConnectivity();
+  wireSettings();
   enhanceGallery();
 });

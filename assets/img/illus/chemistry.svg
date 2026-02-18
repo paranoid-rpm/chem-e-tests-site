@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#fff"/>
+
+  <path d="M0,120 C140,160 220,80 360,120 C520,170 640,70 800,120 C950,170 1030,90 1200,120 L1200,0 L0,0 Z" fill="#000" opacity="0.06"/>
+  <path d="M0,132 C140,172 220,92 360,132 C520,182 640,82 800,132 C950,182 1030,102 1200,132" fill="none" stroke="#000" stroke-width="3" opacity="0.25"/>
+
+  <path d="M210 630c40-60 130-40 150 25 20 65-60 115-120 100-60-15-70-75-30-125z" fill="#000" opacity="0.05"/>
+
+  <!-- молекула -->
+  <g fill="none" stroke="#000" stroke-width="6" opacity="0.85" stroke-linecap="round">
+    <path d="M420 420 L600 300 L780 420 L600 540 Z"/>
+    <path d="M600 300 L600 160"/>
+    <path d="M420 420 L300 480"/>
+    <path d="M780 420 L900 480"/>
+  </g>
+
+  <g fill="#000" opacity="0.18">
+    <circle cx="600" cy="300" r="18"/>
+    <circle cx="420" cy="420" r="18"/>
+    <circle cx="780" cy="420" r="18"/>
+    <circle cx="600" cy="540" r="18"/>
+    <circle cx="600" cy="160" r="18"/>
+    <circle cx="300" cy="480" r="18"/>
+    <circle cx="900" cy="480" r="18"/>
+  </g>
+
+  <!-- подпись -->
+  <rect x="360" y="600" width="480" height="66" rx="33" fill="#000" opacity="0.06"/>
+  <path d="M390 633 h420" stroke="#000" stroke-width="4" opacity="0.18"/>
+</svg>

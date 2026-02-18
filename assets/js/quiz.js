@@ -1,7 +1,9 @@
 import { buildQuestions } from "./questionBank.js";
 
 const STORE_KEY = "chem_quiz_progress_v1";
-const SETTINGS_KEY = "chem_quiz_settings_v1";
+const SETTINGS_KEY = "chem_quiz_settings_v2";
+const FAV_KEY = "chem_quiz_favs_v1";
+const SESSION_KEY = "chem_quiz_session_v1";
 
 function loadProgress(){
   try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
@@ -13,13 +15,32 @@ function saveProgress(obj){
 
 function loadSettings(){
   try {
-    return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{\"trainer\":true}");
+    return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{\"trainer\":true,\"exam\":false}");
   } catch {
-    return { trainer: true };
+    return { trainer: true, exam: false };
   }
 }
 function saveSettings(obj){
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(obj));
+}
+
+function loadFavs(){
+  try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); }
+  catch { return new Set(); }
+}
+function saveFavs(set){
+  try { localStorage.setItem(FAV_KEY, JSON.stringify(Array.from(set))); } catch {}
+}
+
+function loadSession(){
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY) || "null"); }
+  catch { return null; }
+}
+function saveSession(obj){
+  try { localStorage.setItem(SESSION_KEY, JSON.stringify(obj)); } catch {}
+}
+function clearSession(){
+  try { localStorage.removeItem(SESSION_KEY); } catch {}
 }
 
 function shuffle(arr){
@@ -41,6 +62,17 @@ function el(tag, attrs={}, html=""){
   return x;
 }
 
+function fmt(sec){
+  const m = Math.floor(sec/60);
+  const s = sec%60;
+  return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+}
+
+function anyLightboxOpen(){
+  const lb = document.querySelector(".lightbox");
+  return !!(lb && !lb.classList.contains("hidden"));
+}
+
 export async function initQuiz(){
   const listNode = document.querySelector("#quizList");
   const boxNode  = document.querySelector("#quizBox");
@@ -53,13 +85,29 @@ export async function initQuiz(){
   const search = document.querySelector("#testSearch");
   const catSel = document.querySelector("#testCategory");
   const trainerMode = document.querySelector("#trainerMode");
+  const examMode = document.querySelector("#examMode");
+  const favOnly = document.querySelector("#favOnly");
   const progressInfo = document.querySelector("#progressInfo");
+
+  const favs = loadFavs();
 
   if(trainerMode){
     trainerMode.checked = !!settings.trainer;
     trainerMode.addEventListener("change", () => {
       settings.trainer = trainerMode.checked;
+      if(settings.trainer) settings.exam = false;
       saveSettings(settings);
+      if(examMode) examMode.checked = !!settings.exam;
+    });
+  }
+
+  if(examMode){
+    examMode.checked = !!settings.exam;
+    examMode.addEventListener("change", () => {
+      settings.exam = examMode.checked;
+      if(settings.exam) settings.trainer = false;
+      saveSettings(settings);
+      if(trainerMode) trainerMode.checked = !!settings.trainer;
     });
   }
 
@@ -85,6 +133,7 @@ export async function initQuiz(){
     const q = (search?.value || "").trim().toLowerCase();
     const cat = catSel?.value || "";
     if(cat && t.category !== cat) return false;
+    if(favOnly?.checked && !favs.has(t.id)) return false;
     if(!q) return true;
     const hay = `${t.title} ${t.description} ${t.category}`.toLowerCase();
     return hay.includes(q);
@@ -99,101 +148,168 @@ export async function initQuiz(){
       return;
     }
 
+    const session = loadSession();
+
     tests.forEach(t => {
       const done = progress[t.id]?.done;
       const pct = progress[t.id]?.pct;
       const qCount = t.questions?.length || t.questionIds?.length || t.questionCount || 10;
+      const isFav = favs.has(t.id);
+      const canContinue = session && session.testId === t.id && typeof session.i === "number";
+
       const item = el("div", {class:"item", "data-id": t.id},
         `<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
            <div>
-             <b>${t.title}</b>
-             <div class="small">${t.description}</div>
-             <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+               <b>${t.title}</b>
                <span class="tag">${t.category}</span>
                <span class="tag">${qCount} вопросов</span>
                ${t.timerSec ? `<span class="tag">таймер</span>` : ``}
                ${done && typeof pct === "number" ? `<span class="tag">${pct}%</span>` : ``}
              </div>
+             <div class="small" style="margin-top:6px">${t.description}</div>
+             <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+               <button class="btn btn-ghost" data-action="fav" type="button" aria-label="В избранное">${isFav ? "★" : "☆"}</button>
+               ${canContinue ? `<button class="btn" data-action="continue" type="button">Продолжить</button>` : ``}
+               <button class="btn" data-action="start" type="button">Начать</button>
+               <button class="btn btn-ghost" data-action="export" type="button">Экспорт</button>
+             </div>
            </div>
            <span class="tag">${done ? "пройден" : "новый"}</span>
          </div>`
       );
-      item.addEventListener("click", () => runTest(data, t.id, loadSettings()));
+
+      item.addEventListener("click", (e) => {
+        const actEl = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
+        const act = actEl && actEl.getAttribute("data-action");
+        if(!act) return;
+        e.stopPropagation();
+
+        if(act === "fav"){
+          if(favs.has(t.id)) favs.delete(t.id); else favs.add(t.id);
+          saveFavs(favs);
+          renderList();
+          return;
+        }
+
+        if(act === "export"){
+          const p = loadProgress()[t.id];
+          const payload = { testId: t.id, title: t.title, progress: p || null };
+          navigator.clipboard?.writeText(JSON.stringify(payload, null, 2)).catch(()=>{});
+          actEl.textContent = "Скопировано";
+          setTimeout(() => (actEl.textContent = "Экспорт"), 900);
+          return;
+        }
+
+        if(act === "continue"){
+          const s = loadSession();
+          if(s && s.testId === t.id) runTest(data, t.id, loadSettings(), s);
+          return;
+        }
+
+        if(act === "start"){
+          clearSession();
+          runTest(data, t.id, loadSettings(), null);
+        }
+      });
+
       listNode.appendChild(item);
     });
   }
 
   search?.addEventListener("input", renderList);
   catSel?.addEventListener("change", renderList);
+  favOnly?.addEventListener("change", renderList);
 
   boxNode.innerHTML = `
     <div class="card-pad">
       <h2>Выбери тест</h2>
-      <p>Режим тренировки показывает подсказки и пояснения (если они есть в вопросах).</p>
-      <p class="small">Результаты сохраняются на этом устройстве (в браузере).</p>
+      <p>Тренировка показывает подсказки и пояснения (если они есть). Экзамен — без подсказок и без «Назад».</p>
+      <p class="small">Результаты и прогресс сохраняются на этом устройстве (в браузере).</p>
     </div>
   `;
 
   renderList();
 }
 
-async function runTest(data, testId, settings){
+async function runTest(data, testId, settings, session){
   const test = data.tests.find(t => t.id === testId);
   const boxNode  = document.querySelector("#quizBox");
 
   let questions = [];
-
-  if(Array.isArray(test.questions) && test.questions.length){
-    questions = [...test.questions];
-  } else if(Array.isArray(test.questionIds) && test.questionIds.length && data.questionBank){
-    questions = test.questionIds
-      .map((qid, idx) => ({...data.questionBank[qid], id: `q${idx+1}`}))
-      .filter(Boolean);
-  } else if(test.template){
-    questions = buildQuestions(test);
-  }
-
-  if(test.randomize) questions = shuffle(questions);
-  questions = questions.map(q => ({
-    ...q,
-    answers: test.randomize ? shuffle(q.answers) : q.answers
-  }));
-
+  let state = { chosen: {}, hintOpen: {} };
   let i = 0;
-  let correct = 0;
   let startTs = Date.now();
   let left = test.timerSec || null;
-  let timer = null;
 
-  const state = { chosen: {}, hintOpen: {} };
-
-  function fmt(sec){
-    const m = Math.floor(sec/60);
-    const s = sec%60;
-    return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-  }
+  const exam = !!settings?.exam;
+  const trainer = !!settings?.trainer && !exam;
 
   function stopAndBack(){
-    if(timer) clearInterval(timer);
     window.location.href = "./tests.html";
+  }
+
+  // Resume
+  if(session && session.testId === testId && Array.isArray(session.questions)){
+    questions = session.questions;
+    state = session.state || state;
+    i = session.i || 0;
+    startTs = session.startTs || startTs;
+    if(typeof session.left === "number") left = session.left;
+  } else {
+    if(Array.isArray(test.questions) && test.questions.length){
+      questions = [...test.questions];
+    } else if(Array.isArray(test.questionIds) && test.questionIds.length && data.questionBank){
+      questions = test.questionIds
+        .map((qid, idx) => ({...data.questionBank[qid], id: `q${idx+1}`}))
+        .filter(Boolean);
+    } else if(test.template){
+      questions = buildQuestions(test);
+    }
+
+    // Экзамен всегда перемешивает
+    if(test.randomize || exam) questions = shuffle(questions);
+    questions = questions.map(q => ({
+      ...q,
+      answers: (test.randomize || exam) ? shuffle(q.answers) : q.answers
+    }));
+  }
+
+  // Timer
+  let timer = null;
+  if(left !== null){
+    timer = setInterval(() => {
+      left--;
+      const node = document.querySelector("#tleft");
+      if(node) node.textContent = fmt(Math.max(0,left));
+      saveSession({ testId, questions, state, i, startTs, left });
+      if(left <= 0){
+        clearInterval(timer);
+        finish();
+      }
+    }, 1000);
+  }
+
+  function persist(){
+    saveSession({ testId, questions, state, i, startTs, left });
   }
 
   function render(){
     const q = questions[i];
     const multi = q.type === "multi";
     const chosen = state.chosen[q.id] || (multi ? [] : null);
-    const showExplain = settings?.trainer && !!q.explain && (state.hintOpen[q.id] || (multi ? chosen.length>0 : !!chosen));
+    const showExplain = trainer && !!q.explain && (state.hintOpen[q.id] || (multi ? chosen.length>0 : !!chosen));
 
     boxNode.innerHTML = `
       <div class="card-pad">
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
           <div>
             <b>${test.title}</b>
-            <div class="small">Вопрос ${i+1} из ${questions.length} • ${settings?.trainer ? "тренировка" : "контроль"}</div>
+            <div class="small">Вопрос ${i+1} из ${questions.length} • ${exam ? "экзамен" : "тренировка"}</div>
           </div>
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             ${left !== null ? `<span class="tag">Осталось: <span id="tleft">${fmt(left)}</span></span>` : ``}
-            ${q.explain ? `<button class="btn btn-ghost" id="hintBtn">${showExplain ? "Скрыть подсказку" : "Показать подсказку"}</button>` : ``}
+            ${trainer && q.explain ? `<button class="btn btn-ghost" id="hintBtn">${showExplain ? "Скрыть подсказку" : "Показать подсказку"}</button>` : ``}
             <button class="btn btn-ghost" id="exitBtn">Выйти</button>
           </div>
         </div>
@@ -206,7 +322,7 @@ async function runTest(data, testId, settings){
         ${showExplain ? `<div class="callout" role="note"><b>Пояснение</b><div class="small" style="margin-top:6px">${q.explain}</div></div>` : ``}
 
         <div class="form-actions">
-          <button class="btn btn-ghost" id="prevBtn" ${i===0 ? "disabled" : ""}>Назад</button>
+          <button class="btn btn-ghost" id="prevBtn" ${i===0 || exam ? "disabled" : ""}>Назад</button>
           <button class="btn" id="nextBtn">${i===questions.length-1 ? "Завершить" : "Дальше"}</button>
         </div>
 
@@ -214,12 +330,13 @@ async function runTest(data, testId, settings){
       </div>
     `;
 
-    boxNode.querySelector("#exitBtn").onclick = () => stopAndBack();
+    boxNode.querySelector("#exitBtn").onclick = () => { persist(); stopAndBack(); };
 
     const hintBtn = boxNode.querySelector("#hintBtn");
     if(hintBtn){
       hintBtn.onclick = () => {
         state.hintOpen[q.id] = !state.hintOpen[q.id];
+        persist();
         render();
       };
     }
@@ -241,24 +358,23 @@ async function runTest(data, testId, settings){
         } else {
           state.chosen[q.id] = a.id;
         }
-        if(settings?.trainer && q.explain) state.hintOpen[q.id] = true;
+        if(trainer && q.explain) state.hintOpen[q.id] = true;
+        persist();
         render();
       });
 
       ans.appendChild(row);
     });
 
-    boxNode.querySelector("#prevBtn").onclick = () => { i--; render(); };
+    boxNode.querySelector("#prevBtn").onclick = () => { if(exam) return; i--; persist(); render(); };
     boxNode.querySelector("#nextBtn").onclick = () => {
-      if(i < questions.length-1){ i++; render(); }
+      if(i < questions.length-1){ i++; persist(); render(); }
       else finish();
     };
   }
 
-  function finish(){
-    if(timer) clearInterval(timer);
-
-    correct = 0;
+  function calcResult(){
+    let correct = 0;
     const mistakes = [];
 
     questions.forEach(q => {
@@ -282,16 +398,26 @@ async function runTest(data, testId, settings){
     const pct = Math.round((correct/total)*100);
     const spentSec = Math.round((Date.now()-startTs)/1000);
 
+    return { correct, total, pct, spentSec, mistakes };
+  }
+
+  function finish(){
+    if(timer) clearInterval(timer);
+
+    const { correct, total, pct, spentSec, mistakes } = calcResult();
+
     const p = loadProgress();
-    p[test.id] = { done: true, score: correct, total, pct, spentSec, at: new Date().toISOString() };
+    p[test.id] = { done: true, score: correct, total, pct, spentSec, at: new Date().toISOString(), mode: exam ? "exam" : "trainer" };
     saveProgress(p);
+
+    clearSession();
 
     const mistakesHtml = mistakes.length
       ? `<hr class="sep"/>
          <h3 style="margin:0 0 10px">Ошибки (${mistakes.length})</h3>
          <div class="small">Вопросы, где ответ был неверным или не выбран.</div>
          <div style="margin-top:10px;display:grid;gap:10px">
-           ${mistakes.slice(0,8).map(m => `<div class="tile"><b>${m.prompt}</b>${m.explain ? `<div class="small" style="margin-top:6px">${m.explain}</div>` : ``}</div>`).join("")}
+           ${mistakes.slice(0,8).map(m => `<div class="tile"><b>${m.prompt}</b>${trainer && m.explain ? `<div class="small" style="margin-top:6px">${m.explain}</div>` : ``}</div>`).join("")}
          </div>
          ${mistakes.length>8 ? `<div class="small" style="margin-top:10px">Показаны первые 8 ошибок.</div>` : ``}`
       : `<hr class="sep"/><div class="callout"><b>Отлично</b><div class="small" style="margin-top:6px">Ошибок нет.</div></div>`;
@@ -300,27 +426,57 @@ async function runTest(data, testId, settings){
       <div class="card-pad">
         <h2>Результат: ${pct}%</h2>
         <p>Верных: ${correct} из ${total}. Время: ${fmt(spentSec)}.</p>
+
         <div class="form-actions">
           <button class="btn" id="againBtn">Пройти еще раз</button>
+          <button class="btn btn-ghost" id="copyBtn">Копировать JSON</button>
           <a class="btn btn-ghost" href="./tests.html">К списку тестов</a>
         </div>
+
         ${mistakesHtml}
       </div>
     `;
-    boxNode.querySelector("#againBtn").onclick = () => runTest(data, testId, settings);
+
+    boxNode.querySelector("#againBtn").onclick = () => runTest(data, testId, settings, null);
+    boxNode.querySelector("#copyBtn").onclick = async () => {
+      const payload = { testId, title: test.title, result: loadProgress()[testId] };
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+        boxNode.querySelector("#copyBtn").textContent = "Скопировано";
+        setTimeout(() => (boxNode.querySelector("#copyBtn").textContent = "Копировать JSON"), 900);
+      } catch {}
+    };
   }
 
-  if(left !== null){
-    timer = setInterval(() => {
-      left--;
-      const node = document.querySelector("#tleft");
-      if(node) node.textContent = fmt(Math.max(0,left));
-      if(left <= 0){
-        clearInterval(timer);
-        finish();
-      }
-    }, 1000);
+  // Hotkeys (только в тесте)
+  function onKey(e){
+    if(anyLightboxOpen()) return;
+    const lbModal = document.querySelector(".settings");
+    if(lbModal && !lbModal.classList.contains("hidden")) return;
+
+    if(e.key === "Escape"){
+      e.preventDefault();
+      persist();
+      stopAndBack();
+      return;
+    }
+
+    if(e.key === "Enter"){
+      const btn = document.querySelector("#nextBtn");
+      if(btn){ e.preventDefault(); btn.click(); }
+      return;
+    }
+
+    if(/[1-9]/.test(e.key)){
+      const n = parseInt(e.key,10);
+      const inputs = Array.from(document.querySelectorAll("#answers input"));
+      const target = inputs[n-1];
+      if(target){ e.preventDefault(); target.click(); }
+    }
   }
 
+  document.addEventListener("keydown", onKey, { passive:false });
+
+  // Первичный рендер
   render();
 }
