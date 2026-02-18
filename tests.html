@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Тесты — ChemTests</title>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
+      <nav class="navlinks">
+        <a href="./tests.html">Тесты</a>
+        <a href="./theory-tests.html">Теория тестов</a>
+        <a href="./history-tests.html">История</a>
+        <a href="./chemistry.html">Химия</a>
+        <a href="./gallery.html">Фото</a>
+        <a href="./contact.html">Контакты</a>
+        <button class="btn btn-ghost" data-action="toggle-theme">Тема</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card">
+      <div class="card-pad">
+        <h2>Тесты</h2>
+        <p>Слева выбираешь тест, справа проходишь. Вопросы берутся из <code>assets/data/tests.json</code>.</p>
+      </div>
+    </div>
+
+    <section class="quiz" style="margin-top:14px">
+      <div class="card quiz-list">
+        <div class="card-pad">
+          <div id="quizList"></div>
+        </div>
+      </div>
+
+      <div class="card" id="quizBox"></div>
+    </section>
+
+    <div class="footer">
+      <hr class="sep"/>
+      <div class="small">Хочешь больше тестов — просто добавляй новые блоки в tests.json.</div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initTheme, wireThemeToggle } from "./assets/js/app.js";
+    import { initQuiz } from "./assets/js/quiz.js";
+    initTheme(); wireThemeToggle(); initQuiz();
+  </script>
+</body>
+</html>

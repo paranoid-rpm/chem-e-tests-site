@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Химия и электронные тесты</title>
+  <link rel="manifest" href="./manifest.webmanifest"/>
+  <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="./index.html">
+        <span class="pill">ChemTests</span>
+        <span class="small">теория • практика • тесты</span>
+      </a>
+      <nav class="navlinks">
+        <a href="./tests.html">Тесты</a>
+        <a href="./theory-tests.html">Теория тестов</a>
+        <a href="./history-tests.html">История</a>
+        <a href="./chemistry.html">Химия</a>
+        <a href="./gallery.html">Фото</a>
+        <a href="./contact.html">Контакты</a>
+        <button class="btn btn-ghost" data-action="toggle-theme">Тема</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card">
+        <div class="card-pad">
+          <h1 class="h1">Современный сайт про e‑тесты на уроках химии</h1>
+          <p class="lead">Тренажеры, контрольные, теория тестов и химии — в одном месте.</p>
+          <div class="form-actions">
+            <a class="btn" href="./tests.html">Начать тестирование</a>
+            <a class="btn btn-ghost" href="./theory-tests.html">Прочитать теорию</a>
+          </div>
+          <div class="kpis">
+            <div class="kpi"><b>8 тестов</b><span class="small">банк вопросов в JSON</span></div>
+            <div class="kpi"><b>PWA</b><span class="small">можно офлайн</span></div>
+            <div class="kpi"><b>Сохранение</b><span class="small">прогресс в браузере</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card hero-img"></div>
+    </section>
+
+    <section class="grid">
+      <div class="tile">
+        <h3>Для ученика</h3>
+        <p>Проходи тренажеры, смотри результаты, повторяй темы.</p>
+      </div>
+      <div class="tile">
+        <h3>Для учителя</h3>
+        <p>Бери готовые вопросы и быстро расширяй банк под свою программу.</p>
+      </div>
+      <div class="tile">
+        <h3>Для проекта</h3>
+        <p>Добавь свои картинки, логотип, новые тесты и форму обратной связи.</p>
+      </div>
+    </section>
+
+    <div class="footer">
+      <hr class="sep"/>
+      <div>Сделано на HTML/CSS/JS. Без серверной части.</div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { initTheme, wireThemeToggle, wirePWA } from "./assets/js/app.js";
+    initTheme(); wireThemeToggle(); wirePWA();
+  </script>
+</body>
+</html>
