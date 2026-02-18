@@ -1,70 +1,34 @@
-const K = {
-  scale: "chem_font_scale",
-  contrast: "chem_contrast",
-  motion: "chem_motion",
-  style: "chem_style"
-};
+/*
+  prefs.js
+  Автоматическая тема: светлая/тёмная — только по настройке системы.
+  Никаких переключателей и сохранения темы в localStorage.
+*/
+
+function applyThemeFromSystem(){
+  const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+}
+
+function applyMotionFromSystem(){
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.documentElement.setAttribute("data-motion", reduce ? "reduce" : "ok");
+}
 
 export function initPrefs(){
-  const scale = parseFloat(localStorage.getItem(K.scale) || "1");
-  document.documentElement.style.setProperty("--font-scale", String(clamp(scale, 0.9, 1.3)));
+  applyThemeFromSystem();
+  applyMotionFromSystem();
 
-  const contrast = localStorage.getItem(K.contrast);
-  if(contrast) document.documentElement.setAttribute("data-contrast", contrast);
+  // Реакция на изменение системной темы
+  if (window.matchMedia) {
+    const m = window.matchMedia("(prefers-color-scheme: dark)");
+    if (m.addEventListener) m.addEventListener("change", applyThemeFromSystem);
+    else if (m.addListener) m.addListener(applyThemeFromSystem);
 
-  const motion = localStorage.getItem(K.motion);
-  if(motion) document.documentElement.setAttribute("data-motion", motion);
-
-  const style = localStorage.getItem(K.style) || "minimal";
-  document.documentElement.setAttribute("data-style", style);
-
-  const sel = document.querySelector("[data-action='style-select']");
-  if(sel) sel.value = style;
+    const r = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (r.addEventListener) r.addEventListener("change", applyMotionFromSystem);
+    else if (r.addListener) r.addListener(applyMotionFromSystem);
+  }
 }
 
-export function wirePrefs(){
-  const root = document.documentElement;
-
-  const setScale = (v) => {
-    const next = clamp(v, 0.9, 1.3);
-    root.style.setProperty("--font-scale", String(next));
-    localStorage.setItem(K.scale, String(next));
-  };
-
-  document.querySelector("[data-action='font-inc']")?.addEventListener("click", () => {
-    const cur = parseFloat(getComputedStyle(root).getPropertyValue("--font-scale")) || 1;
-    setScale(cur + 0.05);
-  });
-
-  document.querySelector("[data-action='font-dec']")?.addEventListener("click", () => {
-    const cur = parseFloat(getComputedStyle(root).getPropertyValue("--font-scale")) || 1;
-    setScale(cur - 0.05);
-  });
-
-  document.querySelector("[data-action='toggle-contrast']")?.addEventListener("click", () => {
-    const cur = root.getAttribute("data-contrast");
-    const next = cur === "high" ? "" : "high";
-    if(next) root.setAttribute("data-contrast", next);
-    else root.removeAttribute("data-contrast");
-    localStorage.setItem(K.contrast, next);
-  });
-
-  document.querySelector("[data-action='toggle-motion']")?.addEventListener("click", () => {
-    const cur = root.getAttribute("data-motion");
-    const next = cur === "reduce" ? "" : "reduce";
-    if(next) root.setAttribute("data-motion", next);
-    else root.removeAttribute("data-motion");
-    localStorage.setItem(K.motion, next);
-  });
-
-  const styleSel = document.querySelector("[data-action='style-select']");
-  styleSel?.addEventListener("change", () => {
-    const next = styleSel.value || "minimal";
-    root.setAttribute("data-style", next);
-    localStorage.setItem(K.style, next);
-  });
-}
-
-function clamp(x, a, b){
-  return Math.max(a, Math.min(b, x));
-}
+// Автоинициализация (если модуль подключён на странице)
+document.addEventListener("DOMContentLoaded", initPrefs);
