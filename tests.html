@@ -4,7 +4,6 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Тесты • ChemTests</title>
-  <link rel="manifest" href="./manifest.webmanifest"/>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
   <meta name="description" content="Тесты по химии: тренировка и экзамен."/>
@@ -27,7 +26,7 @@
     </div>
   </header>
 
-  <main class="container">
+  <main class="container" id="appRoot">
     <section class="card" style="margin-top:18px">
       <div class="card-pad">
         <h1 style="margin:0 0 10px">Тесты</h1>
@@ -94,12 +93,39 @@
     </div>
   </main>
 
-  <script type="module">
-    import "./assets/js/prefs.js";
-    import { wirePWA } from "./assets/js/app.js";
-    import { initQuiz } from "./assets/js/quiz.js";
-    wirePWA();
-    initQuiz();
+  <script>
+    (async () => {
+      const proto = location.protocol;
+      const ok = proto === 'http:' || proto === 'https:';
+
+      if (!ok) {
+        const root = document.getElementById('appRoot') || document.body;
+        root.innerHTML = `
+          <div class="card" style="margin-top:18px">
+            <div class="card-pad">
+              <h1 style="margin:0 0 10px">Нужен запуск через сервер</h1>
+              <p class="lead">Ты открыл сайт как файл (<span class="tag">file://</span>), поэтому браузер блокирует модульные скрипты (CORS) и функции не работают.</p>
+              <div class="tile" style="margin-top:12px">
+                <b>Как правильно</b>
+                <div class="small" style="margin-top:8px">Открой через Live Server: <span class="tag">http://127.0.0.1:5500/tests.html</span> (или свой порт).</div>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const m = document.createElement('link');
+      m.rel = 'manifest';
+      m.href = './manifest.webmanifest';
+      document.head.appendChild(m);
+
+      await import('./assets/js/prefs.js');
+      const { wirePWA } = await import('./assets/js/app.js');
+      const { initQuiz } = await import('./assets/js/quiz.js');
+      wirePWA();
+      initQuiz();
+    })();
   </script>
 </body>
 </html>
