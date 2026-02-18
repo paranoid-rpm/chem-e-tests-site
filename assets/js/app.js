@@ -27,12 +27,19 @@ function clamp(x, a, b){
   return Math.max(a, Math.min(b, x));
 }
 
+function isGalleryPage(){
+  const p = (location.pathname || "").toLowerCase();
+  return p.endsWith("/gallery.html") || p.endsWith("gallery.html");
+}
+
 function enhanceGallery(){
   const grid = qs(".gallery");
   if (!grid) return;
 
   const imgs = qsa("img", grid).filter(img => img.getAttribute("src"));
   if (!imgs.length) return;
+
+  const allowHash = isGalleryPage();
 
   // Ленивая загрузка по возможности
   imgs.forEach(img => {
@@ -112,6 +119,7 @@ function enhanceGallery(){
   let timer = null;
 
   function setHash(i){
+    if (!allowHash) return;
     const u = new URL(window.location.href);
     u.hash = `photo=${i+1}`;
     history.replaceState(null, "", u);
@@ -150,7 +158,6 @@ function enhanceGallery(){
     lb.classList.remove("hidden");
     document.body.classList.add("modal-open");
     render();
-    // фокус на карточку
     const closeBtn = qs("[data-action='close']", lb);
     if (closeBtn) closeBtn.focus();
   }
@@ -204,8 +211,8 @@ function enhanceGallery(){
 
   // events
   function onClick(e){
-    const t = e.target;
-    const act = t && t.getAttribute && t.getAttribute("data-action");
+    const el = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
+    const act = el && el.getAttribute && el.getAttribute("data-action");
     if (!act) return;
     if (act === "close") close();
     if (act === "next") next();
@@ -246,11 +253,15 @@ function enhanceGallery(){
     });
   });
 
-  // Open from hash
+  // Open from hash (только в gallery.html)
   const m = (window.location.hash || "").match(/photo=(\d+)/);
   if (m){
-    const i = clamp(parseInt(m[1], 10) - 1, 0, items.length-1);
-    setTimeout(() => open(i), 0);
+    if (!allowHash){
+      clearHash();
+    } else {
+      const i = clamp(parseInt(m[1], 10) - 1, 0, items.length-1);
+      setTimeout(() => open(i), 0);
+    }
   }
 }
 
