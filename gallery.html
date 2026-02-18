@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
 </head>
-<body>
+<body data-ink="a">
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="./index.html" aria-label="На главную">
@@ -31,6 +31,18 @@
       <div class="card-pad">
         <h2>Галерея</h2>
         <p>Открой любое изображение — можно листать, сохранять в избранное и запускать слайд‑шоу.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-pad">
+        <h2>Как добавить свои фото</h2>
+        <ul>
+          <li>Скачай изображения (JPG/WebP) и положи в <code>assets/img/photos/</code>.</li>
+          <li>Переименуй по шаблону: <code>photo-01.jpg</code>, <code>photo-02.jpg</code> … <code>photo-18.jpg</code>.</li>
+          <li>Обнови страницу — плейсхолдеры автоматически заменятся твоими файлами.</li>
+        </ul>
+        <div class="small">Подсказка: если сайт установлен как PWA, после добавления файлов иногда нужна жёсткая перезагрузка (Ctrl+F5) или переустановка service worker.</div>
       </div>
     </div>
 
@@ -58,6 +70,79 @@
       <figure class="imgcard">
         <img src="./assets/img/gallery-class.svg" alt="Класс и урок"/>
         <figcaption class="small">Урок и практика</figcaption>
+      </figure>
+
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-01.jpg" alt="Фото 01" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-01.svg';"/>
+        <figcaption class="small">Фото 01</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-02.jpg" alt="Фото 02" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-02.svg';"/>
+        <figcaption class="small">Фото 02</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-03.jpg" alt="Фото 03" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-03.svg';"/>
+        <figcaption class="small">Фото 03</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-04.jpg" alt="Фото 04" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-04.svg';"/>
+        <figcaption class="small">Фото 04</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-05.jpg" alt="Фото 05" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-05.svg';"/>
+        <figcaption class="small">Фото 05</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-06.jpg" alt="Фото 06" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-06.svg';"/>
+        <figcaption class="small">Фото 06</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-07.jpg" alt="Фото 07" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-07.svg';"/>
+        <figcaption class="small">Фото 07</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-08.jpg" alt="Фото 08" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-08.svg';"/>
+        <figcaption class="small">Фото 08</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-09.jpg" alt="Фото 09" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-09.svg';"/>
+        <figcaption class="small">Фото 09</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-10.jpg" alt="Фото 10" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-10.svg';"/>
+        <figcaption class="small">Фото 10</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-11.jpg" alt="Фото 11" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-11.svg';"/>
+        <figcaption class="small">Фото 11</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-12.jpg" alt="Фото 12" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-12.svg';"/>
+        <figcaption class="small">Фото 12</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-13.jpg" alt="Фото 13" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-13.svg';"/>
+        <figcaption class="small">Фото 13</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-14.jpg" alt="Фото 14" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-14.svg';"/>
+        <figcaption class="small">Фото 14</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-15.jpg" alt="Фото 15" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-15.svg';"/>
+        <figcaption class="small">Фото 15</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-16.jpg" alt="Фото 16" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-16.svg';"/>
+        <figcaption class="small">Фото 16</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-17.jpg" alt="Фото 17" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-17.svg';"/>
+        <figcaption class="small">Фото 17</figcaption>
+      </figure>
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/photos/photo-18.jpg" alt="Фото 18" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-18.svg';"/>
+        <figcaption class="small">Фото 18</figcaption>
       </figure>
     </section>
 

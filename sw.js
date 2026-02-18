@@ -1,4 +1,4 @@
-const CACHE = "chem-e-tests-v4";
+const CACHE = "chem-e-tests-v5";
 
 const ASSETS = [
   "./",
@@ -26,7 +26,26 @@ const ASSETS = [
   "./assets/img/ink-bg-b-light.svg",
   "./assets/img/ink-bg-b-dark.svg",
   "./assets/img/ink-bg-c-light.svg",
-  "./assets/img/ink-bg-c-dark.svg"
+  "./assets/img/ink-bg-c-dark.svg",
+  "./assets/img/photo-placeholder-01.svg",
+  "./assets/img/photo-placeholder-02.svg",
+  "./assets/img/photo-placeholder-03.svg",
+  "./assets/img/photo-placeholder-04.svg",
+  "./assets/img/photo-placeholder-05.svg",
+  "./assets/img/photo-placeholder-06.svg",
+  "./assets/img/photo-placeholder-07.svg",
+  "./assets/img/photo-placeholder-08.svg",
+  "./assets/img/photo-placeholder-09.svg",
+  "./assets/img/photo-placeholder-10.svg",
+  "./assets/img/photo-placeholder-11.svg",
+  "./assets/img/photo-placeholder-12.svg",
+  "./assets/img/photo-placeholder-13.svg",
+  "./assets/img/photo-placeholder-14.svg",
+  "./assets/img/photo-placeholder-15.svg",
+  "./assets/img/photo-placeholder-16.svg",
+  "./assets/img/photo-placeholder-17.svg",
+  "./assets/img/photo-placeholder-18.svg",
+  "./assets/img/photos/README.md"
 ];
 
 self.addEventListener("install", (e) => {

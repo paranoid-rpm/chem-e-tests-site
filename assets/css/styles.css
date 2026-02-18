@@ -29,7 +29,6 @@ html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto
 
 body{background: var(--bg);color:var(--text);position: relative;}
 
-/* разводы чернил: разные варианты на разных страницах */
 body::before{
   content:"";
   position: fixed;
@@ -51,7 +50,6 @@ body:not([data-ink])::before{ background-image: url("../img/ink-bg-a-light.svg")
 [data-theme="dark"] body[data-ink="c"]::before{ background-image: url("../img/ink-bg-c-dark.svg"); }
 [data-theme="dark"] body:not([data-ink])::before{ background-image: url("../img/ink-bg-a-dark.svg"); }
 
-/* простая навигация */
 a{color:inherit;text-decoration:none}
 .container{max-width:var(--max);margin:0 auto;padding:18px}
 
@@ -63,7 +61,6 @@ a{color:inherit;text-decoration:none}
 }
 [data-motion="reduce"] *{ animation:none !important; transition:none !important; }
 
-/* шапка: минимальная ч/б волна (одна линия) */
 .nav{position: sticky; top: 0; z-index: 50;background: var(--bg);border-bottom: 1px solid var(--border);overflow:hidden;}
 .nav::before{
   content:"";
@@ -150,9 +147,9 @@ textarea{min-height:120px;resize:vertical}
 .gallery{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px;}
 .imgcard{margin:0;padding:12px;border-radius: 16px;border:1px solid var(--border);background: var(--card);position:relative;cursor:pointer;}
 .imgcard img{width:100%;height:220px;object-fit:contain;display:block}
+.imgcard img.photo{object-fit:cover}
 .imgcard.is-fav::after{content:"★";position:absolute;top:10px;right:10px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;background: var(--bg);color: var(--text);}
 
-/* Lightbox */
 .modal-open{overflow:hidden}
 .lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:18px;}
 .lightbox-backdrop{position:absolute;inset:0;background: rgba(0,0,0,.65);}
