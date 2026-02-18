@@ -112,6 +112,13 @@ a{color:inherit;text-decoration:none}
 .hero-visual{min-height: 320px;display:flex;align-items:center;justify-content:center}
 .hero-ill{max-width:100%;height:auto;opacity:.95}
 
+/* Make SVG illustrations match theme (monochrome SVGs as <img>) */
+img.illus, img.hero-ill{object-fit:contain;}
+[data-theme="dark"] img.illus,
+[data-theme="dark"] img.hero-ill{
+  filter: invert(1) hue-rotate(180deg);
+}
+
 .grid{display:grid;grid-template-columns: repeat(3, 1fr);gap:14px;margin-top:14px}
 .tile{padding:14px;border:1px solid var(--border);border-radius: 16px;background: var(--card)}
 .tile h3{margin:0 0 6px;font-size:16px}
@@ -158,8 +165,8 @@ textarea{min-height:120px;resize:vertical}
 .imgcard img.photo{object-fit:cover}
 .imgcard.is-fav::after{content:"★";position:absolute;top:10px;right:10px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;background: var(--bg);color: var(--text);}
 
+/* legacy: keep for gallery images */
 .imgcard img.illus{object-fit:contain;}
-[data-theme="dark"] .imgcard img.illus{filter: invert(1) hue-rotate(180deg);}
 
 .modal-open{overflow:hidden}
 .lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:18px;}
