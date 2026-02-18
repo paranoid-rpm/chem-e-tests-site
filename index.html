@@ -7,7 +7,7 @@
   <link rel="manifest" href="./manifest.webmanifest"/>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
-  <meta name="description" content="Сайт с теорией тестирования, химией и банком электронных тестов для уроков и самопроверки."/>
+  <meta name="description" content="Тесты по химии: короткие тренировки и контрольные варианты."/>
 </head>
 <body>
   <header class="nav">
@@ -20,26 +20,10 @@
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
-        <a href="./history-tests.html">История</a>
         <a href="./chemistry.html">Химия</a>
         <a href="./glossary.html">Справочник</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
-
-        <span class="nav-sep" aria-hidden="true"></span>
-
-        <label class="small" for="styleSelect" style="margin-right:6px">Стиль</label>
-        <select id="styleSelect" data-action="style-select" class="select" aria-label="Выбор стиля">
-          <option value="minimal">Минимализм</option>
-          <option value="aurora">Аура</option>
-          <option value="mono">Моно</option>
-        </select>
-
-        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
-        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
-        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
-        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
-        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
       </nav>
     </div>
   </header>
@@ -49,70 +33,53 @@
       <div class="card">
         <div class="card-pad">
           <h1 class="h1">Электронные тесты по химии</h1>
-          <p class="lead">Тренажеры и контрольные, теория тестирования, базовая химия и справочник формул. В шапке — настройки для удобного чтения и любой возрастной группы.</p>
+          <p class="lead">60 вариантов по 10 вопросов: для тренировки, повторения и быстрой проверки.</p>
 
           <div class="form-actions">
             <a class="btn" href="./tests.html">Открыть тесты</a>
-            <a class="btn btn-ghost" href="./chemistry.html">Повторить химию</a>
+            <a class="btn btn-ghost" href="./chemistry.html">Повторить тему</a>
           </div>
 
-          <div class="kpis" aria-label="Возможности">
-            <div class="kpi"><b>По уровням</b><span class="small">5 минут или глубже</span></div>
-            <div class="kpi"><b>Прогресс</b><span class="small">сохраняется в браузере</span></div>
-            <div class="kpi"><b>Доступность</b><span class="small">шрифт/контраст/движение</span></div>
+          <div class="kpis" aria-label="Что внутри">
+            <div class="kpi"><b>10 вопросов</b><span class="small">в каждом тесте</span></div>
+            <div class="kpi"><b>Таймер</b><span class="small">если включён в тесте</span></div>
+            <div class="kpi"><b>Минимализм</b><span class="small">строгий белый/чёрный</span></div>
           </div>
         </div>
       </div>
 
       <div class="card hero-visual" aria-hidden="true">
-        <div class="card-pad hero-visual-inner">
+        <div class="card-pad">
           <img class="hero-ill" src="./assets/img/hero-lab.svg" alt=""/>
         </div>
       </div>
     </section>
 
-    <section class="grid" aria-label="Быстрые маршруты">
+    <section class="grid" aria-label="Разделы">
       <a class="tile tile-link" href="./tests.html">
-        <h3>Мини‑тесты</h3>
-        <p>Короткие проверки на урок и для самоконтроля.</p>
+        <h3>Тесты</h3>
+        <p>Выбери вариант и проходи 10 вопросов.</p>
       </a>
       <a class="tile tile-link" href="./theory-tests.html">
-        <h3>Как делать тесты</h3>
-        <p>Валидность, надежность, формулировки, дистракторы.</p>
+        <h3>Теория тестов</h3>
+        <p>Коротко о том, как делать хорошие задания.</p>
       </a>
       <a class="tile tile-link" href="./glossary.html">
         <h3>Справочник</h3>
-        <p>Формулы, обозначения, единицы, быстрые подсказки.</p>
+        <p>Определения и быстрые подсказки.</p>
       </a>
     </section>
 
-    <div class="card" style="margin-top:14px">
-      <div class="card-pad">
-        <h2>Как пользоваться</h2>
-        <ul>
-          <li>Для тренировки: включи «Режим тренировки» в разделе «Тесты» и читай пояснения.</li>
-          <li>Для контроля: отключи тренировки и проходи тест с таймером (если он включен в тесте).</li>
-          <li>Если плохо читается: увеличь текст, включи контраст или выключи анимации в шапке.</li>
-        </ul>
-      </div>
-    </div>
-
     <div class="footer">
       <hr class="sep"/>
-      <div class="small">Учебные материалы. Версия сайта хранится в кэше браузера (PWA).</div>
+      <div class="small">Тема выбирается автоматически по настройке системы.</div>
     </div>
   </main>
 
   <script type="module">
-    import { initTheme, wireThemeToggle, wirePWA } from "./assets/js/app.js";
-    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
-
-    initTheme();
-    wireThemeToggle();
+    import "./assets/js/prefs.js";
+    import { wirePWA } from "./assets/js/app.js";
     wirePWA();
-
-    initPrefs();
-    wirePrefs();
   </script>
 </body>
 </html>

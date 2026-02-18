@@ -1,7 +1,8 @@
 /*
   prefs.js
-  Автоматическая тема: светлая/тёмная — только по настройке системы.
-  Никаких переключателей и сохранения темы в localStorage.
+  Автоматическая тема: строго светлая/тёмная — только по настройке системы.
+  Оставляем совместимость с прошлым API (initPrefs/wirePrefs),
+  но не показываем и не используем ручные переключатели.
 */
 
 function applyThemeFromSystem(){
@@ -18,7 +19,6 @@ export function initPrefs(){
   applyThemeFromSystem();
   applyMotionFromSystem();
 
-  // Реакция на изменение системной темы
   if (window.matchMedia) {
     const m = window.matchMedia("(prefers-color-scheme: dark)");
     if (m.addEventListener) m.addEventListener("change", applyThemeFromSystem);
@@ -30,5 +30,9 @@ export function initPrefs(){
   }
 }
 
-// Автоинициализация (если модуль подключён на странице)
+// Совместимость со старыми страницами (кнопки/селекты мы скрываем CSS-ом)
+export function wirePrefs(){
+  // no-op
+}
+
 document.addEventListener("DOMContentLoaded", initPrefs);
