@@ -83,6 +83,13 @@ a{color:inherit;text-decoration:none}
 .navlinks a{padding:8px 10px;border-radius:999px;border:1px solid transparent}
 .navlinks a:hover{border-color:var(--border);background:transparent}
 
+/* Theme switch */
+.theme-switch{display:flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:transparent;}
+.theme-switch.is-auto{opacity:.85}
+.theme-toggle{appearance:none;-webkit-appearance:none;width:44px;height:24px;border-radius:999px;border:1px solid var(--border);background:transparent;position:relative;cursor:pointer;flex:0 0 auto;}
+.theme-toggle::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:999px;background:var(--text);opacity:.82;transition: transform .18s ease;}
+.theme-toggle:checked::after{transform: translateX(20px);}
+
 .btn{cursor:pointer;border:1px solid var(--border);background: transparent;color:var(--text);padding:10px 12px;border-radius:999px;}
 .btn:hover{border-color: rgba(0,0,0,.25);}
 [data-theme="dark"] .btn:hover{border-color: rgba(255,255,255,.28);}

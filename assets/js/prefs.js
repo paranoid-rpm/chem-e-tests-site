@@ -1,13 +1,34 @@
 /*
   prefs.js
-  Автоматическая тема: строго светлая/тёмная — только по настройке системы.
-  Оставляем совместимость с прошлым API (initPrefs/wirePrefs),
-  но не показываем и не используем ручные переключатели.
+  Тема: по умолчанию — по настройке системы, но можно вручную переключать.
+  Храним режим в localStorage.
 */
 
-function applyThemeFromSystem(){
+const THEME_KEY = "chem_theme_mode_v1"; // 'auto' | 'light' | 'dark'
+
+function readThemeMode(){
+  try {
+    const v = String(localStorage.getItem(THEME_KEY) || "auto");
+    if (v === "light" || v === "dark" || v === "auto") return v;
+    return "auto";
+  } catch {
+    return "auto";
+  }
+}
+
+function writeThemeMode(mode){
+  try { localStorage.setItem(THEME_KEY, mode); } catch {}
+}
+
+function systemTheme(){
   const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-  document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+  return dark ? "dark" : "light";
+}
+
+function applyTheme(mode){
+  const m = mode || readThemeMode();
+  const theme = (m === "auto") ? systemTheme() : m;
+  document.documentElement.setAttribute("data-theme", theme);
 }
 
 function applyMotionFromSystem(){
@@ -15,22 +36,40 @@ function applyMotionFromSystem(){
   document.documentElement.setAttribute("data-motion", reduce ? "reduce" : "ok");
 }
 
+export function getThemeMode(){
+  return readThemeMode();
+}
+
+export function getEffectiveTheme(){
+  return document.documentElement.getAttribute("data-theme") || "light";
+}
+
+export function setThemeMode(mode){
+  const m = (mode === "light" || mode === "dark" || mode === "auto") ? mode : "auto";
+  writeThemeMode(m);
+  applyTheme(m);
+}
+
 export function initPrefs(){
-  applyThemeFromSystem();
+  applyTheme(readThemeMode());
   applyMotionFromSystem();
 
   if (window.matchMedia) {
     const m = window.matchMedia("(prefers-color-scheme: dark)");
-    if (m.addEventListener) m.addEventListener("change", applyThemeFromSystem);
-    else if (m.addListener) m.addListener(applyThemeFromSystem);
+    const onThemeChange = () => {
+      if (readThemeMode() === "auto") applyTheme("auto");
+    };
+    if (m.addEventListener) m.addEventListener("change", onThemeChange);
+    else if (m.addListener) m.addListener(onThemeChange);
 
     const r = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (r.addEventListener) r.addEventListener("change", applyMotionFromSystem);
-    else if (r.addListener) r.addListener(applyMotionFromSystem);
+    const onMotionChange = () => applyMotionFromSystem();
+    if (r.addEventListener) r.addEventListener("change", onMotionChange);
+    else if (r.addListener) r.addListener(onMotionChange);
   }
 }
 
-// Совместимость со старыми страницами (кнопки/селекты мы скрываем CSS-ом)
+// Совместимость со старыми страницами
 export function wirePrefs(){
   // no-op
 }

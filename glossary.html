@@ -36,22 +36,24 @@
   </header>
 
   <main class="container" id="appRoot">
-    <section class="card" style="margin-top:18px">
+    <section class="gallery is-single" style="margin-top:18px" aria-label="Иллюстрация">
+      <figure class="imgcard">
+        <img class="illus" src="./assets/img/illus/glossary.svg" alt="Иллюстрация: таблица"/>
+        <figcaption class="small">Справочник</figcaption>
+      </figure>
+    </section>
+
+    <section class="card" style="margin-top:14px">
       <div class="card-pad">
         <h1 style="margin:0 0 10px">Справочник</h1>
-        <p class="lead">Определения + мини‑шпаргалки. Разделы можно сворачивать.</p>
-
-        <div class="tile" style="margin-top:12px">
-          <b>Совет</b>
-          <div class="small" style="margin-top:8px">Если в тестах встретилось незнакомое слово — открой раздел «Справочник» и добавь его в свой список повторения.</div>
-        </div>
+        <p class="lead">Термины и короткие правила. Разделы можно сворачивать.</p>
       </div>
     </section>
 
     <details class="dict" open>
       <summary>
         <div class="group-title"><b>База</b><span class="tag">термины</span></div>
-        <span class="tag">развернуть</span>
+        <span class="tag">раздел</span>
       </summary>
       <div class="dict-body">
         <div class="dict-grid">
@@ -71,7 +73,7 @@
     <details class="dict">
       <summary>
         <div class="group-title"><b>Связь и строение</b><span class="tag">свойства</span></div>
-        <span class="tag">развернуть</span>
+        <span class="tag">раздел</span>
       </summary>
       <div class="dict-body">
         <div class="dict-grid">
@@ -88,7 +90,7 @@
     <details class="dict">
       <summary>
         <div class="group-title"><b>Растворы</b><span class="tag">концентрации</span></div>
-        <span class="tag">развернуть</span>
+        <span class="tag">раздел</span>
       </summary>
       <div class="dict-body">
         <div class="dict-grid">
@@ -105,7 +107,7 @@
     <details class="dict">
       <summary>
         <div class="group-title"><b>Кислоты, основания, соли</b><span class="tag">неорганика</span></div>
-        <span class="tag">развернуть</span>
+        <span class="tag">раздел</span>
       </summary>
       <div class="dict-body">
         <div class="dict-grid">
@@ -122,7 +124,7 @@
     <details class="dict">
       <summary>
         <div class="group-title"><b>ОВР</b><span class="tag">электроны</span></div>
-        <span class="tag">развернуть</span>
+        <span class="tag">раздел</span>
       </summary>
       <div class="dict-body">
         <div class="dict-grid">
@@ -135,13 +137,6 @@
         </div>
       </div>
     </details>
-
-    <section class="gallery is-single" style="margin-top:14px" aria-label="Иллюстрация">
-      <figure class="imgcard">
-        <img class="illus" src="./assets/img/illus/glossary.svg" alt="Иллюстрация: таблица"/>
-        <figcaption class="small">Справочник</figcaption>
-      </figure>
-    </section>
 
     <div class="footer">
       <hr class="sep"/>

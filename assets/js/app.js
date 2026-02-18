@@ -1,12 +1,58 @@
 // app.js
 // Минималистичная логика сайта: PWA + UI‑фичи + лёгкий лайтбокс для иллюстраций.
 
+import { getEffectiveTheme, getThemeMode, setThemeMode } from "./prefs.js";
+
 export function initTheme(){
-  // Тема управляется через assets/js/prefs.js по настройке системы.
+  // Тема управляется через assets/js/prefs.js.
 }
 
 export function wireThemeToggle(){
-  // Ручной переключатель темы отключён: оставляем кнопку скрытой (CSS).
+  const nav = document.querySelector(".navlinks");
+  if (!nav) return;
+
+  // Не добавляем повторно
+  if (nav.querySelector("[data-role='themeSwitch']")) return;
+
+  const wrap = document.createElement("label");
+  wrap.className = "theme-switch";
+  wrap.setAttribute("data-role", "themeSwitch");
+  wrap.setAttribute("title", "Переключить светлую/тёмную тему");
+
+  const input = document.createElement("input");
+  input.type = "checkbox";
+  input.className = "theme-toggle";
+  input.setAttribute("aria-label", "Тёмная тема");
+
+  const text = document.createElement("span");
+  text.className = "small";
+  text.textContent = "Тема";
+
+  const eff = getEffectiveTheme();
+  input.checked = (eff === "dark");
+
+  input.addEventListener("change", () => {
+    setThemeMode(input.checked ? "dark" : "light");
+    // после смены обновим состояние на случай, если логика изменится
+    input.checked = (getEffectiveTheme() === "dark");
+  });
+
+  // Long-press / ПКМ — вернуть авто
+  wrap.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    setThemeMode("auto");
+    input.checked = (getEffectiveTheme() === "dark");
+    const mode = getThemeMode();
+    wrap.classList.toggle("is-auto", mode === "auto");
+  });
+
+  wrap.appendChild(input);
+  wrap.appendChild(text);
+
+  // Вставляем ближе к концу, но до кнопки «Настройки» (она добавится позже)
+  nav.appendChild(wrap);
+
+  wrap.classList.toggle("is-auto", getThemeMode() === "auto");
 }
 
 export function wirePWA(){
@@ -98,7 +144,7 @@ function wireSettings(){
   const nav = qs(".navlinks");
   if (!nav) return;
 
-  // Кнопка настроек (не ломаем верстку: это обычная btn)
+  // Кнопка настроек
   const btn = document.createElement("button");
   btn.type = "button";
   btn.className = "btn btn-ghost";
@@ -403,6 +449,7 @@ function enhanceGallery(){
 document.addEventListener("DOMContentLoaded", () => {
   applyUIPrefs();
   wireConnectivity();
+  wireThemeToggle();
   wireSettings();
   enhanceGallery();
 });
