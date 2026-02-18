@@ -1,4 +1,5 @@
 const STORE_KEY = "chem_quiz_progress_v1";
+const SETTINGS_KEY = "chem_quiz_settings_v1";
 
 function loadProgress(){
   try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
@@ -6,6 +7,17 @@ function loadProgress(){
 }
 function saveProgress(obj){
   localStorage.setItem(STORE_KEY, JSON.stringify(obj));
+}
+
+function loadSettings(){
+  try {
+    return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{\"trainer\":true}");
+  } catch {
+    return { trainer: true };
+  }
+}
+function saveSettings(obj){
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(obj));
 }
 
 function shuffle(arr){
@@ -34,38 +46,97 @@ export async function initQuiz(){
 
   const data = await fetch("./assets/data/tests.json").then(r => r.json());
   const progress = loadProgress();
+  const settings = loadSettings();
 
-  data.tests.forEach(t => {
-    const done = progress[t.id]?.done;
-    const item = el("div", {class:"item", "data-id": t.id},
-      `<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-         <div>
-           <b>${t.title}</b><div class="small">${t.description}</div>
-           <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
-             <span class="tag">${t.category}</span>
-             <span class="tag">${t.questions.length} вопросов</span>
-             ${t.timerSec ? `<span class="tag">таймер</span>` : ``}
+  const search = document.querySelector("#testSearch");
+  const catSel = document.querySelector("#testCategory");
+  const trainerMode = document.querySelector("#trainerMode");
+  const progressInfo = document.querySelector("#progressInfo");
+
+  if(trainerMode){
+    trainerMode.checked = !!settings.trainer;
+    trainerMode.addEventListener("change", () => {
+      settings.trainer = trainerMode.checked;
+      saveSettings(settings);
+    });
+  }
+
+  // категории
+  const categories = Array.from(new Set(data.tests.map(t => t.category))).sort((a,b)=>a.localeCompare(b));
+  if(catSel){
+    catSel.innerHTML = "";
+    catSel.appendChild(el("option", {value:""}, "Все"));
+    categories.forEach(c => catSel.appendChild(el("option", {value:c}, c)));
+  }
+
+  // прогресс
+  if(progressInfo){
+    const done = Object.values(progress).filter(x => x?.done).length;
+    const total = data.tests.length;
+    let avg = 0;
+    const pcts = Object.values(progress).filter(x => x?.done && typeof x.pct === "number").map(x => x.pct);
+    if(pcts.length) avg = Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length);
+    progressInfo.textContent = `Пройдено: ${done}/${total}. Средний результат: ${pcts.length ? avg+"%" : "—"}.`;
+  }
+
+  function matches(t){
+    const q = (search?.value || "").trim().toLowerCase();
+    const cat = catSel?.value || "";
+    if(cat && t.category !== cat) return false;
+    if(!q) return true;
+    const hay = `${t.title} ${t.description} ${t.category}`.toLowerCase();
+    return hay.includes(q);
+  }
+
+  function renderList(){
+    listNode.innerHTML = "";
+    const tests = data.tests.filter(matches);
+
+    if(!tests.length){
+      listNode.appendChild(el("div", {class:"small"}, "Ничего не найдено. Попробуй другой запрос."));
+      return;
+    }
+
+    tests.forEach(t => {
+      const done = progress[t.id]?.done;
+      const pct = progress[t.id]?.pct;
+      const item = el("div", {class:"item", "data-id": t.id},
+        `<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+           <div>
+             <b>${t.title}</b>
+             <div class="small">${t.description}</div>
+             <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+               <span class="tag">${t.category}</span>
+               <span class="tag">${t.questions.length} вопросов</span>
+               ${t.timerSec ? `<span class="tag">таймер</span>` : ``}
+               ${done && typeof pct === "number" ? `<span class="tag">${pct}%</span>` : ``}
+             </div>
            </div>
-         </div>
-         <span class="tag">${done ? "пройден" : "новый"}</span>
-       </div>`
-    );
-    item.addEventListener("click", () => runTest(data, t.id));
-    listNode.appendChild(item);
-  });
+           <span class="tag">${done ? "пройден" : "новый"}</span>
+         </div>`
+      );
+      item.addEventListener("click", () => runTest(data, t.id, loadSettings()));
+      listNode.appendChild(item);
+    });
+  }
+
+  search?.addEventListener("input", renderList);
+  catSel?.addEventListener("change", renderList);
 
   boxNode.innerHTML = `
     <div class="card-pad">
-      <h2>Выбери тест слева</h2>
-      <p>Результаты сохраняются в этом браузере.</p>
+      <h2>Выбери тест</h2>
+      <p>Включи «Режим тренировки», если нужны пояснения и подсказки.</p>
+      <p class="small">Результаты сохраняются только на этом устройстве (в браузере).</p>
     </div>
   `;
+
+  renderList();
 }
 
-async function runTest(data, testId){
+async function runTest(data, testId, settings){
   const test = data.tests.find(t => t.id === testId);
   const boxNode  = document.querySelector("#quizBox");
-  const progress = loadProgress();
 
   let questions = test.randomize ? shuffle(test.questions) : [...test.questions];
   questions = questions.map(q => ({
@@ -79,22 +150,35 @@ async function runTest(data, testId){
   let left = test.timerSec || null;
   let timer = null;
 
-  const state = { chosen: {} };
+  const state = { chosen: {}, hintOpen: {} };
+
+  function fmt(sec){
+    const m = Math.floor(sec/60);
+    const s = sec%60;
+    return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  }
+
+  function stopAndBack(){
+    if(timer) clearInterval(timer);
+    window.location.href = "./tests.html";
+  }
 
   function render(){
     const q = questions[i];
     const multi = q.type === "multi";
     const chosen = state.chosen[q.id] || (multi ? [] : null);
+    const showExplain = settings?.trainer && !!q.explain && (state.hintOpen[q.id] || (multi ? chosen.length>0 : !!chosen));
 
     boxNode.innerHTML = `
       <div class="card-pad">
         <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
           <div>
             <b>${test.title}</b>
-            <div class="small">Вопрос ${i+1} из ${questions.length}</div>
+            <div class="small">Вопрос ${i+1} из ${questions.length} • ${settings?.trainer ? "тренировка" : "контроль"}</div>
           </div>
-          <div style="display:flex;gap:10px;align-items:center">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             ${left !== null ? `<span class="tag">Осталось: <span id="tleft">${fmt(left)}</span></span>` : ``}
+            ${q.explain ? `<button class="btn btn-ghost" id="hintBtn">${showExplain ? "Скрыть подсказку" : "Показать подсказку"}</button>` : ``}
             <button class="btn btn-ghost" id="exitBtn">Выйти</button>
           </div>
         </div>
@@ -103,6 +187,8 @@ async function runTest(data, testId){
 
         <h3 class="qtitle">${q.prompt}</h3>
         <div id="answers"></div>
+
+        ${showExplain ? `<div class="callout" role="note"><b>Пояснение</b><div class="small" style="margin-top:6px">${q.explain}</div></div>` : ``}
 
         <div class="form-actions">
           <button class="btn btn-ghost" id="prevBtn" ${i===0 ? "disabled" : ""}>Назад</button>
@@ -114,22 +200,23 @@ async function runTest(data, testId){
     `;
 
     boxNode.querySelector("#exitBtn").onclick = () => stopAndBack();
-    const ans = boxNode.querySelector("#answers");
 
+    const hintBtn = boxNode.querySelector("#hintBtn");
+    if(hintBtn){
+      hintBtn.onclick = () => {
+        state.hintOpen[q.id] = !state.hintOpen[q.id];
+        render();
+      };
+    }
+
+    const ans = boxNode.querySelector("#answers");
     q.answers.forEach((a, idx) => {
       const id = `a_${q.id}_${idx}`;
       const checked = multi ? chosen.includes(a.id) : chosen === a.id;
       const row = el("label", {class:"answer", for:id},
-        `<input ${multi ? "type='checkbox'" : "type='radio'"} name="q_${q.id}" id="${id}" ${checked ? "checked":""}/>
+        `<input ${multi ? "type='checkbox'" : "type='radio'"} name="q_${q.id}" id="${id}" ${checked ? "checked": ""}/>
          ${a.text}`
       );
-
-      row.addEventListener("click", (e) => {
-        // чтобы клик по label не дергал дважды
-        if(e.target.tagName.toLowerCase() === "input") return;
-        const input = row.querySelector("input");
-        input.checked = !input.checked;
-      });
 
       row.querySelector("input").addEventListener("change", (e) => {
         if(multi){
@@ -139,6 +226,8 @@ async function runTest(data, testId){
         } else {
           state.chosen[q.id] = a.id;
         }
+        if(settings?.trainer && q.explain) state.hintOpen[q.id] = true;
+        render();
       });
 
       ans.appendChild(row);
@@ -155,16 +244,23 @@ async function runTest(data, testId){
     if(timer) clearInterval(timer);
 
     correct = 0;
+    const mistakes = [];
+
     questions.forEach(q => {
       const chosen = state.chosen[q.id];
       const right = q.correct;
+
+      let ok = false;
       if(q.type === "single"){
-        if(chosen && chosen === right) correct++;
+        ok = !!chosen && chosen === right;
       } else {
         const a = new Set(chosen || []);
         const b = new Set(right);
-        if(a.size === b.size && [...a].every(x => b.has(x))) correct++;
+        ok = (a.size === b.size && [...a].every(x => b.has(x)));
       }
+
+      if(ok) correct++;
+      else mistakes.push(q);
     });
 
     const total = questions.length;
@@ -175,29 +271,28 @@ async function runTest(data, testId){
     p[test.id] = { done: true, score: correct, total, pct, spentSec, at: new Date().toISOString() };
     saveProgress(p);
 
+    const mistakesHtml = mistakes.length
+      ? `<hr class="sep"/>
+         <h3 style="margin:0 0 10px">Ошибки (${mistakes.length})</h3>
+         <div class="small">Ниже — вопросы, где ответ был неверным или не выбран.</div>
+         <div style="margin-top:10px;display:grid;gap:10px">
+           ${mistakes.slice(0,8).map(m => `<div class="tile"><b>${m.prompt}</b>${m.explain ? `<div class="small" style="margin-top:6px">${m.explain}</div>` : ``}</div>`).join("")}
+         </div>
+         ${mistakes.length>8 ? `<div class="small" style="margin-top:10px">Показаны первые 8 ошибок.</div>` : ``}`
+      : `<hr class="sep"/><div class="callout"><b>Отлично</b><div class="small" style="margin-top:6px">Ошибок нет.</div></div>`;
+
     boxNode.innerHTML = `
       <div class="card-pad">
-        <h2>Готово: ${pct}%</h2>
+        <h2>Результат: ${pct}%</h2>
         <p>Верных: ${correct} из ${total}. Время: ${fmt(spentSec)}.</p>
         <div class="form-actions">
           <button class="btn" id="againBtn">Пройти еще раз</button>
           <a class="btn btn-ghost" href="./tests.html">К списку тестов</a>
         </div>
-        <p class="small">Подсказка: включи randomize в tests.json, чтобы вопросы перемешивались.</p>
+        ${mistakesHtml}
       </div>
     `;
-    boxNode.querySelector("#againBtn").onclick = () => runTest(data, testId);
-  }
-
-  function fmt(sec){
-    const m = Math.floor(sec/60);
-    const s = sec%60;
-    return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-  }
-
-  function stopAndBack(){
-    if(timer) clearInterval(timer);
-    window.location.href = "./tests.html";
+    boxNode.querySelector("#againBtn").onclick = () => runTest(data, testId, settings);
   }
 
   if(left !== null){

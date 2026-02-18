@@ -11,14 +11,25 @@
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
+
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
         <a href="./history-tests.html">История</a>
         <a href="./chemistry.html">Химия</a>
+        <a href="./glossary.html">Справочник</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
+
         <span class="nav-sep" aria-hidden="true"></span>
+
+        <label class="small" for="styleSelect" style="margin-right:6px">Стиль</label>
+        <select id="styleSelect" data-action="style-select" class="select" aria-label="Выбор стиля">
+          <option value="minimal">Минимализм</option>
+          <option value="aurora">Аура</option>
+          <option value="mono">Моно</option>
+        </select>
+
         <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
         <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
         <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
@@ -31,44 +42,54 @@
   <main class="container">
     <div class="card">
       <div class="card-pad">
-        <h2>Химия: мини‑конспект</h2>
-        <p>Этот раздел специально написан простым языком. Он подходит и школьнику, и взрослому, который хочет «вспомнить базу».</p>
+        <h2>Химия: теория (короткими блоками)</h2>
+        <p>Раздел помогает быстро повторить тему и сразу перейти к тестам.</p>
       </div>
     </div>
 
     <div class="grid">
       <div class="tile">
-        <h3>Строение атома</h3>
-        <p>Протоны/нейтроны в ядре, электроны вокруг. Порядковый номер = число протонов.</p>
+        <h3>1) Строение атома</h3>
+        <p>Порядковый номер элемента = число протонов. Электроны определяют химические свойства.</p>
       </div>
       <div class="tile">
-        <h3>Химическая связь</h3>
-        <p>Ионная, ковалентная, металлическая — зависит от того, как «делятся» электронами.</p>
+        <h3>2) Периодический закон</h3>
+        <p>В периоде слева направо растёт заряд ядра; свойства меняются закономерно.</p>
       </div>
       <div class="tile">
-        <h3>Реакции</h3>
-        <p>Соединение, разложение, замещение, обмен. Уравнивание — чтобы атомов слева и справа было поровну.</p>
+        <h3>3) Химическая связь</h3>
+        <p>Ионная — перенос электронов, ковалентная — общие пары, металлическая — «электронный газ».</p>
       </div>
     </div>
 
     <div class="card" style="margin-top:14px">
       <div class="card-pad">
-        <h2>Быстрый план повторения</h2>
+        <h2>Реакции и уравнивания</h2>
         <ul>
-          <li>Таблица Менделеева: периоды/группы, заряд ядра, валентность (в базе).</li>
-          <li>Формулы: относительная молекулярная масса, количество вещества (моль), молярная масса.</li>
-          <li>Растворы: массовая доля, концентрации (на нужном уровне).</li>
+          <li>Типы: соединение, разложение, замещение, обмен.</li>
+          <li>Уравнивание — чтобы число атомов каждого элемента слева и справа совпадало.</li>
+          <li>Признаки реакции: газ, осадок, изменение цвета/температуры.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-pad">
+        <h2>Растворы (база)</h2>
+        <ul>
+          <li>Массовая доля вещества: в процентах показывает, сколько вещества в растворе.</li>
+          <li>Всегда следить за единицами и аккуратно подставлять в формулы.</li>
         </ul>
         <div class="form-actions" style="margin-top:14px">
-          <a class="btn" href="./tests.html">Открыть тесты по химии</a>
-          <a class="btn btn-ghost" href="./theory-tests.html">Как делать тесты</a>
+          <a class="btn" href="./tests.html">Перейти к тестам по химии</a>
+          <a class="btn btn-ghost" href="./glossary.html">Открыть справочник</a>
         </div>
       </div>
     </div>
 
     <div class="footer">
       <hr class="sep"/>
-      <div class="small">Хочешь раздел «ЕГЭ‑формат» или «8–9 класс» — скажи, подстрою.</div>
+      <div class="small">Подборка тем расширяется через банк тестов и справочник.</div>
     </div>
   </main>
 

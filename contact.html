@@ -11,14 +11,25 @@
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
+
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
         <a href="./history-tests.html">История</a>
         <a href="./chemistry.html">Химия</a>
+        <a href="./glossary.html">Справочник</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
+
         <span class="nav-sep" aria-hidden="true"></span>
+
+        <label class="small" for="styleSelect" style="margin-right:6px">Стиль</label>
+        <select id="styleSelect" data-action="style-select" class="select" aria-label="Выбор стиля">
+          <option value="minimal">Минимализм</option>
+          <option value="aurora">Аура</option>
+          <option value="mono">Моно</option>
+        </select>
+
         <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
         <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
         <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
@@ -32,7 +43,7 @@
     <div class="card">
       <div class="card-pad">
         <h2>Обратная связь</h2>
-        <p>Форма отправляет письмо через EmailJS (без своего сервера). Чтобы заработало, вставь ключи в <code>assets/js/email.js</code>.</p>
+        <p>Сообщение отправляется на почту через EmailJS. Для работы нужно вставить ключи в <code>assets/js/email.js</code>.</p>
       </div>
     </div>
 
@@ -42,7 +53,7 @@
           <div class="form-row">
             <div>
               <label class="small" for="name">Имя</label>
-              <input id="name" name="name" autocomplete="name" required placeholder="Например: Артём"/>
+              <input id="name" name="name" autocomplete="name" required placeholder="Имя"/>
             </div>
             <div>
               <label class="small" for="email">Почта</label>
@@ -52,7 +63,7 @@
 
           <div style="margin-top:12px">
             <label class="small" for="message">Сообщение</label>
-            <textarea id="message" name="message" required placeholder="Что улучшить? Какие тесты добавить?"></textarea>
+            <textarea id="message" name="message" required placeholder="Текст сообщения"></textarea>
           </div>
 
           <div class="form-actions">
@@ -67,7 +78,7 @@
 
     <div class="footer">
       <hr class="sep"/>
-      <div class="small">Если хочешь без сторонних сервисов — можно сделать отправку через свой backend (Node/PHP).</div>
+      <div class="small">Если отправка не работает — проверь ключи EmailJS и подключение к интернету.</div>
     </div>
   </main>
 
