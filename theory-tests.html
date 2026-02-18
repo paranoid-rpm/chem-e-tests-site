@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
 </head>
-<body>
+<body data-ink="b">
   <header class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
-
+      <a class="brand" href="./index.html" aria-label="На главную"><span class="pill">ChemTests</span></a>
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
@@ -20,87 +19,43 @@
         <a href="./glossary.html">Справочник</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
-
-        <span class="nav-sep" aria-hidden="true"></span>
-
-        <label class="small" for="styleSelect" style="margin-right:6px">Стиль</label>
-        <select id="styleSelect" data-action="style-select" class="select" aria-label="Выбор стиля">
-          <option value="minimal">Минимализм</option>
-          <option value="aurora">Аура</option>
-          <option value="mono">Моно</option>
-        </select>
-
-        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
-        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
-        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
-        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
-        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="card">
-      <div class="card-pad">
-        <h2>Теория тестов</h2>
-        <p>Хороший тест — это не «много вопросов», а понятные цели, корректные задания и аккуратная интерпретация результатов.</p>
-      </div>
-    </div>
+    <div class="card"><div class="card-pad">
+      <h2>Теория тестов</h2>
+      <p>Хороший тест — это понятная цель, аккуратные задания и честная интерпретация результата.</p>
+    </div></div>
 
     <div class="grid">
-      <div class="tile">
-        <h3>Валидность</h3>
-        <p>Тест измеряет то, что задумано. Например, если проверяется «понимание реакций», вопросы должны требовать применения, а не только запоминания.</p>
-      </div>
-      <div class="tile">
-        <h3>Надежность</h3>
-        <p>Результаты устойчивы: при повторении в похожих условиях баллы не «скачут» из‑за случайностей.</p>
-      </div>
-      <div class="tile">
-        <h3>Справедливость</h3>
-        <p>Условия и формулировки одинаково понятны разным ученикам, без лишних «ловушек» и двусмысленностей.</p>
-      </div>
+      <div class="tile"><h3>Валидность</h3><p>Тест измеряет то, что задумано — без подмены навыка и без лишних «ловушек».</p></div>
+      <div class="tile"><h3>Надёжность</h3><p>Результаты устойчивы: при повторе в похожих условиях баллы не «скачут» от случайностей.</p></div>
+      <div class="tile"><h3>Справедливость</h3><p>Одинаково понятные формулировки и условия для разных учеников.</p></div>
     </div>
 
-    <div class="card" style="margin-top:14px">
-      <div class="card-pad">
-        <h2>Как составлять задания</h2>
-        <ul>
-          <li>Одна мысль — один вопрос. Не смешивать два условия в одном пункте.</li>
-          <li>Дистракторы (неверные варианты) должны быть правдоподобными и одинаковыми по стилю.</li>
-          <li>Избегать подсказок: «всегда/никогда», различие по длине ответа, грамматические подсказки.</li>
-          <li>Проверять разные уровни: узнавание → применение → объяснение причин.</li>
-        </ul>
+    <div class="card" style="margin-top:14px"><div class="card-pad">
+      <h2>Как составлять задания</h2>
+      <ul>
+        <li>Одна мысль — один вопрос.</li>
+        <li>Неверные варианты должны быть правдоподобными и одинаковыми по стилю.</li>
+        <li>Убирай подсказки: «всегда/никогда», разная длина ответов, грамматика.</li>
+        <li>Проверяй применение, а не только запоминание.</li>
+      </ul>
+      <div class="form-actions" style="margin-top:14px">
+        <a class="btn" href="./tests.html">Перейти к тестам</a>
+        <a class="btn btn-ghost" href="./history-tests.html">История тестирования</a>
       </div>
-    </div>
+    </div></div>
 
-    <div class="card" style="margin-top:14px">
-      <div class="card-pad">
-        <h2>Электронные тесты на химии: типовые сценарии</h2>
-        <ul>
-          <li>Актуализация: 3–5 вопросов в начале темы, чтобы вспомнить базу.</li>
-          <li>Тренажер: несколько попыток + пояснения к типичным ошибкам.</li>
-          <li>Контроль: ограниченные попытки, таймер, перемешивание, банк вариантов.</li>
-          <li>Разбор: после контроля — короткий тест на «ошибки недели».</li>
-        </ul>
-        <div class="form-actions" style="margin-top:14px">
-          <a class="btn" href="./tests.html">Перейти к тестам</a>
-          <a class="btn btn-ghost" href="./history-tests.html">История тестирования</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <hr class="sep"/>
-      <div class="small">Для практики смотри раздел «Тесты» (есть методика и химия).</div>
-    </div>
+    <div class="footer"><hr class="sep"/><div class="small">Тема выбирается автоматически по настройке системы.</div></div>
   </main>
 
   <script type="module">
-    import { initTheme, wireThemeToggle } from "./assets/js/app.js";
-    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
-    initTheme(); wireThemeToggle();
-    initPrefs(); wirePrefs();
+    import "./assets/js/prefs.js";
+    import { wirePWA } from "./assets/js/app.js";
+    wirePWA();
   </script>
 </body>
 </html>

@@ -7,11 +7,10 @@
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
 </head>
-<body>
+<body data-ink="c">
   <header class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./index.html"><span class="pill">ChemTests</span></a>
-
+      <a class="brand" href="./index.html" aria-label="На главную"><span class="pill">ChemTests</span></a>
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
@@ -20,77 +19,48 @@
         <a href="./glossary.html">Справочник</a>
         <a href="./gallery.html">Фото</a>
         <a href="./contact.html">Контакты</a>
-
-        <span class="nav-sep" aria-hidden="true"></span>
-
-        <label class="small" for="styleSelect" style="margin-right:6px">Стиль</label>
-        <select id="styleSelect" data-action="style-select" class="select" aria-label="Выбор стиля">
-          <option value="minimal">Минимализм</option>
-          <option value="aurora">Аура</option>
-          <option value="mono">Моно</option>
-        </select>
-
-        <button class="btn btn-ghost" data-action="font-dec" title="Уменьшить текст">A−</button>
-        <button class="btn btn-ghost" data-action="font-inc" title="Увеличить текст">A+</button>
-        <button class="btn btn-ghost" data-action="toggle-contrast" title="Высокий контраст">Контраст</button>
-        <button class="btn btn-ghost" data-action="toggle-motion" title="Меньше анимаций">Движение</button>
-        <button class="btn btn-ghost" data-action="toggle-theme" title="Светлая/темная тема">Тема</button>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <div class="card">
-      <div class="card-pad">
-        <h2>Обратная связь</h2>
-        <p>Сообщение отправляется на почту через EmailJS. Для работы нужно вставить ключи в <code>assets/js/email.js</code>.</p>
-      </div>
-    </div>
+    <div class="card"><div class="card-pad">
+      <h2>Контакты</h2>
+      <p>Если хочешь добавить свои фотографии/тесты или поправить ошибки — напиши.</p>
+    </div></div>
 
-    <div class="card" style="margin-top:14px">
-      <div class="card-pad">
-        <form id="contactForm" aria-label="Форма обратной связи">
-          <div class="form-row">
-            <div>
-              <label class="small" for="name">Имя</label>
-              <input id="name" name="name" autocomplete="name" required placeholder="Имя"/>
-            </div>
-            <div>
-              <label class="small" for="email">Почта</label>
-              <input id="email" name="email" type="email" autocomplete="email" required placeholder="name@example.com"/>
-            </div>
+    <div class="card" style="margin-top:14px"><div class="card-pad">
+      <form id="contactForm" aria-label="Форма обратной связи">
+        <div class="form-row">
+          <div>
+            <label class="small" for="name">Имя</label>
+            <input id="name" name="name" autocomplete="name"/>
           </div>
-
-          <div style="margin-top:12px">
-            <label class="small" for="message">Сообщение</label>
-            <textarea id="message" name="message" required placeholder="Текст сообщения"></textarea>
+          <div>
+            <label class="small" for="email">Почта</label>
+            <input id="email" name="email" type="email" autocomplete="email"/>
           </div>
+        </div>
+        <div style="margin-top:12px">
+          <label class="small" for="message">Сообщение</label>
+          <textarea id="message" name="message"></textarea>
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Отправить</button>
+        </div>
+        <div id="emailStatus" class="small" style="margin-top:10px"></div>
+      </form>
+    </div></div>
 
-          <div class="form-actions">
-            <button class="btn" type="submit">Отправить</button>
-            <a class="btn btn-ghost" href="./index.html">На главную</a>
-          </div>
-
-          <div id="contactStatus" class="small" style="margin-top:10px"></div>
-        </form>
-      </div>
-    </div>
-
-    <div class="footer">
-      <hr class="sep"/>
-      <div class="small">Если отправка не работает — проверь ключи EmailJS и подключение к интернету.</div>
-    </div>
+    <div class="footer"><hr class="sep"/><div class="small">Тема выбирается автоматически по настройке системы.</div></div>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script type="module">
-    import { initTheme, wireThemeToggle } from "./assets/js/app.js";
-    import { initPrefs, wirePrefs } from "./assets/js/prefs.js";
-    import { initContactForm } from "./assets/js/email.js";
-
-    initTheme(); wireThemeToggle();
-    initPrefs(); wirePrefs();
-    initContactForm();
+    import "./assets/js/prefs.js";
+    import { wirePWA } from "./assets/js/app.js";
+    import { initEmailForm } from "./assets/js/email.js";
+    wirePWA();
+    initEmailForm();
   </script>
 </body>
 </html>

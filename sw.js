@@ -1,4 +1,4 @@
-const CACHE = "chem-e-tests-v3";
+const CACHE = "chem-e-tests-v4";
 
 const ASSETS = [
   "./",
@@ -18,7 +18,15 @@ const ASSETS = [
   "./assets/js/questionBank.js",
   "./assets/js/email.js",
   "./assets/data/tests.json",
-  "./assets/icons/favicon.svg"
+  "./assets/icons/favicon.svg",
+  "./assets/img/header-wave-light.svg",
+  "./assets/img/header-wave-dark.svg",
+  "./assets/img/ink-bg-a-light.svg",
+  "./assets/img/ink-bg-a-dark.svg",
+  "./assets/img/ink-bg-b-light.svg",
+  "./assets/img/ink-bg-b-dark.svg",
+  "./assets/img/ink-bg-c-light.svg",
+  "./assets/img/ink-bg-c-dark.svg"
 ];
 
 self.addEventListener("install", (e) => {
@@ -44,7 +52,6 @@ async function networkFirst(request){
   } catch {
     const cached = await cache.match(request);
     if (cached) return cached;
-    // fallback for navigation
     if (request.mode === "navigate") return cache.match("./index.html");
     throw new Error("offline");
   }
@@ -67,16 +74,13 @@ self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
 
-  // HTML: network-first, чтобы изменения интерфейса (CSS/JS) не залипали в кэше
   if (req.mode === "navigate") {
     e.respondWith(networkFirst(req));
     return;
   }
 
   const url = new URL(req.url);
-  const sameOrigin = url.origin === self.location.origin;
-  if (!sameOrigin) return;
+  if (url.origin !== self.location.origin) return;
 
-  // Статика: cache-first, но обновляем в фоне
   e.respondWith(staleWhileRevalidate(req));
 });
