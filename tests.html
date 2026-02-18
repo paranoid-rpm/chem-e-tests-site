@@ -5,9 +5,40 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Тесты • ChemTests</title>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
-  <link rel="stylesheet" href="./assets/css/tests.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
   <meta name="description" content="Тесты по химии: тренировка и экзамен."/>
+
+  <!-- Page-only tweaks: compact + grouped list without global CSS changes -->
+  <style>
+    /* Make left list usable without scrolling the whole page */
+    #quizList{ max-height: calc(100vh - 360px); overflow:auto; padding-right:6px; }
+    @media (max-width: 960px){ #quizList{ max-height: none; overflow: visible; padding-right:0; } }
+
+    .list-tools{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+
+    details.group, details.subgroup{ border:1px solid var(--border); border-radius:16px; background: transparent; overflow:hidden; }
+    details.group{ margin:10px 0; }
+    details.subgroup{ margin:10px 0 0; }
+
+    details summary{ cursor:pointer; user-select:none; display:flex; justify-content:space-between; gap:12px; align-items:flex-start; padding:12px 14px; }
+    details summary::-webkit-details-marker{ display:none; }
+
+    .group-title{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .group-hint{ margin-top:4px; }
+
+    .group-body{ border-top:1px solid var(--border); padding:12px 14px; display:grid; gap:10px; }
+    .subgroup-body{ display:grid; gap:10px; padding-top:10px; }
+
+    .test-item{ border:1px solid var(--border); border-radius:16px; background: var(--card); padding:12px; }
+    .test-item:hover{ border-color: rgba(0,0,0,.25); }
+    [data-theme="dark"] .test-item:hover{ border-color: rgba(255,255,255,.28); }
+
+    .test-head{ display:flex; justify-content:space-between; gap:12px; align-items:flex-start; }
+    .test-title{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .test-desc{ margin-top:6px; }
+    .test-actions{ display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    .test-state{ white-space:nowrap; }
+  </style>
 </head>
 <body data-ink="b">
   <header class="nav">
@@ -33,7 +64,7 @@
         <h1 style="margin:0 0 10px">Тесты</h1>
         <p class="lead">Выбери вариант. Есть тренировка (с пояснениями) и экзамен (без подсказок, без «Назад»).</p>
 
-        <div class="form-row form-row-3" style="margin-top:12px">
+        <div class="form-row" style="margin-top:12px;grid-template-columns: 1.2fr .8fr 1fr">
           <div>
             <label class="small">Поиск</label>
             <input id="testSearch" placeholder="Например: кислоты"/>
@@ -46,9 +77,9 @@
             <label class="small">Сортировка</label>
             <select class="select" id="testSort">
               <option value="default" selected>По умолчанию</option>
-              <option value="title">По названию (А→Я)</option>
               <option value="fav">Избранное сверху</option>
-              <option value="progress">Сначала новые</option>
+              <option value="progress">Новые сверху</option>
+              <option value="title">По названию</option>
             </select>
           </div>
         </div>
@@ -66,9 +97,6 @@
             <input type="checkbox" id="favOnly"/>
             <span>Только избранное</span>
           </label>
-          <button class="btn btn-ghost" id="expandAll" type="button">Развернуть всё</button>
-          <button class="btn btn-ghost" id="collapseAll" type="button">Свернуть всё</button>
-          <span class="tag" id="shownInfo"></span>
           <span class="tag" id="progressInfo"></span>
         </div>
       </div>
@@ -79,6 +107,12 @@
         <div class="card-pad">
           <h2 style="margin:0 0 10px">Список тестов</h2>
           <div class="small">Подсказка: ★ — избранное, «Продолжить» появляется, если тест не завершён.</div>
+
+          <div class="list-tools">
+            <button class="btn btn-ghost" id="expandAll" type="button">Развернуть всё</button>
+            <button class="btn btn-ghost" id="collapseAll" type="button">Свернуть всё</button>
+            <span class="tag" id="shownInfo"></span>
+          </div>
         </div>
         <div class="card-pad" id="quizList"></div>
       </div>
