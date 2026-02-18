@@ -17,7 +17,7 @@ export function wireThemeToggle(){
   const wrap = document.createElement("label");
   wrap.className = "theme-switch";
   wrap.setAttribute("data-role", "themeSwitch");
-  wrap.setAttribute("title", "Переключить светлую/тёмную тему");
+  wrap.setAttribute("title", "Переключить светлую/тёмную тему (ПКМ — авто) ");
 
   const input = document.createElement("input");
   input.type = "checkbox";
@@ -33,25 +33,21 @@ export function wireThemeToggle(){
 
   input.addEventListener("change", () => {
     setThemeMode(input.checked ? "dark" : "light");
-    // после смены обновим состояние на случай, если логика изменится
     input.checked = (getEffectiveTheme() === "dark");
   });
 
-  // Long-press / ПКМ — вернуть авто
+  // ПКМ — вернуть авто
   wrap.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     setThemeMode("auto");
     input.checked = (getEffectiveTheme() === "dark");
-    const mode = getThemeMode();
-    wrap.classList.toggle("is-auto", mode === "auto");
+    wrap.classList.toggle("is-auto", getThemeMode() === "auto");
   });
 
   wrap.appendChild(input);
   wrap.appendChild(text);
 
-  // Вставляем ближе к концу, но до кнопки «Настройки» (она добавится позже)
   nav.appendChild(wrap);
-
   wrap.classList.toggle("is-auto", getThemeMode() === "auto");
 }
 
@@ -99,6 +95,19 @@ function clearHash(){
   history.replaceState(null, "", u);
 }
 
+function cleanupNavStrayText(){
+  // На случай случайно вставленного символа (например, «ф») между блоками шапки.
+  const inner = document.querySelector(".nav-inner");
+  if (!inner) return;
+
+  Array.from(inner.childNodes).forEach(n => {
+    if (n.nodeType !== 3) return; // text node
+    const t = String(n.textContent || "").replace(/\s+/g, " ").trim();
+    if (!t) return;
+    if (t.length <= 2) n.remove();
+  });
+}
+
 function applyUIPrefs(){
   const KEY = "chem_ui_prefs_v1";
   let p = { fontScale: 1, compact: false, motion: "auto" };
@@ -144,11 +153,14 @@ function wireSettings(){
   const nav = qs(".navlinks");
   if (!nav) return;
 
-  // Кнопка настроек
+  // Не добавляем повторно
+  if (nav.querySelector("[data-role='settingsBtn']")) return;
+
   const btn = document.createElement("button");
   btn.type = "button";
   btn.className = "btn btn-ghost";
   btn.textContent = "Настройки";
+  btn.setAttribute("data-role", "settingsBtn");
   btn.setAttribute("aria-label", "Открыть настройки");
 
   const modal = document.createElement("div");
@@ -187,7 +199,7 @@ function wireSettings(){
           </label>
         </div>
 
-        <div class="small">Совет: в тестах работают клавиши 1–4 для ответа и Enter для «Дальше».</div>
+        <div class="small">Подсказка: в тестах работают клавиши 1–4 для ответа и Enter для «Дальше».</div>
       </div>
 
       <div class="settings-foot">
@@ -251,7 +263,6 @@ function enhanceGallery(){
   const grid = qs(".gallery");
   if (!grid) return;
 
-  // Если вдруг кто-то пришёл по старой ссылке — убираем hash и не автозапускаем просмотр.
   if (parsePhotoHash() != null) clearHash();
 
   const imgs = qsa("img", grid).filter(img => img.getAttribute("src"));
@@ -270,7 +281,6 @@ function enhanceGallery(){
     el: img
   }));
 
-  // Favorites (для картинок)
   const FAV_KEY = "chem_gallery_favs";
   const readFavs = () => {
     try { return new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]")); }
@@ -446,10 +456,18 @@ function enhanceGallery(){
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function boot(){
+  cleanupNavStrayText();
   applyUIPrefs();
   wireConnectivity();
   wireThemeToggle();
   wireSettings();
   enhanceGallery();
-});
+}
+
+// Важно: страницы импортируют app.js динамически; DOMContentLoaded может уже пройти.
+if (document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", boot, { once: true });
+} else {
+  boot();
+}
