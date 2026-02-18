@@ -1,4 +1,4 @@
-const CACHE = "chem-e-tests-v5";
+const CACHE = "chem-e-tests-v6";
 
 const ASSETS = [
   "./",
@@ -45,7 +45,8 @@ const ASSETS = [
   "./assets/img/photo-placeholder-16.svg",
   "./assets/img/photo-placeholder-17.svg",
   "./assets/img/photo-placeholder-18.svg",
-  "./assets/img/photos/README.md"
+  "./assets/img/photos/README.md",
+  "./assets/img/pages/README.md"
 ];
 
 self.addEventListener("install", (e) => {

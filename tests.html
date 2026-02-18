@@ -7,13 +7,10 @@
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
 </head>
-<body>
+<body data-ink="a">
   <header class="nav">
     <div class="container nav-inner">
-      <a class="brand" href="./index.html" aria-label="На главную">
-        <span class="pill">ChemTests</span>
-      </a>
-
+      <a class="brand" href="./index.html" aria-label="На главную"><span class="pill">ChemTests</span></a>
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
@@ -27,54 +24,50 @@
   </header>
 
   <main class="container">
-    <div class="card">
-      <div class="card-pad">
-        <h2>Тесты</h2>
-        <p>Выбери вариант слева или найди нужную тему через поиск и фильтр.</p>
+    <div class="card"><div class="card-pad">
+      <h2>Тесты</h2>
+      <p>Выбери вариант слева или найди нужную тему через поиск и фильтр.</p>
 
-        <div class="grid" style="grid-template-columns: 1.2fr .8fr 1fr; margin-top:12px">
-          <div class="tile">
-            <label class="small" for="testSearch">Поиск</label>
-            <input id="testSearch" placeholder="Например: растворы, валидность, безопасность"/>
-          </div>
-          <div class="tile">
-            <label class="small" for="testCategory">Категория</label>
-            <select id="testCategory" class="select"></select>
-          </div>
-          <div class="tile">
-            <div class="small">Режим</div>
-            <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:8px">
-              <input id="trainerMode" type="checkbox" style="width:auto"/>
-              Тренировка (с пояснениями)
-            </label>
-          </div>
+      <div class="grid" style="grid-template-columns: 1.2fr .8fr 1fr; margin-top:12px">
+        <div class="tile">
+          <label class="small" for="testSearch">Поиск</label>
+          <input id="testSearch" placeholder="Например: растворы, валидность, безопасность"/>
         </div>
-
-        <div class="small" id="progressInfo" style="margin-top:10px"></div>
+        <div class="tile">
+          <label class="small" for="testCategory">Категория</label>
+          <select id="testCategory" class="select"></select>
+        </div>
+        <div class="tile">
+          <div class="small">Режим</div>
+          <label class="small" style="display:flex;gap:8px;align-items:center;margin-top:8px">
+            <input id="trainerMode" type="checkbox" style="width:auto"/>
+            Тренировка (с пояснениями)
+          </label>
+        </div>
       </div>
-    </div>
+
+      <div class="small" id="progressInfo" style="margin-top:10px"></div>
+    </div></div>
+
+    <section class="gallery is-single" style="margin-top:14px" aria-label="Фото на странице">
+      <figure class="imgcard">
+        <img class="photo" src="./assets/img/pages/tests-01.jpg" alt="Фото: тестирование/урок" onerror="this.onerror=null;this.src='./assets/img/photo-placeholder-04.svg';"/>
+        <figcaption class="small">Тесты — 01</figcaption>
+      </figure>
+    </section>
 
     <section class="quiz" style="margin-top:14px">
-      <div class="card quiz-list">
-        <div class="card-pad">
-          <div id="quizList" aria-label="Список тестов"></div>
-        </div>
-      </div>
-
+      <div class="card quiz-list"><div class="card-pad"><div id="quizList" aria-label="Список тестов"></div></div></div>
       <div class="card" id="quizBox" aria-label="Окно теста"></div>
     </section>
 
-    <div class="footer">
-      <hr class="sep"/>
-      <div class="small">Тема выбирается автоматически по настройке системы.</div>
-    </div>
+    <div class="footer"><hr class="sep"/><div class="small">Тема выбирается автоматически по настройке системы.</div></div>
   </main>
 
   <script type="module">
     import "./assets/js/prefs.js";
     import { wirePWA } from "./assets/js/app.js";
     import { initQuiz } from "./assets/js/quiz.js";
-
     wirePWA();
     initQuiz();
   </script>
