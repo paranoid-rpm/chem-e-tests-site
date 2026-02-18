@@ -44,6 +44,14 @@ function isGalleryPage(){
   return p.endsWith("/gallery.html") || p.endsWith("gallery.html");
 }
 
+function parsePhotoHash(){
+  const m = (window.location.hash || "").match(/photo=(\d+)/);
+  if (!m) return null;
+  const n = parseInt(m[1], 10);
+  if (!Number.isFinite(n) || n <= 0) return null;
+  return n - 1;
+}
+
 function enhanceGallery(){
   const grid = qs(".gallery");
   if (!grid) return;
@@ -51,7 +59,16 @@ function enhanceGallery(){
   const imgs = qsa("img", grid).filter(img => img.getAttribute("src"));
   if (!imgs.length) return;
 
-  const allowHash = isGalleryPage();
+  // Всегда убираем #photo=... из URL, чтобы лайтбокс не «залипал» при обновлении.
+  // Если это gallery.html — мы можем открыть нужный элемент, но хэш всё равно не оставляем.
+  const hashIndex = parsePhotoHash();
+  if (hashIndex != null) {
+    const u = new URL(window.location.href);
+    u.hash = "";
+    history.replaceState(null, "", u);
+  }
+
+  const allowAutoOpen = isGalleryPage();
 
   // Ленивая загрузка по возможности
   imgs.forEach(img => {
@@ -130,19 +147,6 @@ function enhanceGallery(){
   let idx = 0;
   let timer = null;
 
-  function setHash(i){
-    if (!allowHash) return;
-    const u = new URL(window.location.href);
-    u.hash = `photo=${i+1}`;
-    history.replaceState(null, "", u);
-  }
-
-  function clearHash(){
-    const u = new URL(window.location.href);
-    u.hash = "";
-    history.replaceState(null, "", u);
-  }
-
   function render(){
     const cur = items[idx];
     imgEl.src = cur.src;
@@ -160,8 +164,6 @@ function enhanceGallery(){
       if (!card) return;
       card.classList.toggle("is-fav", isFav(favs, src));
     });
-
-    setHash(idx);
   }
 
   function open(i){
@@ -177,7 +179,6 @@ function enhanceGallery(){
     stop();
     lb.classList.add("hidden");
     document.body.classList.remove("modal-open");
-    clearHash();
   }
 
   function next(){ idx = (idx + 1) % items.length; render(); }
@@ -209,8 +210,9 @@ function enhanceGallery(){
   }
 
   async function copyLink(){
+    // Теперь URL без #photo=..., копируем прямую ссылку на файл.
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(items[idx].src);
       const btn = qs("[data-action='copy']", lb);
       if (btn){
         const old = btn.textContent;
@@ -263,15 +265,10 @@ function enhanceGallery(){
     });
   });
 
-  // Open from hash (только в gallery.html)
-  const m = (window.location.hash || "").match(/photo=(\d+)/);
-  if (m){
-    if (!allowHash){
-      clearHash();
-    } else {
-      const i = clamp(parseInt(m[1], 10) - 1, 0, items.length-1);
-      setTimeout(() => open(i), 0);
-    }
+  // Авто‑открытие только в gallery.html, при этом хэш уже удалён выше.
+  if (allowAutoOpen && hashIndex != null){
+    const i = clamp(hashIndex, 0, items.length-1);
+    setTimeout(() => open(i), 0);
   }
 }
 
