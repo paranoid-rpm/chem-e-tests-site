@@ -1,4 +1,4 @@
-const CACHE = "chem-e-tests-v8";
+const CACHE = "chem-e-tests-v9";
 
 const ASSETS = [
   "./",
@@ -72,6 +72,7 @@ async function networkFirst(request){
   } catch {
     const cached = await cache.match(request);
     if (cached) return cached;
+    // Если конкретной страницы нет в кэше — только тогда отдаём главную.
     if (request.mode === "navigate") return cache.match("./index.html");
     throw new Error("offline");
   }

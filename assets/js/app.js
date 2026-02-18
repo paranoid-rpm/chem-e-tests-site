@@ -10,9 +10,21 @@ export function wireThemeToggle(){
 }
 
 export function wirePWA(){
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  if (!("serviceWorker" in navigator)) return;
+
+  const h = (location.hostname || "").toLowerCase();
+  const isLocal = h === "localhost" || h === "127.0.0.1" || h === "0.0.0.0";
+
+  // В локальной разработке service worker мешает (кэширует старые страницы/JS).
+  // Поэтому отключаем регистрацию и пытаемся убрать уже установленный SW.
+  if (isLocal){
+    navigator.serviceWorker.getRegistrations()
+      .then(regs => Promise.all(regs.map(r => r.unregister())))
+      .catch(() => {});
+    return;
   }
+
+  navigator.serviceWorker.register("./sw.js").catch(() => {});
 }
 
 function qs(sel, root=document){
@@ -143,7 +155,6 @@ function enhanceGallery(){
     favBtn.classList.toggle("is-on", fav);
     favBtn.textContent = fav ? "★" : "☆";
 
-    // карточки
     items.forEach(({src, el}) => {
       const card = el.closest(".imgcard");
       if (!card) return;
@@ -209,7 +220,6 @@ function enhanceGallery(){
     } catch {}
   }
 
-  // events
   function onClick(e){
     const el = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
     const act = el && el.getAttribute && el.getAttribute("data-action");
