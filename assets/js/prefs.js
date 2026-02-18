@@ -2,9 +2,13 @@
   prefs.js
   Тема: по умолчанию — по настройке системы, но можно вручную переключать.
   Храним режим в localStorage.
+
+  Важно: страницы грузят prefs.js через динамический import(), поэтому DOMContentLoaded
+  может уже пройти к моменту загрузки модуля. Инициализируемся сразу, если DOM уже готов.
 */
 
 const THEME_KEY = "chem_theme_mode_v1"; // 'auto' | 'light' | 'dark'
+let _inited = false;
 
 function readThemeMode(){
   try {
@@ -29,6 +33,7 @@ function applyTheme(mode){
   const m = mode || readThemeMode();
   const theme = (m === "auto") ? systemTheme() : m;
   document.documentElement.setAttribute("data-theme", theme);
+  document.documentElement.setAttribute("data-theme-mode", m);
 }
 
 function applyMotionFromSystem(){
@@ -41,7 +46,7 @@ export function getThemeMode(){
 }
 
 export function getEffectiveTheme(){
-  return document.documentElement.getAttribute("data-theme") || "light";
+  return document.documentElement.getAttribute("data-theme") || systemTheme();
 }
 
 export function setThemeMode(mode){
@@ -51,6 +56,9 @@ export function setThemeMode(mode){
 }
 
 export function initPrefs(){
+  if (_inited) return;
+  _inited = true;
+
   applyTheme(readThemeMode());
   applyMotionFromSystem();
 
@@ -74,4 +82,9 @@ export function wirePrefs(){
   // no-op
 }
 
-document.addEventListener("DOMContentLoaded", initPrefs);
+// Авто‑инициализация (учёт динамического импорта)
+if (document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", initPrefs, { once: true });
+} else {
+  initPrefs();
+}
