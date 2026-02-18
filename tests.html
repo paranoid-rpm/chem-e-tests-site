@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Тесты • ChemTests</title>
   <link rel="stylesheet" href="./assets/css/styles.css"/>
+  <link rel="stylesheet" href="./assets/css/tests.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
   <meta name="description" content="Тесты по химии: тренировка и экзамен."/>
 </head>
@@ -32,7 +33,7 @@
         <h1 style="margin:0 0 10px">Тесты</h1>
         <p class="lead">Выбери вариант. Есть тренировка (с пояснениями) и экзамен (без подсказок, без «Назад»).</p>
 
-        <div class="form-row" style="margin-top:12px">
+        <div class="form-row form-row-3" style="margin-top:12px">
           <div>
             <label class="small">Поиск</label>
             <input id="testSearch" placeholder="Например: кислоты"/>
@@ -40,6 +41,15 @@
           <div>
             <label class="small">Категория</label>
             <select class="select" id="testCategory"></select>
+          </div>
+          <div>
+            <label class="small">Сортировка</label>
+            <select class="select" id="testSort">
+              <option value="default" selected>По умолчанию</option>
+              <option value="title">По названию (А→Я)</option>
+              <option value="fav">Избранное сверху</option>
+              <option value="progress">Сначала новые</option>
+            </select>
           </div>
         </div>
 
@@ -56,6 +66,9 @@
             <input type="checkbox" id="favOnly"/>
             <span>Только избранное</span>
           </label>
+          <button class="btn btn-ghost" id="expandAll" type="button">Развернуть всё</button>
+          <button class="btn btn-ghost" id="collapseAll" type="button">Свернуть всё</button>
+          <span class="tag" id="shownInfo"></span>
           <span class="tag" id="progressInfo"></span>
         </div>
       </div>

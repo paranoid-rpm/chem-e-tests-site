@@ -1,0 +1,113 @@
+/* tests.css — только для страницы tests.html */
+
+.form-row.form-row-3{ grid-template-columns: 1.2fr .8fr .9fr; }
+
+/* Список тестов: прокрутка внутри блока (а не всей страницы) */
+.quiz-list #quizList{
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 961px){
+  .quiz-list #quizList{
+    max-height: calc(100vh - 340px);
+    overflow: auto;
+    padding-right: 6px;
+  }
+}
+
+/* Визуальный стиль элементов списка */
+.test-item{
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+}
+
+.test-item:hover{ border-color: rgba(0,0,0,.25); }
+[data-theme="dark"] .test-item:hover{ border-color: rgba(255,255,255,.28); }
+
+.test-head{
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.test-title{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.test-desc{ margin-top: 6px; }
+
+.test-actions{
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.test-state{ white-space: nowrap; }
+
+/* Аккордеоны групп */
+.group{
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.group > summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.group > summary::-webkit-details-marker{ display:none; }
+
+.group-body{ padding: 12px; display: grid; gap: 10px; }
+
+.group-title{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.group-hint{ margin-top: 4px; }
+
+.subgroup{
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: transparent;
+}
+
+.subgroup > summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 10px 12px;
+  display:flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.subgroup > summary::-webkit-details-marker{ display:none; }
+
+.subgroup-body{
+  padding: 10px 12px;
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 960px){
+  .form-row.form-row-3{ grid-template-columns: 1fr; }
+}

@@ -73,6 +73,35 @@ function anyLightboxOpen(){
   return !!(lb && !lb.classList.contains("hidden"));
 }
 
+function normTitle(s){
+  return String(s || "").trim();
+}
+
+function extractVariantNumber(title){
+  const m = String(title || "").match(/вариант\s*(\d+)/i);
+  if(!m) return null;
+  const n = parseInt(m[1], 10);
+  return Number.isFinite(n) ? n : null;
+}
+
+function chemTopicNameByTemplate(t){
+  const map = {
+    chemAtom: "Атом и таблица",
+    chemReactions: "Реакции и уравнивание",
+    chemSolutions: "Растворы и смеси",
+    chemAcidBase: "Кислоты, основания, соли"
+  };
+  if(t && map[t]) return map[t];
+  return "Другое";
+}
+
+function defaultKey(t){
+  const cat = t.category || "";
+  const topic = (cat === "Химия") ? chemTopicNameByTemplate(t.template) : "";
+  const v = extractVariantNumber(t.title);
+  return `${cat}::${topic}::${String(v ?? 999).padStart(3,"0")}::${normTitle(t.title)}`;
+}
+
 export async function initQuiz(){
   const listNode = document.querySelector("#quizList");
   const boxNode  = document.querySelector("#quizBox");
@@ -84,10 +113,15 @@ export async function initQuiz(){
 
   const search = document.querySelector("#testSearch");
   const catSel = document.querySelector("#testCategory");
+  const sortSel = document.querySelector("#testSort");
   const trainerMode = document.querySelector("#trainerMode");
   const examMode = document.querySelector("#examMode");
   const favOnly = document.querySelector("#favOnly");
   const progressInfo = document.querySelector("#progressInfo");
+  const shownInfo = document.querySelector("#shownInfo");
+
+  const expandAllBtn = document.querySelector("#expandAll");
+  const collapseAllBtn = document.querySelector("#collapseAll");
 
   const favs = loadFavs();
 
@@ -139,9 +173,81 @@ export async function initQuiz(){
     return hay.includes(q);
   }
 
+  function sortTests(arr){
+    const mode = sortSel?.value || "default";
+
+    const byTitle = (a,b) => normTitle(a.title).localeCompare(normTitle(b.title), "ru");
+
+    if(mode === "title"){
+      return [...arr].sort(byTitle);
+    }
+
+    if(mode === "fav"){
+      return [...arr].sort((a,b) => {
+        const af = favs.has(a.id) ? 0 : 1;
+        const bf = favs.has(b.id) ? 0 : 1;
+        if(af !== bf) return af - bf;
+        return defaultKey(a).localeCompare(defaultKey(b), "ru");
+      });
+    }
+
+    if(mode === "progress"){
+      return [...arr].sort((a,b) => {
+        const ad = progress[a.id]?.done ? 1 : 0;
+        const bd = progress[b.id]?.done ? 1 : 0;
+        if(ad !== bd) return ad - bd; // новые (0) сначала
+        return defaultKey(a).localeCompare(defaultKey(b), "ru");
+      });
+    }
+
+    // default
+    return [...arr].sort((a,b) => defaultKey(a).localeCompare(defaultKey(b), "ru"));
+  }
+
+  function buildItemHTML(t, session){
+    const done = progress[t.id]?.done;
+    const pct = progress[t.id]?.pct;
+    const qCount = t.questions?.length || t.questionIds?.length || t.questionCount || 10;
+    const isFav = favs.has(t.id);
+    const canContinue = session && session.testId === t.id && typeof session.i === "number";
+
+    const timerChip = t.timerSec ? `<span class="tag">таймер</span>` : ``;
+    const pctChip = (done && typeof pct === "number") ? `<span class="tag">${pct}%</span>` : ``;
+
+    return `
+      <div class="test-item" data-test="${t.id}">
+        <div class="test-head">
+          <div>
+            <div class="test-title">
+              <b>${t.title}</b>
+              <span class="tag">${t.category}</span>
+              <span class="tag">${qCount} вопросов</span>
+              ${timerChip}
+              ${pctChip}
+            </div>
+            <div class="small test-desc">${t.description}</div>
+            <div class="test-actions">
+              <button class="btn btn-ghost" data-action="fav" type="button" aria-label="В избранное">${isFav ? "★" : "☆"}</button>
+              ${canContinue ? `<button class="btn" data-action="continue" type="button">Продолжить</button>` : ``}
+              <button class="btn" data-action="start" type="button">Начать</button>
+              <button class="btn btn-ghost" data-action="export" type="button">Экспорт</button>
+            </div>
+          </div>
+          <span class="tag test-state">${done ? "пройден" : "новый"}</span>
+        </div>
+      </div>
+    `;
+  }
+
   function renderList(){
     listNode.innerHTML = "";
-    const tests = data.tests.filter(matches);
+
+    const raw = data.tests.filter(matches);
+    const tests = sortTests(raw);
+
+    if(shownInfo){
+      shownInfo.textContent = `Показано: ${tests.length}/${data.tests.length}`;
+    }
 
     if(!tests.length){
       listNode.appendChild(el("div", {class:"small"}, "Ничего не найдено. Измени запрос или фильтр."));
@@ -150,75 +256,112 @@ export async function initQuiz(){
 
     const session = loadSession();
 
+    // Группировка: категория → (в Химии) тема
+    const catMap = new Map();
+
     tests.forEach(t => {
-      const done = progress[t.id]?.done;
-      const pct = progress[t.id]?.pct;
-      const qCount = t.questions?.length || t.questionIds?.length || t.questionCount || 10;
-      const isFav = favs.has(t.id);
-      const canContinue = session && session.testId === t.id && typeof session.i === "number";
+      const cat = t.category || "Без категории";
+      if(!catMap.has(cat)) catMap.set(cat, new Map());
 
-      const item = el("div", {class:"item", "data-id": t.id},
-        `<div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
-           <div>
-             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-               <b>${t.title}</b>
-               <span class="tag">${t.category}</span>
-               <span class="tag">${qCount} вопросов</span>
-               ${t.timerSec ? `<span class="tag">таймер</span>` : ``}
-               ${done && typeof pct === "number" ? `<span class="tag">${pct}%</span>` : ``}
-             </div>
-             <div class="small" style="margin-top:6px">${t.description}</div>
-             <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
-               <button class="btn btn-ghost" data-action="fav" type="button" aria-label="В избранное">${isFav ? "★" : "☆"}</button>
-               ${canContinue ? `<button class="btn" data-action="continue" type="button">Продолжить</button>` : ``}
-               <button class="btn" data-action="start" type="button">Начать</button>
-               <button class="btn btn-ghost" data-action="export" type="button">Экспорт</button>
-             </div>
-           </div>
-           <span class="tag">${done ? "пройден" : "новый"}</span>
-         </div>`
-      );
+      const sub = (cat === "Химия") ? chemTopicNameByTemplate(t.template) : "Варианты";
+      const subMap = catMap.get(cat);
+      if(!subMap.has(sub)) subMap.set(sub, []);
+      subMap.get(sub).push(t);
+    });
 
-      item.addEventListener("click", (e) => {
-        const actEl = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
-        const act = actEl && actEl.getAttribute("data-action");
-        if(!act) return;
-        e.stopPropagation();
+    // Рендер
+    Array.from(catMap.entries()).forEach(([cat, subMap]) => {
+      const catCount = Array.from(subMap.values()).reduce((a,b)=>a+b.length, 0);
 
-        if(act === "fav"){
-          if(favs.has(t.id)) favs.delete(t.id); else favs.add(t.id);
-          saveFavs(favs);
-          renderList();
-          return;
-        }
+      const catDetails = el("details", {class:"group", open:""});
+      const catSummary = el("summary", {}, `
+        <div>
+          <div class="group-title"><b>${cat}</b><span class="tag">${catCount}</span></div>
+          <div class="small group-hint">Нажми, чтобы свернуть/развернуть</div>
+        </div>
+        <span class="tag">раздел</span>
+      `);
+      catDetails.appendChild(catSummary);
 
-        if(act === "export"){
-          const p = loadProgress()[t.id];
-          const payload = { testId: t.id, title: t.title, progress: p || null };
-          navigator.clipboard?.writeText(JSON.stringify(payload, null, 2)).catch(()=>{});
-          actEl.textContent = "Скопировано";
-          setTimeout(() => (actEl.textContent = "Экспорт"), 900);
-          return;
-        }
+      const body = el("div", {class:"group-body"});
 
-        if(act === "continue"){
-          const s = loadSession();
-          if(s && s.testId === t.id) runTest(data, t.id, loadSettings(), s);
-          return;
-        }
+      Array.from(subMap.entries()).forEach(([sub, arr]) => {
+        const open = (cat !== "Химия") ? true : (sub !== "Другое");
+        const subDetails = el("details", {class:"subgroup", ...(open ? {open:""} : {})});
+        const subSummary = el("summary", {}, `<div class="group-title"><b>${sub}</b><span class="tag">${arr.length}</span></div><span class="tag">тема</span>`);
+        subDetails.appendChild(subSummary);
 
-        if(act === "start"){
-          clearSession();
-          runTest(data, t.id, loadSettings(), null);
-        }
+        const subBody = el("div", {class:"subgroup-body"});
+        subBody.innerHTML = arr.map(t => buildItemHTML(t, session)).join("");
+
+        subDetails.appendChild(subBody);
+        body.appendChild(subDetails);
       });
 
-      listNode.appendChild(item);
+      catDetails.appendChild(body);
+      listNode.appendChild(catDetails);
     });
   }
 
+  // Делегирование кликов по списку
+  listNode.addEventListener("click", (e) => {
+    const actEl = e.target && e.target.closest ? e.target.closest("[data-action]") : null;
+    if(!actEl) return;
+
+    const item = actEl.closest("[data-test]");
+    const testId = item && item.getAttribute("data-test");
+    if(!testId) return;
+
+    const t = data.tests.find(x => x.id === testId);
+    if(!t) return;
+
+    const act = actEl.getAttribute("data-action");
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if(act === "fav"){
+      if(favs.has(t.id)) favs.delete(t.id); else favs.add(t.id);
+      saveFavs(favs);
+      renderList();
+      return;
+    }
+
+    if(act === "export"){
+      const p = loadProgress()[t.id];
+      const payload = { testId: t.id, title: t.title, progress: p || null };
+      navigator.clipboard?.writeText(JSON.stringify(payload, null, 2)).catch(()=>{});
+      actEl.textContent = "Скопировано";
+      setTimeout(() => (actEl.textContent = "Экспорт"), 900);
+      return;
+    }
+
+    if(act === "continue"){
+      const s = loadSession();
+      if(s && s.testId === t.id) runTest(data, t.id, loadSettings(), s);
+      return;
+    }
+
+    if(act === "start"){
+      clearSession();
+      runTest(data, t.id, loadSettings(), null);
+    }
+  });
+
+  function setAllDetails(open){
+    const nodes = Array.from(listNode.querySelectorAll("details.group, details.subgroup"));
+    nodes.forEach(d => {
+      if(open) d.setAttribute("open", "");
+      else d.removeAttribute("open");
+    });
+  }
+
+  expandAllBtn?.addEventListener("click", () => setAllDetails(true));
+  collapseAllBtn?.addEventListener("click", () => setAllDetails(false));
+
   search?.addEventListener("input", renderList);
   catSel?.addEventListener("change", renderList);
+  sortSel?.addEventListener("change", renderList);
   favOnly?.addEventListener("change", renderList);
 
   boxNode.innerHTML = `
