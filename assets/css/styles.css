@@ -10,6 +10,24 @@
   --font-scale: 1;
   --focus: rgba(0,0,0,.92);
   color-scheme: light;
+
+  /* ── Section accent colours (shared across all pages) ─── */
+  --c1:#6366f1; --c1a:rgba(99,102,241,.12);
+  --c2:#0ea5e9; --c2a:rgba(14,165,233,.12);
+  --c3:#10b981; --c3a:rgba(16,185,129,.12);
+  --c4:#f59e0b; --c4a:rgba(245,158,11,.12);
+  --c5:#ef4444; --c5a:rgba(239,68,68,.12);
+  --c6:#8b5cf6; --c6a:rgba(139,92,246,.12);
+  --c7:#ec4899; --c7a:rgba(236,72,153,.12);
+  --c8:#14b8a6; --c8a:rgba(20,184,166,.12);
+  --c9:#f97316; --c9a:rgba(249,115,22,.12);
+
+  /* ── Pastel blobs ─────────────────────────────────────── */
+  --blob1: radial-gradient(ellipse 520px 380px at 8% 12%,  rgba(99,102,241,.13) 0%, transparent 70%);
+  --blob2: radial-gradient(ellipse 420px 460px at 92% 8%,  rgba(236,72,153,.10) 0%, transparent 70%);
+  --blob3: radial-gradient(ellipse 480px 340px at 18% 88%, rgba(16,185,129,.10) 0%, transparent 70%);
+  --blob4: radial-gradient(ellipse 380px 500px at 88% 82%, rgba(245,158,11,.09) 0%, transparent 70%);
+  --blob5: radial-gradient(ellipse 320px 320px at 50% 50%, rgba(14,165,233,.07) 0%, transparent 65%);
 }
 
 [data-theme="dark"]{
@@ -21,14 +39,40 @@
   --shadow: 0 14px 40px rgba(0,0,0,.55);
   --focus: rgba(255,255,255,.92);
   color-scheme: dark;
+
+  --blob1: radial-gradient(ellipse 520px 380px at 8% 12%,  rgba(99,102,241,.09) 0%, transparent 70%);
+  --blob2: radial-gradient(ellipse 420px 460px at 92% 8%,  rgba(236,72,153,.07) 0%, transparent 70%);
+  --blob3: radial-gradient(ellipse 480px 340px at 18% 88%, rgba(16,185,129,.07) 0%, transparent 70%);
+  --blob4: radial-gradient(ellipse 380px 500px at 88% 82%, rgba(245,158,11,.06) 0%, transparent 70%);
+  --blob5: radial-gradient(ellipse 320px 320px at 50% 50%, rgba(14,165,233,.05) 0%, transparent 65%);
 }
 
 *{box-sizing:border-box}
 html{font-size: calc(16px * var(--font-scale));}
 html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Arial}
 
-body{background: var(--bg);color:var(--text);position: relative;}
+body{
+  background: var(--bg);
+  color:var(--text);
+  position: relative;
+}
 
+/* ── Pastel blobs layer ───────────────────────────────────── */
+body::after{
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    var(--blob1),
+    var(--blob2),
+    var(--blob3),
+    var(--blob4),
+    var(--blob5);
+}
+
+/* ── Ink texture layer (on top of blobs) ─────────────────── */
 body::before{
   content:"";
   position: fixed;
@@ -37,7 +81,7 @@ body::before{
   pointer-events: none;
   background-repeat: repeat;
   background-size: 900px 700px;
-  opacity: .22;
+  opacity: .14;
 }
 
 body[data-ink="a"]::before{ background-image: url("../img/ink-bg-a-light.svg"); }
@@ -112,7 +156,6 @@ a{color:inherit;text-decoration:none}
 .hero-visual{min-height: 320px;display:flex;align-items:center;justify-content:center}
 .hero-ill{max-width:100%;height:auto;opacity:.95}
 
-/* Make SVG illustrations match theme (monochrome SVGs as <img>) */
 img.illus, img.hero-ill{object-fit:contain;}
 [data-theme="dark"] img.illus,
 [data-theme="dark"] img.hero-ill{
@@ -126,6 +169,17 @@ img.illus, img.hero-ill{object-fit:contain;}
 .tile-link{display:block}
 .tile-link:hover{border-color: rgba(0,0,0,.25)}
 [data-theme="dark"] .tile-link:hover{border-color: rgba(255,255,255,.28)}
+
+/* ── Tile accent colours (usable on any page) ─────────────── */
+.tile.t1{border-left: 3px solid var(--c1);} .tile.t1:hover{border-color:var(--c1); background:var(--c1a);}
+.tile.t2{border-left: 3px solid var(--c2);} .tile.t2:hover{border-color:var(--c2); background:var(--c2a);}
+.tile.t3{border-left: 3px solid var(--c3);} .tile.t3:hover{border-color:var(--c3); background:var(--c3a);}
+.tile.t4{border-left: 3px solid var(--c4);} .tile.t4:hover{border-color:var(--c4); background:var(--c4a);}
+.tile.t5{border-left: 3px solid var(--c5);} .tile.t5:hover{border-color:var(--c5); background:var(--c5a);}
+.tile.t6{border-left: 3px solid var(--c6);} .tile.t6:hover{border-color:var(--c6); background:var(--c6a);}
+.tile.t7{border-left: 3px solid var(--c7);} .tile.t7:hover{border-color:var(--c7); background:var(--c7a);}
+.tile.t8{border-left: 3px solid var(--c8);} .tile.t8:hover{border-color:var(--c8); background:var(--c8a);}
+.tile.t9{border-left: 3px solid var(--c9);} .tile.t9:hover{border-color:var(--c9); background:var(--c9a);}
 
 .footer{margin:28px 0 40px;color:var(--muted);font-size:13px}
 hr.sep{border:0;border-top:1px solid var(--border);margin:16px 0}
@@ -165,7 +219,6 @@ textarea{min-height:120px;resize:vertical}
 .imgcard img.photo{object-fit:cover}
 .imgcard.is-fav::after{content:"★";position:absolute;top:10px;right:10px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;background: var(--bg);color: var(--text);}
 
-/* legacy: keep for gallery images */
 .imgcard img.illus{object-fit:contain;}
 
 .modal-open{overflow:hidden}
