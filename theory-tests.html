@@ -7,6 +7,23 @@
   <link rel="stylesheet" href="./assets/css/styles.css"/>
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml"/>
   <meta name="description" content="Как проходить тесты: стратегии, типичные ловушки и как учиться по ошибкам."/>
+
+  <style>
+    .hero-photo-inline{
+      float:right;
+      width:min(260px, 40%);
+      margin:0 0 8px 14px;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background: var(--card);
+    }
+    .hero-photo-inline img{ display:block; width:100%; height:100%; object-fit:cover; }
+    .hero-photo-inline figcaption{ padding:6px 8px; font-size:12px; color:var(--muted); }
+    @media (max-width: 960px){
+      .hero-photo-inline{ float:none; width:100%; max-width:100%; margin:0 0 10px; }
+    }
+  </style>
 </head>
 <body data-ink="c">
   <header class="nav">
@@ -27,17 +44,15 @@
   </header>
 
   <main class="container" id="appRoot">
-    <section class="gallery is-single" style="margin-top:18px" aria-label="Иллюстрация">
-      <figure class="imgcard">
-        <img class="illus" src="https://commons.wikimedia.org/wiki/Special:FilePath/Desk-laptop-notebook-pen_(23958719819).jpg?width=1200" alt="Фото стола с ноутбуком и тетрадью для конспектов" loading="lazy"/>
-        <figcaption class="small">Теория</figcaption>
-      </figure>
-    </section>
-
-    <section class="card" style="margin-top:14px">
+    <section class="card" style="margin-top:18px">
       <div class="card-pad">
         <h1 style="margin:0 0 10px">Теория тестов</h1>
         <p class="lead">Стратегии, темп и типичные ловушки формулировок.</p>
+
+        <figure class="hero-photo-inline">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Desk-laptop-notebook-pen_(23958719819).jpg?width=1200" alt="Фото стола с ноутбуком и тетрадью для конспектов" loading="lazy"/>
+          <figcaption>Стол с ноутбуком и тетрадью для конспектов · Wikimedia Commons</figcaption>
+        </figure>
 
         <div class="grid" style="margin-top:12px">
           <a class="tile tile-link" href="#rules"><h3>1) Правила ответа</h3><p>Что сделать перед кликом.</p></a>
