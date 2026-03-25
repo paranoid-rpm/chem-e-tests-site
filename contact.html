@@ -9,20 +9,22 @@
   <meta name="description" content="Контакты и обратная связь."/>
 
   <style>
-    .hero-photo-inline{
-      float:right;
-      width:min(220px, 38%);
-      margin:0 0 8px 14px;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background: var(--card);
+    .page-hero{
+      margin-top:18px;border-radius:20px;padding:28px 28px 24px;
+      background:linear-gradient(135deg,#ec4899 0%,#8b5cf6 60%,#6366f1 100%);
+      color:#fff;display:flex;gap:20px;align-items:center;flex-wrap:wrap;
     }
-    .hero-photo-inline img{ display:block; width:100%; height:100%; object-fit:cover; }
-    .hero-photo-inline figcaption{ padding:6px 8px; font-size:12px; color:var(--muted); }
-    @media (max-width: 960px){
-      .hero-photo-inline{ float:none; width:100%; max-width:100%; margin:0 0 10px; }
+    .page-hero h1{margin:0 0 6px;font-size:32px;color:#fff;}
+    .page-hero p{margin:0;opacity:.88;font-size:15px;color:#fff;}
+    .page-hero-emoji{font-size:56px;line-height:1;}
+    .hero-photo-float{
+      float:right;width:min(220px,35%);margin:0 0 10px 16px;
+      border-radius:16px;overflow:hidden;
+      border:1px solid var(--border);background:var(--card);
     }
+    .hero-photo-float img{display:block;width:100%;height:160px;object-fit:cover;}
+    .hero-photo-float figcaption{padding:5px 8px;font-size:11px;color:var(--muted);}
+    @media(max-width:960px){.hero-photo-float{float:none;width:100%;margin:0 0 10px;}}
   </style>
 </head>
 <body data-ink="a">
@@ -32,7 +34,6 @@
         <span class="pill">ChemTests</span>
         <span class="small">химия • тесты • теория</span>
       </a>
-
       <nav class="navlinks" aria-label="Навигация">
         <a href="./tests.html">Тесты</a>
         <a href="./theory-tests.html">Теория тестов</a>
@@ -44,69 +45,52 @@
   </header>
 
   <main class="container" id="appRoot">
-    <section class="card" style="margin-top:18px">
-      <div class="card-pad">
-        <h1 style="margin:0 0 10px">Контакты</h1>
-        <p class="lead">Напиши сообщение — оно откроется в почтовом клиенте.</p>
 
-        <figure class="hero-photo-inline">
-          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mail-envelope.png?width=600" alt="Рисунок конверта электронной почты" loading="lazy"/>
-          <figcaption>Иконка конверта электронной почты · Wikimedia Commons</figcaption>
+    <div class="page-hero">
+      <div class="page-hero-emoji">✉️</div>
+      <div>
+        <h1>Контакты</h1>
+        <p>Напиши сообщение — оно откроется в почтовом клиенте.</p>
+      </div>
+    </div>
+
+    <section class="card" style="margin-top:14px">
+      <div class="card-pad">
+        <figure class="hero-photo-float">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mail-envelope.png?width=600" alt="Иконка конверта электронной почты" loading="lazy"/>
+          <figcaption>Иконка конверта · Wikimedia Commons</figcaption>
         </figure>
 
-        <div class="form-row">
-          <div>
-            <label class="small">Имя</label>
-            <input id="name" placeholder="Например: Иван"/>
-          </div>
-          <div>
-            <label class="small">Email</label>
-            <input id="email" placeholder="name@example.com"/>
-          </div>
+        <h2 style="margin:0 0 8px">Форма обратной связи</h2>
+        <p class="lead">Заполни поля и нажми «Отправить» — откроется почтовый клиент.</p>
+
+        <div class="form-row" style="margin-top:12px">
+          <div><label class="small">Имя</label><input id="name" placeholder="Например: Иван"/></div>
+          <div><label class="small">Email</label><input id="email" placeholder="name@example.com"/></div>
         </div>
         <div style="margin-top:12px">
           <label class="small">Сообщение</label>
           <textarea id="message" placeholder="Текст сообщения..."></textarea>
         </div>
-
         <div class="form-actions">
           <button class="btn" id="sendBtn" type="button">Отправить</button>
           <button class="btn btn-ghost" id="clearBtn" type="button">Очистить</button>
         </div>
-
         <div class="small" id="status" style="margin-top:10px"></div>
       </div>
     </section>
 
-    <div class="footer">
-      <hr class="sep"/>
-      <div class="small">Тема выбирается автоматически по настройке системы.</div>
-    </div>
+    <div class="footer"><hr class="sep"/><div class="small">Тема выбирается автоматически по настройке системы.</div></div>
   </main>
 
   <script>
     (async () => {
-      const proto = location.protocol;
-      const ok = proto === 'http:' || proto === 'https:';
-
+      const ok = ['http:','https:'].includes(location.protocol);
       if (!ok) {
-        const root = document.getElementById('appRoot') || document.body;
-        root.innerHTML = `
-          <div class="card" style="margin-top:18px">
-            <div class="card-pad">
-              <h1 style="margin:0 0 10px">Нужен запуск через сервер</h1>
-              <p class="lead">Открой страницу через Live Server (http://127.0.0.1:5500/...), иначе модульные скрипты блокируются (CORS).</p>
-            </div>
-          </div>
-        `;
+        document.getElementById('appRoot').innerHTML = `<div class="card" style="margin-top:18px"><div class="card-pad"><h1 style="margin:0 0 10px">Нужен запуск через сервер</h1><p class="lead">Открой через Live Server: <span class="tag">http://127.0.0.1:5500/contact.html</span></p></div></div>`;
         return;
       }
-
-      const m = document.createElement('link');
-      m.rel = 'manifest';
-      m.href = './manifest.webmanifest';
-      document.head.appendChild(m);
-
+      const m = document.createElement('link'); m.rel='manifest'; m.href='./manifest.webmanifest'; document.head.appendChild(m);
       await import('./assets/js/prefs.js');
       const { wirePWA } = await import('./assets/js/app.js');
       await import('./assets/js/email.js');
