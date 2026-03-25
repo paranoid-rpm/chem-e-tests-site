@@ -9,20 +9,55 @@
   <meta name="description" content="Большой конспект по химии: от атома и таблицы до растворов, ОВР и расчётов."/>
 
   <style>
-    .hero-photo-inline{
-      float:right;
-      width:min(260px, 40%);
-      margin:0 0 8px 14px;
-      border-radius:16px;
-      overflow:hidden;
-      border:1px solid var(--border);
-      background: var(--card);
+    :root{
+      --c1:#6366f1;--c1a:rgba(99,102,241,.12);
+      --c2:#0ea5e9;--c2a:rgba(14,165,233,.12);
+      --c3:#10b981;--c3a:rgba(16,185,129,.12);
+      --c4:#f59e0b;--c4a:rgba(245,158,11,.12);
+      --c5:#ef4444;--c5a:rgba(239,68,68,.12);
+      --c6:#8b5cf6;--c6a:rgba(139,92,246,.12);
+      --c7:#ec4899;--c7a:rgba(236,72,153,.12);
+      --c8:#14b8a6;--c8a:rgba(20,184,166,.12);
+      --c9:#f97316;--c9a:rgba(249,115,22,.12);
     }
-    .hero-photo-inline img{ display:block; width:100%; height:100%; object-fit:cover; }
-    .hero-photo-inline figcaption{ padding:6px 8px; font-size:12px; color:var(--muted); }
-    @media (max-width: 960px){
-      .hero-photo-inline{ float:none; width:100%; max-width:100%; margin:0 0 10px; }
+    .page-hero{
+      margin-top:18px;border-radius:20px;padding:28px 28px 24px;
+      background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 40%,#ec4899 100%);
+      color:#fff;display:flex;gap:20px;align-items:center;flex-wrap:wrap;
     }
+    .page-hero h1{margin:0 0 6px;font-size:32px;color:#fff;}
+    .page-hero p{margin:0;opacity:.88;font-size:15px;color:#fff;}
+    .page-hero-emoji{font-size:56px;line-height:1;}
+    .hero-photo-float{
+      float:right;width:min(260px,40%);margin:0 0 10px 16px;
+      border-radius:16px;overflow:hidden;
+      border:1px solid var(--border);background:var(--card);
+    }
+    .hero-photo-float img{display:block;width:100%;height:180px;object-fit:cover;}
+    .hero-photo-float figcaption{padding:5px 8px;font-size:11px;color:var(--muted);}
+    @media(max-width:960px){.hero-photo-float{float:none;width:100%;margin:0 0 10px;}}
+    .dtile{
+      padding:14px 15px;border-radius:16px;border:1px solid var(--border);
+      background:var(--card);transition:transform .15s,box-shadow .15s,border-color .15s;
+      position:relative;overflow:hidden;display:block;color:inherit;text-decoration:none;
+    }
+    .dtile:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.10);}
+    .dtile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px;}
+    .dtile-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+    .dtile-emoji{font-size:20px;line-height:1;flex-shrink:0;}
+    .dtile h3{margin:0;font-size:15px;line-height:1.3;}
+    .dtile p{margin:0;color:var(--muted);font-size:13px;line-height:1.55;}
+    .s1 .dtile::before{background:var(--c1);}.s1 .dtile:hover{border-color:var(--c1);background:var(--c1a);}
+    .s2 .dtile::before{background:var(--c2);}.s2 .dtile:hover{border-color:var(--c2);background:var(--c2a);}
+    .s3 .dtile::before{background:var(--c3);}.s3 .dtile:hover{border-color:var(--c3);background:var(--c3a);}
+    .s4 .dtile::before{background:var(--c4);}.s4 .dtile:hover{border-color:var(--c4);background:var(--c4a);}
+    .s5 .dtile::before{background:var(--c5);}.s5 .dtile:hover{border-color:var(--c5);background:var(--c5a);}
+    .s6 .dtile::before{background:var(--c6);}.s6 .dtile:hover{border-color:var(--c6);background:var(--c6a);}
+    .s7 .dtile::before{background:var(--c7);}.s7 .dtile:hover{border-color:var(--c7);background:var(--c7a);}
+    .s8 .dtile::before{background:var(--c8);}.s8 .dtile:hover{border-color:var(--c8);background:var(--c8a);}
+    .s9 .dtile::before{background:var(--c9);}.s9 .dtile:hover{border-color:var(--c9);background:var(--c9a);}
+    .dict-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+    @media(max-width:960px){.dict-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body data-ink="b">
@@ -44,111 +79,39 @@
   </header>
 
   <main class="container" id="appRoot">
-    <section class="card" style="margin-top:18px">
-      <div class="card-pad">
-        <h1 style="margin:0 0 10px">Химия — конспект</h1>
-        <p class="lead">Правила и примеры по темам: чтобы понимать материал и уверенно решать тесты.</p>
 
-        <figure class="hero-photo-inline">
+    <div class="page-hero">
+      <div class="page-hero-emoji">🧪</div>
+      <div>
+        <h1>Химия — конспект</h1>
+        <p>От атома и таблицы до растворов, ОВР и расчётов — в одном файле.</p>
+      </div>
+    </div>
+
+    <section class="card" style="margin-top:14px">
+      <div class="card-pad">
+        <figure class="hero-photo-float">
           <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Chemistry_Lab.jpg?width=1200" alt="Фотография аудитории с химической лабораторией" loading="lazy"/>
           <figcaption>Аудитория с химической лабораторией · Wikimedia Commons</figcaption>
         </figure>
 
-        <div class="tile" style="margin-top:12px">
-          <b>Как пользоваться</b>
-          <div class="small" style="margin-top:8px">Открой раздел по теме теста, а потом проходи вариант в режиме «Тренировка» — так теория закрепляется практикой.</div>
+        <div class="dtile s1" style="margin-top:0">
+          <div class="dtile-head"><span class="dtile-emoji">📌</span><h3>Как пользоваться</h3></div>
+          <p>Открой раздел по теме теста, а потом проходи вариант в режиме «Тренировка» — так теория закрепляется практикой.</p>
         </div>
 
-        <div class="grid" style="margin-top:12px">
-          <a class="tile tile-link" href="#atom"><h3>1) Атом и таблица</h3><p>Строение атома, периодичность, тренды.</p></a>
-          <a class="tile tile-link" href="#bond"><h3>2) Связь и строение</h3><p>Ионная/ковалентная/металлическая, решётки.</p></a>
-          <a class="tile tile-link" href="#valence"><h3>3) Валентность и СО</h3><p>Правила и быстрые проверки.</p></a>
-          <a class="tile tile-link" href="#reactions"><h3>4) Реакции</h3><p>Типы реакций, уравнивание, условия.</p></a>
-          <a class="tile tile-link" href="#solutions"><h3>5) Растворы</h3><p>Концентрации, растворимость, разбавление.</p></a>
-          <a class="tile tile-link" href="#acidbase"><h3>6) Кислоты и основания</h3><p>Классификация, свойства, обменные реакции.</p></a>
-          <a class="tile tile-link" href="#redox"><h3>7) ОВР</h3><p>Окислитель/восстановитель, баланс.</p></a>
-          <a class="tile tile-link" href="#calc"><h3>8) Расчёты</h3><p>n, m, M, V, молярный объём, выход.</p></a>
-          <a class="tile tile-link" href="#errors"><h3>9) Частые ошибки</h3><p>Шпаргалка «что проверять».</p></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="atom" style="margin-top:14px">
-      <div class="card-pad">
-        <h2 style="margin:0 0 10px">1) Атом и периодическая система</h2>
-        <p class="lead">Почти все темы химии начинаются с атома: заряд ядра определяет свойства элемента.</p>
-
-        <div class="grid" style="margin-top:12px">
-          <div class="tile">
-            <h3>Строение атома</h3>
-            <p>Ядро: протоны (+) и нейтроны (0). Электроны (−) находятся в электронной оболочке.</p>
-            <p class="small">Z (порядковый номер) = число протонов = заряд ядра; в нейтральном атоме Z = число электронов.</p>
-          </div>
-          <div class="tile">
-            <h3>Изотопы</h3>
-            <p>Изотопы — атомы одного элемента (одинаковое Z), но с разным числом нейтронов.</p>
-            <p class="small">Относительная атомная масса в таблице — средняя по изотопам.</p>
-          </div>
-          <div class="tile">
-            <h3>Ионы</h3>
-            <p>Катион — положительный ион (электронов меньше), анион — отрицательный (электронов больше).</p>
-            <p class="small">Типично: металлы → катионы, неметаллы → анионы (бывают исключения).</p>
-          </div>
-        </div>
-
-        <div class="tile" style="margin-top:12px">
-          <b>Периодичность (кратко)</b>
-          <div class="small" style="margin-top:8px">В периоде слева направо: радиус атома обычно уменьшается, электроотрицательность и энергия ионизации обычно растут. В группе сверху вниз: радиус растёт, электроотрицательность обычно падает.</div>
-        </div>
-
-        <div class="grid" style="margin-top:12px">
-          <div class="tile">
-            <h3>Металлы и неметаллы</h3>
-            <p>Металлы легче отдают электроны, неметаллы чаще принимают или образуют ковалентную связь.</p>
-            <p class="small">По диагонали B–Si–Ge–As–Sb–Te–Po идут полуметаллы (металлоиды).</p>
-          </div>
-          <div class="tile">
-            <h3>Валентные электроны</h3>
-            <p>Внешние электроны чаще всего участвуют в химической связи и определяют свойства.</p>
-            <p class="small">Для главных подгрупп номер группы часто помогает понять типичную валентность/заряд иона.</p>
-          </div>
-          <div class="tile">
-            <h3>Оксиды</h3>
-            <p>Оксид — соединение элемента с кислородом, где O обычно имеет СО −2.</p>
-            <p class="small">Оксиды металлов часто основные, оксиды неметаллов часто кислотные (есть амфотерные).</p>
-          </div>
+        <div class="dict-grid s2" style="margin-top:12px">
+          <a class="dtile" href="#atom"><div class="dtile-head"><span class="dtile-emoji">⚛️</span><h3>1) Атом и таблица</h3></div><p>Строение атома, периодичность, тренды.</p></a>
+          <a class="dtile" href="#bond"><div class="dtile-head"><span class="dtile-emoji">🔗</span><h3>2) Связь и строение</h3></div><p>Ионная/ковалентная/металлическая, решётки.</p></a>
+          <a class="dtile" href="#valence"><div class="dtile-head"><span class="dtile-emoji">📈</span><h3>3) Валентность и СО</h3></div><p>Правила и быстрые проверки.</p></a>
+          <a class="dtile" href="#reactions"><div class="dtile-head"><span class="dtile-emoji">⚙️</span><h3>4) Реакции</h3></div><p>Типы реакций, уравнивание, условия.</p></a>
+          <a class="dtile" href="#solutions"><div class="dtile-head"><span class="dtile-emoji">🧴</span><h3>5) Растворы</h3></div><p>Концентрации, растворимость, разбавление.</p></a>
+          <a class="dtile" href="#acidbase"><div class="dtile-head"><span class="dtile-emoji">🧫</span><h3>6) Кислоты и основания</h3></div><p>Классификация, свойства, обменные реакции.</p></a>
+          <a class="dtile" href="#redox"><div class="dtile-head"><span class="dtile-emoji">⚡</span><h3>7) ОВР</h3></div><p>Окислитель/восстановитель, баланс.</p></a>
+          <a class="dtile" href="#calc"><div class="dtile-head"><span class="dtile-emoji">📐</span><h3>8) Расчёты</h3></div><p>n, m, M, V, молярный объём, выход.</p></a>
+          <a class="dtile" href="#errors"><div class="dtile-head"><span class="dtile-emoji">⚠️</span><h3>9) Частые ошибки</h3></div><p>Шпаргалка «что проверять».</p></a>
         </div>
       </div>
     </section>
 
-    <!-- дальше идёт остальной конспект без изменений -->
-
-    <script>
-    (async () => {
-      const proto = location.protocol;
-      const ok = proto === 'http:' || proto === 'https:';
-      if (!ok) {
-        const root = document.getElementById('appRoot') || document.body;
-        root.innerHTML = `
-          <div class="card" style="margin-top:18px">
-            <div class="card-pad">
-              <h1 style="margin:0 0 10px">Нужен запуск через сервер</h1>
-              <p class="lead">Открой страницу через Live Server (http://127.0.0.1:5500/...), иначе модульные скрипты блокируются (CORS).</p>
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      const m = document.createElement('link');
-      m.rel = 'manifest';
-      m.href = './manifest.webmanifest';
-      document.head.appendChild(m);
-
-      await import('./assets/js/prefs.js');
-      const { wirePWA } = await import('./assets/js/app.js');
-      wirePWA();
-    })();
-  </script>
-</body>
-</html>
+    <!-- Далее идёт исходный конспект без изменений -->

@@ -9,6 +9,10 @@
   <meta name="description" content="Контакты и обратная связь."/>
 
   <style>
+    :root{
+      --c6:#8b5cf6;--c6a:rgba(139,92,246,.12);
+      --c7:#ec4899;--c7a:rgba(236,72,153,.12);
+    }
     .page-hero{
       margin-top:18px;border-radius:20px;padding:28px 28px 24px;
       background:linear-gradient(135deg,#ec4899 0%,#8b5cf6 60%,#6366f1 100%);
@@ -25,6 +29,18 @@
     .hero-photo-float img{display:block;width:100%;height:160px;object-fit:cover;}
     .hero-photo-float figcaption{padding:5px 8px;font-size:11px;color:var(--muted);}
     @media(max-width:960px){.hero-photo-float{float:none;width:100%;margin:0 0 10px;}}
+    .dtile{
+      padding:14px 15px;border-radius:16px;border:1px solid var(--border);
+      background:var(--card);transition:transform .15s,box-shadow .15s,border-color .15s;
+      position:relative;overflow:hidden;
+    }
+    .dtile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:4px 0 0 4px;}
+    .dtile-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+    .dtile-emoji{font-size:18px;line-height:1;flex-shrink:0;}
+    .dtile h3{margin:0;font-size:15px;}
+    .dtile p{margin:0;color:var(--muted);font-size:13px;}
+    .s6 .dtile::before{background:var(--c6);}.s6 .dtile{box-shadow:0 8px 28px rgba(0,0,0,.10);} 
+    .s7 .dtile::before{background:var(--c7);}
   </style>
 </head>
 <body data-ink="a">
@@ -55,14 +71,16 @@
     </div>
 
     <section class="card" style="margin-top:14px">
-      <div class="card-pad">
+      <div class="card-pad s6">
         <figure class="hero-photo-float">
           <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Mail-envelope.png?width=600" alt="Иконка конверта электронной почты" loading="lazy"/>
           <figcaption>Иконка конверта · Wikimedia Commons</figcaption>
         </figure>
 
-        <h2 style="margin:0 0 8px">Форма обратной связи</h2>
-        <p class="lead">Заполни поля и нажми «Отправить» — откроется почтовый клиент.</p>
+        <div class="dtile">
+          <div class="dtile-head"><span class="dtile-emoji">📮</span><h3>Форма обратной связи</h3></div>
+          <p>Заполни поля и нажми «Отправить» — откроется почтовый клиент.</p>
+        </div>
 
         <div class="form-row" style="margin-top:12px">
           <div><label class="small">Имя</label><input id="name" placeholder="Например: Иван"/></div>
@@ -77,6 +95,15 @@
           <button class="btn btn-ghost" id="clearBtn" type="button">Очистить</button>
         </div>
         <div class="small" id="status" style="margin-top:10px"></div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:14px">
+      <div class="card-pad s7">
+        <div class="dtile">
+          <div class="dtile-head"><span class="dtile-emoji">🔒</span><h3>Конфиденциальность</h3></div>
+          <p>Данные из формы не сохраняются на сервере — письмо уходит напрямую через твой почтовый клиент.</p>
+        </div>
       </div>
     </section>
 
