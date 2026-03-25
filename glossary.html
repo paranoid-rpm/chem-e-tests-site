@@ -9,7 +9,6 @@
   <meta name="description" content="Большой справочник по химии: определения, правила и мини‑шпаргалки."/>
 
   <style>
-    /* ── Section colours ─────────────────────────────────────── */
     :root{
       --c1:#6366f1; --c1a:rgba(99,102,241,.12);
       --c2:#0ea5e9; --c2a:rgba(14,165,233,.12);
@@ -22,11 +21,12 @@
       --c9:#f97316; --c9a:rgba(249,115,22,.12);
     }
 
-    /* ── Search ──────────────────────────────────────────────── */
+    /* ── Search ── */
     .gloss-search-wrap{
       position:sticky; top:60px; z-index:40;
       padding:10px 0 4px;
       background: var(--bg);
+      position:relative;
     }
     .gloss-search{
       width:100%; padding:12px 16px 12px 42px;
@@ -39,9 +39,8 @@
       position:absolute; left:14px; top:50%; transform:translateY(-50%);
       font-size:17px; pointer-events:none;
     }
-    .gloss-search-wrap{position:relative;}
 
-    /* ── Details/section ─────────────────────────────────────── */
+    /* ── Details ── */
     details.dict{
       border:1px solid var(--border);
       border-radius:18px;
@@ -59,122 +58,102 @@
     }
     details.dict summary:hover{ background: rgba(128,128,128,.06); }
     details.dict summary::-webkit-details-marker{ display:none; }
-    .dict-body{ border-top:1px solid var(--border); padding:16px; }
+    .dict-body{ border-top:1px solid var(--border); padding:0; }
+
+    /* ── Section photo banner ── */
+    .sect-photo-wrap{
+      width:100%; height:200px; overflow:hidden;
+      position:relative;
+    }
+    .sect-photo-wrap img{
+      width:100%; height:100%; object-fit:cover;
+      display:block;
+      transition: transform .4s ease;
+    }
+    .sect-photo-wrap:hover img{ transform: scale(1.04); }
+    .sect-photo-caption{
+      position:absolute; bottom:0; left:0; right:0;
+      padding:8px 14px;
+      background: linear-gradient(transparent, rgba(0,0,0,.55));
+      color:#fff; font-size:12px;
+    }
+    .sect-photo-caption a{
+      color:rgba(255,255,255,.75); text-decoration:underline;
+    }
+    /* tint bar top of photo matching section colour */
+    .sect-photo-wrap::before{
+      content:""; position:absolute; top:0; left:0; right:0;
+      height:4px; z-index:2;
+    }
+    .s1 .sect-photo-wrap::before{ background:var(--c1); }
+    .s2 .sect-photo-wrap::before{ background:var(--c2); }
+    .s3 .sect-photo-wrap::before{ background:var(--c3); }
+    .s4 .sect-photo-wrap::before{ background:var(--c4); }
+    .s5 .sect-photo-wrap::before{ background:var(--c5); }
+    .s6 .sect-photo-wrap::before{ background:var(--c6); }
+    .s7 .sect-photo-wrap::before{ background:var(--c7); }
+    .s8 .sect-photo-wrap::before{ background:var(--c8); }
+    .s9 .sect-photo-wrap::before{ background:var(--c9); }
+
+    .dict-inner{ padding:16px; }
 
     /* Section header */
-    .group-title{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-    }
-    .sect-icon{
-      width:34px; height:34px; border-radius:10px;
-      display:flex; align-items:center; justify-content:center;
-      font-size:17px; flex-shrink:0;
-    }
+    .group-title{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .sect-icon{ width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0; }
     .sect-label{ font-size:16px; font-weight:700; }
-    .sect-count{
-      font-size:11px; color:#fff; border-radius:999px;
-      padding:2px 8px; font-weight:600;
-    }
+    .sect-count{ font-size:11px; color:#fff; border-radius:999px; padding:2px 8px; font-weight:600; }
     .chevron{ font-size:13px; color:var(--muted); transition:transform .2s; }
     details.dict[open] .chevron{ transform:rotate(180deg); }
 
-    /* ── Tile grid ───────────────────────────────────────────── */
-    .dict-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:13px;
-    }
+    /* ── Tile grid ── */
+    .dict-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:13px; }
     @media (max-width: 960px){ .dict-grid{ grid-template-columns: 1fr; } }
 
     .dtile{
-      padding:14px 15px;
-      border-radius:16px;
-      border:1px solid var(--border);
+      padding:14px 15px; border-radius:16px; border:1px solid var(--border);
       background:var(--card);
       transition: transform .15s, box-shadow .15s, border-color .15s;
       position:relative; overflow:hidden;
     }
-    .dtile:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(0,0,0,.10);
-    }
-    /* coloured left accent bar */
-    .dtile::before{
-      content:""; position:absolute; left:0; top:0; bottom:0;
-      width:4px; border-radius:4px 0 0 4px;
-    }
-
-    .dtile-head{
-      display:flex; align-items:center; gap:8px; margin-bottom:6px;
-    }
+    .dtile:hover{ transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.10); }
+    .dtile::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:4px; border-radius:4px 0 0 4px; }
+    .dtile-head{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
     .dtile-emoji{ font-size:18px; line-height:1; flex-shrink:0; }
     .dtile h3{ margin:0; font-size:15px; line-height:1.3; }
     .dtile p{ margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
-    .dtile .formula{
-      margin-top:6px; display:inline-block;
-      font-family: 'Courier New', monospace; font-size:12px;
-      background:rgba(128,128,128,.12); border-radius:6px;
-      padding:2px 7px; color:var(--muted);
-    }
+    .dtile .formula{ margin-top:6px; display:inline-block; font-family: 'Courier New', monospace; font-size:12px; background:rgba(128,128,128,.12); border-radius:6px; padding:2px 7px; color:var(--muted); }
 
-    /* per-section colour theming */
-    .s1 .dtile::before{ background:var(--c1); }
-    .s1 .dtile:hover{ border-color:var(--c1); background:var(--c1a); }
-    .s2 .dtile::before{ background:var(--c2); }
-    .s2 .dtile:hover{ border-color:var(--c2); background:var(--c2a); }
-    .s3 .dtile::before{ background:var(--c3); }
-    .s3 .dtile:hover{ border-color:var(--c3); background:var(--c3a); }
-    .s4 .dtile::before{ background:var(--c4); }
-    .s4 .dtile:hover{ border-color:var(--c4); background:var(--c4a); }
-    .s5 .dtile::before{ background:var(--c5); }
-    .s5 .dtile:hover{ border-color:var(--c5); background:var(--c5a); }
-    .s6 .dtile::before{ background:var(--c6); }
-    .s6 .dtile:hover{ border-color:var(--c6); background:var(--c6a); }
-    .s7 .dtile::before{ background:var(--c7); }
-    .s7 .dtile:hover{ border-color:var(--c7); background:var(--c7a); }
-    .s8 .dtile::before{ background:var(--c8); }
-    .s8 .dtile:hover{ border-color:var(--c8); background:var(--c8a); }
-    .s9 .dtile::before{ background:var(--c9); }
-    .s9 .dtile:hover{ border-color:var(--c9); background:var(--c9a); }
+    .s1 .dtile::before{ background:var(--c1); } .s1 .dtile:hover{ border-color:var(--c1); background:var(--c1a); }
+    .s2 .dtile::before{ background:var(--c2); } .s2 .dtile:hover{ border-color:var(--c2); background:var(--c2a); }
+    .s3 .dtile::before{ background:var(--c3); } .s3 .dtile:hover{ border-color:var(--c3); background:var(--c3a); }
+    .s4 .dtile::before{ background:var(--c4); } .s4 .dtile:hover{ border-color:var(--c4); background:var(--c4a); }
+    .s5 .dtile::before{ background:var(--c5); } .s5 .dtile:hover{ border-color:var(--c5); background:var(--c5a); }
+    .s6 .dtile::before{ background:var(--c6); } .s6 .dtile:hover{ border-color:var(--c6); background:var(--c6a); }
+    .s7 .dtile::before{ background:var(--c7); } .s7 .dtile:hover{ border-color:var(--c7); background:var(--c7a); }
+    .s8 .dtile::before{ background:var(--c8); } .s8 .dtile:hover{ border-color:var(--c8); background:var(--c8a); }
+    .s9 .dtile::before{ background:var(--c9); } .s9 .dtile:hover{ border-color:var(--c9); background:var(--c9a); }
 
-    /* icon bg colours */
     .i1{background:var(--c1a);} .i2{background:var(--c2a);} .i3{background:var(--c3a);}
     .i4{background:var(--c4a);} .i5{background:var(--c5a);} .i6{background:var(--c6a);}
     .i7{background:var(--c7a);} .i8{background:var(--c8a);} .i9{background:var(--c9a);}
-
-    /* count badge colours */
     .b1{background:var(--c1);} .b2{background:var(--c2);} .b3{background:var(--c3);}
     .b4{background:var(--c4);} .b5{background:var(--c5);} .b6{background:var(--c6);}
     .b7{background:var(--c7);} .b8{background:var(--c8);} .b9{background:var(--c9);}
 
-    /* ── Hero banner ─────────────────────────────────────────── */
+    /* ── Hero banner ── */
     .gloss-hero{
-      margin-top:18px;
-      border-radius:20px;
-      padding:28px 28px 24px;
+      margin-top:18px; border-radius:20px; padding:28px 28px 24px;
       background: linear-gradient(135deg,#6366f1 0%,#8b5cf6 40%,#ec4899 100%);
-      color:#fff;
-      display:flex; gap:20px; align-items:center; flex-wrap:wrap;
+      color:#fff; display:flex; gap:20px; align-items:center; flex-wrap:wrap;
     }
     .gloss-hero h1{ margin:0 0 6px; font-size:32px; color:#fff; }
     .gloss-hero p{ margin:0; opacity:.88; font-size:15px; color:#fff; }
     .gloss-hero-emoji{ font-size:56px; line-height:1; }
-    .gloss-stats{
-      display:flex; gap:14px; flex-wrap:wrap; margin-top:14px;
-    }
-    .gloss-stat{
-      background:rgba(255,255,255,.18); border-radius:12px;
-      padding:8px 14px; font-size:13px;
-    }
+    .gloss-stats{ display:flex; gap:14px; flex-wrap:wrap; margin-top:14px; }
+    .gloss-stat{ background:rgba(255,255,255,.18); border-radius:12px; padding:8px 14px; font-size:13px; }
     .gloss-stat b{ display:block; font-size:22px; }
 
-    /* ── "no results" ────────────────────────────────────────── */
-    #noResults{
-      display:none; text-align:center; padding:40px;
-      color:var(--muted); font-size:15px;
-    }
-
-    /* hide filtered tiles */
+    #noResults{ display:none; text-align:center; padding:40px; color:var(--muted); font-size:15px; }
     .dtile.hidden{ display:none; }
     details.dict.all-hidden{ display:none; }
   </style>
@@ -221,7 +200,7 @@
     </div>
     <div id="noResults">😕 Ничего не найдено. Попробуй другой запрос.</div>
 
-    <!-- ── 1. База ─────────────────────────────────────────────────── -->
+    <!-- ── 1. База ── -->
     <details class="dict s1" open>
       <summary>
         <div class="group-title">
@@ -233,6 +212,15 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: модель атома Резерфорда / атомы -->  
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/1280px-Camponotus_flavomarginatus_ant.jpg"
+               onerror="this.parentElement.style.display='none'"
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Stylised_Lithium_Atom.svg/800px-Stylised_Lithium_Atom.svg.png"
+               alt="Модель атома" loading="lazy"/>
+          <div class="sect-photo-caption">Стилизованная модель атома лития · <a href="https://commons.wikimedia.org/wiki/File:Stylised_Lithium_Atom.svg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">⚛️</span><h3>Атом</h3></div><p>Наименьшая частица элемента, сохраняющая его химические свойства. Состоит из ядра (протоны + нейтроны) и электронных оболочек.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔗</span><h3>Молекула</h3></div><p>Частица вещества, образованная двумя и более атомами, соединёнными химическими связями. Сохраняет свойства вещества.</p></div>
@@ -247,10 +235,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">⚖️</span><h3>Молярная масса</h3></div><p>Масса одного моля вещества (г/моль). Численно равна относительной молекулярной массе Mᵣ.</p><span class="formula">M(H₂O) = 18 г/моль</span></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔢</span><h3>Число Авогадро</h3></div><p>Количество частиц в 1 моле вещества: Nₐ ≈ 6,022 × 10²³ mol⁻¹.</p><span class="formula">Nₐ = 6,022·10²³</span></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 2. Строение атома ───────────────────────────────────────── -->
+    <!-- ── 2. Строение атома ── -->
     <details class="dict s2">
       <summary>
         <div class="group-title">
@@ -262,6 +251,14 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: ядро атома, модель Бора -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Atom_diagram.png/640px-Atom_diagram.png"
+               onerror="this.parentElement.style.display='none'"
+               alt="Строение атома" loading="lazy"/>
+          <div class="sect-photo-caption">Схема строения атома (ядро, электронные оболочки) · <a href="https://commons.wikimedia.org/wiki/File:Atom_diagram.png" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🎯</span><h3>Ядро</h3></div><p>Центральная часть атома, содержит протоны (p⁺) и нейтроны (n⁰). Диаметр ~10⁻¹⁵ м.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔴</span><h3>Протон</h3></div><p>Положительно заряженная частица ядра. Заряд +1, масса ≈ 1 а.е.м. Число протонов = Z = порядковый номер.</p></div>
@@ -272,10 +269,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📊</span><h3>Электронная конфигурация</h3></div><p>Распределение электронов по уровням и подуровням. Записывается через s, p, d, f-орбитали.</p><span class="formula">Na: 1s²2s²2p⁶3s¹</span></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📐</span><h3>Орбиталь</h3></div><p>Область пространства, где вероятность обнаружить электрон максимальна (90%). Формы: s — шар, p — гантель, d — клевер.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 3. Связь и строение ─────────────────────────────────────── -->
+    <!-- ── 3. Химическая связь ── -->
     <details class="dict s3">
       <summary>
         <div class="group-title">
@@ -287,6 +285,14 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: молекула воды, водородные связи -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/3D_model_hydrogen_bonds_in_water.svg/800px-3D_model_hydrogen_bonds_in_water.svg.png"
+               onerror="this.parentElement.style.display='none'"
+               alt="Водородные связи в воде" loading="lazy"/>
+          <div class="sect-photo-caption">3D-модель водородных связей молекул воды · <a href="https://commons.wikimedia.org/wiki/File:3D_model_hydrogen_bonds_in_water.svg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🧲</span><h3>Ионная связь</h3></div><p>Электростатическое притяжение катионов и анионов. Образуется между металлом и неметаллом. Характерна для солей и оснований.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🤝</span><h3>Ковалентная связь</h3></div><p>Связь через обобществлённые электронные пары. Бывает полярная (между разными неметаллами) и неполярная (между одинаковыми атомами).</p></div>
@@ -298,10 +304,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔀</span><h3>Гибридизация</h3></div><p>Смешение атомных орбиталей для образования одинаковых связей. sp³ — тетраэдр, sp² — треугольник, sp — линия.</p><span class="formula">CH₄: sp³ · C₂H₄: sp²</span></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔁</span><h3>Донорно-акцепторная связь</h3></div><p>Ковалентная связь, обе пары электронов предоставляет один атом (донор), а другой (акцептор) лишь принимает.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 4. Растворы ────────────────────────────────────────────── -->
+    <!-- ── 4. Растворы ── -->
     <details class="dict s4">
       <summary>
         <div class="group-title">
@@ -313,6 +320,18 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: лабораторные колбы с растворами -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/1280px-Camponotus_flavomarginatus_ant.jpg"
+               onerror="this.parentElement.style.display='none'"
+               src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg/800px-Good_Food_Display_-_NCI_Visuals_Online.jpg"
+               alt="Химические растворы" loading="lazy"/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Laboratory_glassware.jpg/800px-Laboratory_glassware.jpg"
+               onerror="this.parentElement.style.display='none'"
+               alt="Лабораторная посуда" loading="lazy" style="display:none"/>
+          <div class="sect-photo-caption">Лабораторная посуда с растворами · <a href="https://commons.wikimedia.org/wiki/File:Laboratory_glassware.jpg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🍹</span><h3>Раствор</h3></div><p>Однородная (гомогенная) смесь растворителя и одного или более растворённых веществ. Размер частиц менее 1 нм.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📈</span><h3>Растворимость</h3></div><p>Максимальное количество вещества (г), растворяемого в 100 г растворителя при данных T и P. Зависит от природы веществ и температуры.</p></div>
@@ -324,10 +343,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🚫</span><h3>Неэлектролит</h3></div><p>Вещество, раствор которого не проводит ток (не диссоциирует). Примеры: сахар, этанол, глюкоза.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔃</span><h3>Диссоциация</h3></div><p>Распад электролита на ионы при растворении. Степень диссоциации α = число диссоциированных молекул / общее число молекул.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 5. Кислоты, основания, соли ───────────────────────────── -->
+    <!-- ── 5. Кислоты, основания, соли ── -->
     <details class="dict s5">
       <summary>
         <div class="group-title">
@@ -339,6 +359,14 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: pH-индикатор, лакмус -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/PH_indicators.jpg/800px-PH_indicators.jpg"
+               onerror="this.parentElement.style.display='none'"
+               alt="pH индикаторы" loading="lazy"/>
+          <div class="sect-photo-caption">Цвета pH-индикаторов при разных значениях кислотности · <a href="https://commons.wikimedia.org/wiki/File:PH_indicators.jpg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🍋</span><h3>Кислота</h3></div><p>Электролит, диссоциирующий в водном растворе с образованием ионов H⁺ (протонов). pH &lt; 7.</p><span class="formula">HCl → H⁺ + Cl⁻</span></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🧼</span><h3>Основание</h3></div><p>Электролит, диссоциирующий с образованием ионов OH⁻. Растворимые основания называются щёлочами. pH &gt; 7.</p><span class="formula">NaOH → Na⁺ + OH⁻</span></div>
@@ -351,10 +379,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">💦</span><h3>Гидролиз</h3></div><p>Реакция вещества с водой. Гидролиз соли: соль слабой кислоты или слабого основания изменяет pH раствора.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🌡️</span><h3>Сильная кислота</h3></div><p>Полностью диссоциирует в водном растворе. HCl, H₂SO₄ (разб.), HNO₃, HBr, HI, HClO₄.</p><span class="formula">HCl → H⁺ + Cl⁻ (100%)</span></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 6. ОВР ──────────────────────────────────────────────────── -->
+    <!-- ── 6. ОВР ── -->
     <details class="dict s6">
       <summary>
         <div class="group-title">
@@ -366,6 +395,14 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: ржавление железа / окисление -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Rust_on_iron.jpg/800px-Rust_on_iron.jpg"
+               onerror="this.parentElement.style.display='none'"
+               alt="Ржавление железа — пример окисления" loading="lazy"/>
+          <div class="sect-photo-caption">Ржавление железа — классический пример окислительно-восстановительной реакции · <a href="https://commons.wikimedia.org/wiki/File:Rust_on_iron.jpg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📊</span><h3>Степень окисления</h3></div><p>Условный заряд атома в соединении при полном смещении электронов к более электроотрицательному атому. Записывается над символом элемента.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📤</span><h3>Окисление</h3></div><p>Процесс отдачи электронов, сопровождается повышением степени окисления атома. «ОИЛ» — окисление, потеря электронов.</p></div>
@@ -375,10 +412,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">⚖️</span><h3>Электронный баланс</h3></div><p>Метод уравнивания ОВР: число отданных электронов равно числу принятых. Находим коэффициенты перед окислителем и восстановителем.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔀</span><h3>Диспропорционирование</h3></div><p>ОВР, в которой один и тот же элемент одновременно окисляется и восстанавливается. Пример: Cl₂ + NaOH.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 7. Термодинамика и кинетика ────────────────────────────── -->
+    <!-- ── 7. Термодинамика и кинетика ── -->
     <details class="dict s7">
       <summary>
         <div class="group-title">
@@ -390,6 +428,14 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: пламя, горение -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Burning_blue_flame.jpg/800px-Burning_blue_flame.jpg"
+               onerror="this.parentElement.style.display='none'"
+               alt="Горение — экзотермическая реакция" loading="lazy"/>
+          <div class="sect-photo-caption">Горение — типичная экзотермическая реакция (ΔH &lt; 0) · <a href="https://commons.wikimedia.org/wiki/File:Burning_blue_flame.jpg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔥</span><h3>Экзотермическая реакция</h3></div><p>Реакция, протекающая с выделением теплоты (ΔH &lt; 0). Пример: горение, нейтрализация.</p><span class="formula">ΔH &lt; 0</span></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">❄️</span><h3>Эндотермическая реакция</h3></div><p>Реакция, протекающая с поглощением теплоты из окружающей среды (ΔH &gt; 0). Пример: разложение карбонатов.</p><span class="formula">ΔH &gt; 0</span></div>
@@ -400,10 +446,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">↔️</span><h3>Принцип Ле Шателье</h3></div><p>Если на равновесную систему оказать внешнее воздействие, равновесие сместится в сторону, ослабляющую это воздействие.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📦</span><h3>Константа равновесия Kc</h3></div><p>Отношение произведений концентраций продуктов к произведениям концентраций реагентов в степенях стехиометрических коэффициентов.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 8. Органическая химия ──────────────────────────────────── -->
+    <!-- ── 8. Органическая химия ── -->
     <details class="dict s8">
       <summary>
         <div class="group-title">
@@ -415,6 +462,14 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: модель молекулы бензола -->
+        <div class="sect-photo-wrap">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Benzene_Skeletal.svg/800px-Benzene_Skeletal.svg.png"
+               onerror="this.parentElement.style.display='none'"
+               alt="Структурная формула бензола" loading="lazy"/>
+          <div class="sect-photo-caption">Структурная формула бензола C₆H₆ — основа ароматических соединений · <a href="https://commons.wikimedia.org/wiki/File:Benzene_Skeletal.svg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">⛽</span><h3>Углеводороды</h3></div><p>Органические соединения, содержащие только C и H. Делятся на алканы, алкены, алкины, арены.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🪨</span><h3>Алканы</h3></div><p>Предельные углеводороды с формулой CₙH₂ₙ₊₂. Только σ-связи. Реакция замещения (галогенирование).</p><span class="formula">CₙH₂ₙ₊₂</span></div>
@@ -425,10 +480,11 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🍬</span><h3>Карбоновые кислоты</h3></div><p>Содержат группу −COOH. Уксусная, муравьиная, стеариновая. Реакция этерификации со спиртами.</p><span class="formula">−COOH</span></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🧬</span><h3>Полимер</h3></div><p>Высокомолекулярное соединение из повторяющихся звеньев (мономеров). Полиэтилен, ПВХ, каучук, белки, ДНК.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
-    <!-- ── 9. Таблица Менделеева и закономерности ─────────────────── -->
+    <!-- ── 9. Таблица Менделеева ── -->
     <details class="dict s9">
       <summary>
         <div class="group-title">
@@ -440,6 +496,15 @@
         <span class="chevron">▼</span>
       </summary>
       <div class="dict-body">
+        <!-- Wikimedia: периодическая таблица -->
+        <div class="sect-photo-wrap" style="height:240px">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Periodic_table.svg/1200px-Periodic_table.svg.png"
+               onerror="this.parentElement.style.display='none'"
+               alt="Периодическая таблица элементов" loading="lazy"
+               style="object-position: top center;"/>
+          <div class="sect-photo-caption">Периодическая таблица химических элементов Менделеева · <a href="https://commons.wikimedia.org/wiki/File:Periodic_table.svg" target="_blank">Wikimedia Commons</a></div>
+        </div>
+        <div class="dict-inner">
         <div class="dict-grid">
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📋</span><h3>Период</h3></div><p>Горизонтальный ряд таблицы. Номер периода = число электронных уровней. В периоде слева направо: металлы → неметаллы.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">📌</span><h3>Группа</h3></div><p>Вертикальный столбец. Номер группы (главной подгруппы) = число валентных электронов. Элементы группы имеют сходные свойства.</p></div>
@@ -448,6 +513,7 @@
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🏆</span><h3>Самые активные</h3></div><p>Наиболее активный металл — Fr (Cs практически), наиболее активный неметалл — F. Наименее активные металлы — Au, Pt.</p></div>
           <div class="dtile"><div class="dtile-head"><span class="dtile-emoji">🔑</span><h3>Закон периодичности</h3></div><p>Свойства элементов и их соединений периодически повторяются с ростом заряда ядра атома. Сформулирован Д.И. Менделеевым в 1869 г.</p></div>
         </div>
+        </div>
       </div>
     </details>
 
@@ -455,19 +521,16 @@
 
     <div class="footer">
       <hr class="sep"/>
-      <div class="small">Тема выбирается автоматически по настройке системы.</div>
+      <div class="small">Тема выбирается автоматически по настройке системы. Фото: Wikimedia Commons (CC).</div>
     </div>
   </main>
 
   <script>
-    /* ── Live search ─────────────────────────────────────────── */
     const input = document.getElementById('glossSearch');
     const noRes = document.getElementById('noResults');
-
     input.addEventListener('input', () => {
       const q = input.value.trim().toLowerCase();
       let anyVisible = false;
-
       document.querySelectorAll('details.dict').forEach(section => {
         const tiles = section.querySelectorAll('.dtile');
         let sectionHasMatch = false;
@@ -480,7 +543,6 @@
         section.classList.toggle('all-hidden', !sectionHasMatch);
         if (sectionHasMatch) { anyVisible = true; if (q) section.open = true; }
       });
-
       noRes.style.display = anyVisible ? 'none' : 'block';
     });
   </script>
@@ -491,19 +553,11 @@
       const ok = proto === 'http:' || proto === 'https:';
       if (!ok) {
         const root = document.getElementById('appRoot') || document.body;
-        root.innerHTML = `
-          <div class="card" style="margin-top:18px">
-            <div class="card-pad">
-              <h1 style="margin:0 0 10px">Нужен запуск через сервер</h1>
-              <p class="lead">Открой страницу через Live Server (http://127.0.0.1:5500/...), иначе модульные скрипты блокируются (CORS).</p>
-            </div>
-          </div>
-        `;
+        root.innerHTML = `<div class="card" style="margin-top:18px"><div class="card-pad"><h1 style="margin:0 0 10px">Нужен запуск через сервер</h1><p class="lead">Открой страницу через Live Server (http://127.0.0.1:5500/...), иначе модульные скрипты блокируются (CORS).</p></div></div>`;
         return;
       }
       const m = document.createElement('link');
-      m.rel = 'manifest';
-      m.href = './manifest.webmanifest';
+      m.rel = 'manifest'; m.href = './manifest.webmanifest';
       document.head.appendChild(m);
       await import('./assets/js/prefs.js');
       const { wirePWA } = await import('./assets/js/app.js');
